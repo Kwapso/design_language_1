@@ -1,0 +1,1382 @@
+/* Structure — the Kwapso design language.
+ * GENERATED FILE. Do not edit by hand: edit tokens/tokens.json and run
+ * `npm run build:tokens`. Source of truth measured from https://kwapso.com.
+ * SINGLE-FILE BUNDLE: dist/tokens.css + css/base.css + css/components.css, in load order.
+ */
+/* Structure — the Kwapso design language.
+ * GENERATED FILE. Do not edit by hand: edit tokens/tokens.json and run
+ * `npm run build:tokens`. Source of truth measured from https://kwapso.com.
+ * 
+ */
+:root {
+  /* ---- brand primitives ---- */
+  --st-color-ink: #191817;
+  --st-color-paper: #fffdf8;
+  --st-color-sand: #f7f2eb;
+  --st-color-mango: #ffd066;
+  --st-color-sky: #89bce5;
+  --st-color-forest: #1d9159;
+  --st-color-poppy: #ea4832;
+  --st-color-grey: #bab8b4;
+  --st-color-ink-10: rgba(25, 24, 23, 0.10);
+  --st-color-ink-15: rgba(25, 24, 23, 0.15);
+  --st-color-ink-30: rgba(25, 24, 23, 0.30);
+  --st-color-ink-50: rgba(25, 24, 23, 0.50);
+  --st-color-ink-65: rgba(25, 24, 23, 0.65);
+  --st-color-mango-deep: #e8b244;
+  --st-color-sky-deep: #6489a7;
+
+  /* ---- semantic (light) ---- */
+  --st-background: #fffdf8;
+  --st-foreground: #191817;
+  --st-surface: #f7f2eb;
+  --st-surface-foreground: #191817;
+  --st-raised: #fffdf8;
+  --st-muted: rgba(25, 24, 23, 0.65);
+  --st-accent: #ffd066;
+  --st-accent-hover: #e8b244;
+  --st-accent-foreground: #191817;
+  --st-border: rgba(25, 24, 23, 0.15);
+  --st-border-control: rgba(25, 24, 23, 0.50);
+  --st-divider: rgba(25, 24, 23, 0.10);
+  --st-ring: rgba(25, 24, 23, 0.50);
+  --st-placeholder: rgba(25, 24, 23, 0.50);
+  --st-chart-stroke: rgba(25, 24, 23, 0.65);
+  --st-disabled: #bab8b4;
+  --st-info: #6489a7;
+  --st-success: #1d9159;
+  --st-danger: #ea4832;
+  --st-warning: #e8b244;
+
+  /* ---- chart series ---- */
+  --st-chart-1: #ffd066;
+  --st-chart-2: #89bce5;
+  --st-chart-3: #1d9159;
+  --st-chart-4: #ea4832;
+  --st-chart-5: #bab8b4;
+  --st-chart-6: #e8b244;
+  --st-chart-stroke-width: 1px;
+
+  /* ---- type ---- */
+  --st-font-display: "Serrif Condensed", "Serrifcondensed", "Playfair Display", "Times New Roman", serif;
+  --st-font-sans: "Saans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  --st-font-mono: "SF Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --st-weight-light: 300;
+  --st-weight-medium: 500;
+  --st-text-2xs: 0.675rem;
+  --st-leading-2xs: 1.1;
+  --st-text-xs: 0.75rem;
+  --st-leading-xs: 1.5;
+  --st-text-sm: 0.9rem;
+  --st-leading-sm: 1.5;
+  --st-text-base: 1rem;
+  --st-leading-base: 1.5;
+  --st-text-md: 1.125rem;
+  --st-leading-md: 1.5;
+  --st-text-lg: 1.25rem;
+  --st-leading-lg: 1.5;
+  --st-text-xl: 1.8rem;
+  --st-leading-xl: 1.2;
+  --st-text-2xl: 2.925rem;
+  --st-leading-2xl: 1.0;
+  --st-text-3xl: 4.77rem;
+  --st-leading-3xl: 1.05;
+  --st-text-4xl: 6.75rem;
+  --st-leading-4xl: 0.8;
+  --st-tracking-normal: 0;
+  --st-tracking-wide: 0.5px;
+  --st-tracking-wider: 1px;
+
+  /* ---- space ---- */
+  --st-space-0: 0;
+  --st-space-xs: 5px;
+  --st-space-s: 10px;
+  --st-space-base: 20px;
+  --st-space-m: 40px;
+  --st-space-l: 60px;
+  --st-space-xl: 80px;
+  --st-space-2xl: 100px;
+  --st-space-section: 150px;
+
+  /* ---- form ---- */
+  --st-radius-none: 0;
+  --st-radius-surface: 10px;
+  --st-radius-pill: 50px;
+  --st-radius-circle: 50%;
+  --st-border-hairline: 1px;
+  --st-border-accent: 2px;
+  --st-elevation-flat: none;
+  --st-elevation-escape-hatch: 0 4px 16px rgba(25, 24, 23, 0.08);
+
+  /* ---- motion ---- */
+  --st-motion-ease: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --st-motion-fast: 120ms;
+  --st-motion-base: 200ms;
+  --st-motion-slow: 400ms;
+  --st-motion-reveal: 800ms;
+  --st-motion-max-allowed: 400ms;
+
+  /* ---- layout ---- */
+  --st-layout-measure: 950px;
+  --st-layout-frame: 1920px;
+  --st-layout-gutter: 20px;
+  --st-layout-gutter-wide: 60px;
+  --st-control-height: 44px;
+  --st-control-height-sm: 36px;
+  --st-control-height-lg: 52px;
+  --st-control-padding-x: 24px;
+  --st-control-min-touch: 44px;
+  --st-z-base: 0;
+  --st-z-sticky: 100;
+  --st-z-overlay: 200;
+  --st-z-modal: 300;
+  --st-z-toast: 400;
+
+  /* ---- density: comfortable is the default ---- */
+  --st-density-body: [object Object];
+  --st-density-section-y: 100px;
+  --st-density-block-y: 60px;
+  --st-density-stack: 20px;
+  --st-density-control-h: 44px;
+  --st-density-control-px: 24px;
+}
+
+/* Density is a cognitive-load control, not a style. See COGNITIVE-LOAD.md. */
+[data-density="compact"] {
+  --st-density-body: [object Object];
+  --st-density-section-y: 40px;
+  --st-density-block-y: 20px;
+  --st-density-stack: 10px;
+  --st-density-control-h: 36px;
+  --st-density-control-px: 16px;
+}
+[data-density="comfortable"] {
+  --st-density-body: [object Object];
+  --st-density-section-y: 100px;
+  --st-density-block-y: 60px;
+  --st-density-stack: 20px;
+  --st-density-control-h: 44px;
+  --st-density-control-px: 24px;
+}
+
+/* Dark. Explicit [data-theme] wins over the system preference in both directions. */
+[data-theme="dark"] {
+  --st-background: #191817;
+  --st-foreground: #fffdf8;
+  --st-surface: #232120;
+  --st-surface-foreground: #fffdf8;
+  --st-raised: #2c2a28;
+  --st-muted: rgba(255, 253, 248, 0.60);
+  --st-accent: #ffd066;
+  --st-accent-hover: #ffdd8a;
+  --st-accent-foreground: #191817;
+  --st-border: rgba(255, 253, 248, 0.15);
+  --st-border-control: rgba(255, 253, 248, 0.45);
+  --st-divider: rgba(255, 253, 248, 0.10);
+  --st-ring: rgba(255, 253, 248, 0.45);
+  --st-placeholder: rgba(255, 253, 248, 0.40);
+  --st-chart-stroke: rgba(255, 253, 248, 0.55);
+  --st-disabled: rgba(255, 253, 248, 0.35);
+  --st-info: #89bce5;
+  --st-success: #2eb673;
+  --st-danger: #f26350;
+  --st-warning: #e8b244;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --st-background: #191817;
+    --st-foreground: #fffdf8;
+    --st-surface: #232120;
+    --st-surface-foreground: #fffdf8;
+    --st-raised: #2c2a28;
+    --st-muted: rgba(255, 253, 248, 0.60);
+    --st-accent: #ffd066;
+    --st-accent-hover: #ffdd8a;
+    --st-accent-foreground: #191817;
+    --st-border: rgba(255, 253, 248, 0.15);
+    --st-border-control: rgba(255, 253, 248, 0.45);
+    --st-divider: rgba(255, 253, 248, 0.10);
+    --st-ring: rgba(255, 253, 248, 0.45);
+    --st-placeholder: rgba(255, 253, 248, 0.40);
+    --st-chart-stroke: rgba(255, 253, 248, 0.55);
+    --st-disabled: rgba(255, 253, 248, 0.35);
+    --st-info: #89bce5;
+    --st-success: #2eb673;
+    --st-danger: #f26350;
+    --st-warning: #e8b244;
+  }
+}
+
+
+/* Structure — base layer.
+ *
+ * THE RESKIN. This file styles plain semantic HTML, so an existing app can
+ * adopt the language without changing a single line of markup: link this
+ * file, and <h1>, <p>, <button>, <input>, <table> already speak Structure.
+ *
+ * It defines no class names except the escape hatches at the bottom. Every
+ * value resolves to a token — there is not one literal colour or size below.
+ *
+ * Load order:  tokens.css  ->  base.css  ->  components.css
+ * structure-definitions — this file DEFINES the vocabulary; view budgets do not apply.
+ */
+
+/* ---------------------------------------------------------------- reset */
+/* Minimal, and only where a default actively fights the language. */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  /* No screen scrolls sideways. Designated scrollers opt in per component. */
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--st-background);
+  color: var(--st-foreground);
+  font-family: var(--st-font-sans);
+  font-size: var(--st-density-body, var(--st-text-sm));
+  font-weight: var(--st-weight-light);
+  line-height: var(--st-leading-sm);
+  /* Warm paper deserves proper rendering; the light weight needs it most. */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  min-height: 100svh;
+}
+
+/* A page with content that fits must not move. Sign-in, empty states and
+ * confirmations sit perfectly still — including the mobile rubber-band. */
+html, body { overscroll-behavior: none; }
+
+img, svg, video, canvas, picture { display: block; max-width: 100%; height: auto; }
+svg { fill: none; stroke: currentColor; }
+
+/* ------------------------------------------------------------- headings */
+/* Sans, weight 500, POSITIVE tracking. The positive tracking is measured and
+ * deliberate — it is the opposite of the tight-tracking default, and it is a
+ * large part of why the brand reads as calm rather than urgent. */
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: var(--st-font-sans);
+  font-weight: var(--st-weight-medium);
+  letter-spacing: var(--st-tracking-wide);
+  color: var(--st-foreground);
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--st-text-2xl);  line-height: var(--st-leading-2xl); }
+h2 { font-size: var(--st-text-xl);   line-height: var(--st-leading-xl); }
+h3 { font-size: var(--st-text-lg);   line-height: var(--st-leading-lg); }
+h4 { font-size: var(--st-text-md);   line-height: var(--st-leading-md); }
+h5 { font-size: var(--st-text-base); line-height: var(--st-leading-base); }
+h6 { font-size: var(--st-text-sm);   line-height: var(--st-leading-sm); }
+
+/* ------------------------------------------------------------ body copy */
+
+p, ul, ol, dl, blockquote, pre, figure, table { margin: 0 0 var(--st-space-base); }
+:where(p, ul, ol, dl, blockquote, pre, figure, table):last-child { margin-bottom: 0; }
+
+p { max-width: 68ch; text-wrap: pretty; }
+
+small { font-size: var(--st-text-xs); color: var(--st-muted); }
+strong, b { font-weight: var(--st-weight-medium); }
+em, i { font-style: italic; }
+
+/* Links carry an ink underline, never the accent colour. Mango means "next
+ * action" and a body link is not that — colouring links mango would spend the
+ * accent budget on prose. */
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--st-border-control);
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color var(--st-motion-base) var(--st-motion-ease);
+}
+a:hover { text-decoration-color: currentColor; }
+
+blockquote {
+  padding-left: var(--st-space-base);
+  border-left: var(--st-border-accent) solid var(--st-accent);
+  font-family: var(--st-font-display);
+  font-size: var(--st-text-md);
+  font-weight: var(--st-weight-light);
+}
+
+hr {
+  height: 0;
+  margin: var(--st-space-m) 0;
+  border: 0;
+  border-top: var(--st-border-hairline) solid var(--st-divider);
+}
+
+ul, ol { padding-left: var(--st-space-base); }
+li { margin-bottom: var(--st-space-xs); }
+li::marker { color: var(--st-muted); }
+
+code, kbd, samp, pre { font-family: var(--st-font-mono); font-size: 0.9em; }
+code {
+  padding: 0.1em 0.35em;
+  background: var(--st-surface);
+  border-radius: var(--st-radius-surface);
+}
+pre {
+  padding: var(--st-space-base);
+  overflow-x: auto;
+  background: var(--st-surface);
+  border-radius: var(--st-radius-surface);
+}
+pre code { padding: 0; background: none; }
+
+kbd {
+  padding: 0.15em 0.45em;
+  font-size: var(--st-text-xs);
+  background: var(--st-surface);
+  border: var(--st-border-hairline) solid var(--st-border-control);
+  border-radius: calc(var(--st-radius-surface) / 2);
+}
+
+/* ---------------------------------------------------------------- media */
+
+figure { margin-inline: 0; }
+figcaption {
+  margin-top: var(--st-space-s);
+  font-size: var(--st-text-xs);
+  color: var(--st-muted);
+}
+
+/* ---------------------------------------------------------------- table */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--st-text-sm);
+}
+caption {
+  margin-bottom: var(--st-space-s);
+  font-size: var(--st-text-xs);
+  color: var(--st-muted);
+  text-align: left;
+}
+th {
+  font-weight: var(--st-weight-medium);
+  letter-spacing: var(--st-tracking-wide);
+  text-align: left;
+}
+th, td {
+  padding: var(--st-space-s) var(--st-space-base);
+  border-bottom: var(--st-border-hairline) solid var(--st-divider);
+}
+thead th { border-bottom-color: var(--st-border-control); }
+tbody tr:last-child td { border-bottom: 0; }
+
+/* -------------------------------------------------------------- buttons */
+/* Bare <button> gets the accent treatment, because in unstyled markup a
+ * button is nearly always the primary action. Anything secondary should say
+ * so with .st-btn--outline / --ghost from components.css. */
+
+button, [type="button"], [type="submit"], [type="reset"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--st-space-s);
+  min-height: var(--st-density-control-h, var(--st-control-height));
+  padding-inline: var(--st-density-control-px, var(--st-control-padding-x));
+  font-family: inherit;
+  font-size: var(--st-text-sm);
+  font-weight: var(--st-weight-medium);
+  line-height: 1;
+  color: var(--st-accent-foreground);
+  background-color: var(--st-accent);
+  border: var(--st-border-accent) solid transparent;
+  border-radius: var(--st-radius-pill);
+  cursor: pointer;
+  transition:
+    background-color var(--st-motion-base) var(--st-motion-ease),
+    border-color var(--st-motion-base) var(--st-motion-ease),
+    color var(--st-motion-base) var(--st-motion-ease),
+    opacity var(--st-motion-base) var(--st-motion-ease);
+}
+button:hover, [type="button"]:hover, [type="submit"]:hover { background-color: var(--st-accent-hover); }
+button:disabled, [type="button"]:disabled, [type="submit"]:disabled {
+  background-color: var(--st-disabled);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* --------------------------------------------------------------- inputs */
+
+input, textarea, select {
+  width: 100%;
+  min-height: var(--st-density-control-h, var(--st-control-height));
+  padding: var(--st-space-s) var(--st-space-base);
+  font-family: inherit;
+  font-size: var(--st-text-sm);
+  font-weight: var(--st-weight-light);
+  color: var(--st-foreground);
+  background-color: var(--st-background);
+  /* border-control, NOT the decorative hairline: this edge is the only thing
+   * telling a user where the field is, so it must clear 3:1. */
+  border: var(--st-border-hairline) solid var(--st-border-control);
+  border-radius: var(--st-radius-surface);
+  transition:
+    border-color var(--st-motion-base) var(--st-motion-ease),
+    box-shadow var(--st-motion-base) var(--st-motion-ease);
+}
+textarea { min-height: calc(var(--st-control-height) * 2); resize: vertical; }
+
+input::placeholder, textarea::placeholder {
+  color: var(--st-placeholder);
+  /* Never shear a letter: an overflowing placeholder ellipsises. */
+  text-overflow: ellipsis;
+}
+
+input:disabled, textarea:disabled, select:disabled {
+  background-color: var(--st-surface);
+  color: var(--st-muted);
+  cursor: not-allowed;
+}
+
+input[type="checkbox"], input[type="radio"] {
+  width: var(--st-space-base);
+  min-height: 0;
+  height: var(--st-space-base);
+  padding: 0;
+  accent-color: var(--st-accent);
+  cursor: pointer;
+}
+input[type="radio"] { border-radius: var(--st-radius-circle); }
+
+input[type="range"] { padding: 0; border: 0; accent-color: var(--st-accent); }
+input[type="file"] { padding: var(--st-space-s); }
+
+select {
+  /* Chevron drawn in ink so it inherits the theme; no image request. */
+  appearance: none;
+  padding-right: var(--st-space-m);
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+                    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 22px) calc(50% + 2px), calc(100% - 16px) calc(50% + 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: var(--st-space-xs);
+  font-size: var(--st-text-xs);
+  font-weight: var(--st-weight-medium);
+  letter-spacing: var(--st-tracking-wide);
+}
+
+fieldset {
+  margin: 0 0 var(--st-space-base);
+  padding: var(--st-space-base);
+  border: var(--st-border-hairline) solid var(--st-border);
+  border-radius: var(--st-radius-surface);
+}
+legend { padding-inline: var(--st-space-xs); font-weight: var(--st-weight-medium); }
+
+/* ------------------------------------------------------------ disclosure */
+
+details {
+  border-bottom: var(--st-border-hairline) solid var(--st-divider);
+}
+summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--st-space-base);
+  min-height: var(--st-control-min-touch);
+  padding: var(--st-space-s) 0;
+  font-weight: var(--st-weight-medium);
+  cursor: pointer;
+  list-style: none;
+}
+summary::-webkit-details-marker { display: none; }
+summary::after {
+  content: "";
+  flex: none;
+  width: 8px; height: 8px;
+  border-right: var(--st-border-hairline) solid currentColor;
+  border-bottom: var(--st-border-hairline) solid currentColor;
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform var(--st-motion-base) var(--st-motion-ease);
+}
+details[open] summary::after { transform: rotate(-135deg) translate(-2px, -2px); }
+details > :not(summary) { padding-bottom: var(--st-space-base); }
+
+/* ----------------------------------------------------------------- focus */
+/* One focus treatment for the entire language. Never removed, never mango:
+ * a focus ring is not an accent, and it must survive on top of a mango
+ * button — where a mango ring would be invisible. */
+
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--st-ring);
+  outline-offset: 2px;
+  border-radius: var(--st-radius-surface);
+}
+/* Pill controls get a pill-shaped ring rather than a rectangle around them. */
+button:focus-visible,
+[type="button"]:focus-visible,
+[type="submit"]:focus-visible { border-radius: var(--st-radius-pill); }
+
+::selection { background: var(--st-accent); color: var(--st-accent-foreground); }
+
+/* ---------------------------------------------------------------- misc */
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--st-border-control);
+  border-radius: var(--st-radius-pill);
+}
+
+[hidden] { display: none !important; }
+
+/* Screen-reader-only, and the skip link that uses it. */
+.st-sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.st-skip-link {
+  position: absolute;
+  top: var(--st-space-s);
+  left: var(--st-space-s);
+  z-index: var(--st-z-toast);
+  padding: var(--st-space-s) var(--st-space-base);
+  background: var(--st-accent);
+  color: var(--st-accent-foreground);
+  border-radius: var(--st-radius-pill);
+  transform: translateY(-200%);
+  transition: transform var(--st-motion-base) var(--st-motion-ease);
+}
+.st-skip-link:focus-visible { transform: translateY(0); }
+
+/* ------------------------------------------------------- reduced motion */
+/* Not a courtesy. Motion in this language is functional only, so removing it
+ * costs nothing and honouring the preference is unconditional. */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --------------------------------------------------------------- print */
+
+@media print {
+  body { background: #fff; color: #000; }
+  a { text-decoration: underline; }
+  button, [type="button"], .st-no-print { display: none !important; }
+}
+
+
+/* Structure — component layer.
+ *
+ * Framework-free component classes, prefixed `st-`. Usable from plain HTML,
+ * Webflow, Rails, Django, PHP, Vue, Svelte — anything that can set a class.
+ * The React package in /react renders exactly these class names, so the two
+ * surfaces can never drift: there is one implementation, not two.
+ *
+ * Every value resolves to a token. No literal colours or sizes below.
+ * structure-definitions — this file DEFINES the vocabulary; view budgets do not apply.
+ */
+
+/* ======================================================================
+ * LAYOUT
+ * ==================================================================== */
+
+/* The reading column. 950px measured off the live site. */
+.st-container {
+  width: 100%;
+  max-width: var(--st-layout-measure);
+  margin-inline: auto;
+  padding-inline: var(--st-layout-gutter);
+}
+.st-container--wide { max-width: var(--st-layout-frame); padding-inline: var(--st-layout-gutter-wide); }
+.st-container--full { max-width: none; }
+
+/* Vertical section rhythm — the single biggest carrier of "considered". */
+.st-section { padding-block: var(--st-density-section-y, var(--st-space-2xl)); }
+.st-section--tight { padding-block: var(--st-space-m); }
+.st-section--loose { padding-block: var(--st-space-section); }
+
+/* Stack: one-direction flow with a single gap. The workhorse. */
+.st-stack { display: flex; flex-direction: column; gap: var(--st-density-stack, var(--st-space-base)); }
+.st-stack--xs { gap: var(--st-space-xs); }
+.st-stack--s  { gap: var(--st-space-s); }
+.st-stack--m  { gap: var(--st-space-m); }
+.st-stack--l  { gap: var(--st-space-l); }
+
+/* Cluster: horizontal group that wraps instead of overflowing. */
+.st-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--st-space-s); }
+.st-cluster--between { justify-content: space-between; }
+.st-cluster--end { justify-content: flex-end; }
+.st-cluster--center { justify-content: center; }
+
+/* Grid: responsive without media queries — columns collapse on their own. */
+.st-grid {
+  display: grid;
+  gap: var(--st-space-base);
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+}
+.st-grid--2 { grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); }
+.st-grid--fixed-2 { grid-template-columns: 1fr 1fr; }
+.st-grid--fixed-3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 720px) {
+  .st-grid--fixed-2, .st-grid--fixed-3 { grid-template-columns: 1fr; }
+}
+
+.st-divider { height: 0; border: 0; border-top: var(--st-border-hairline) solid var(--st-divider); }
+.st-spacer { flex: 1 1 auto; }
+
+/* A designated horizontal scroller. The ONLY sanctioned way to overflow
+ * sideways — it is contained, so it can never widen the page. */
+.st-scroll-x { overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+.st-scroll-x::-webkit-scrollbar { height: 6px; }
+.st-no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.st-no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* ======================================================================
+ * TYPOGRAPHY
+ * ==================================================================== */
+
+/* The display face. Serif, weight 300, NEGATIVE leading. This is the single
+ * most recognisable thing in the language — a 108px headline set at 0.8
+ * line-height. It is for statements, never for UI. */
+.st-display {
+  font-family: var(--st-font-display);
+  font-weight: var(--st-weight-light);
+  font-size: var(--st-text-4xl);
+  line-height: var(--st-leading-4xl);
+  letter-spacing: var(--st-tracking-normal);
+  text-wrap: balance;
+}
+.st-display--sm { font-size: var(--st-text-3xl); line-height: var(--st-leading-3xl); }
+.st-display--xs { font-size: var(--st-text-2xl); line-height: var(--st-leading-2xl); }
+
+/* Display sizes are set for a wide viewport; they must come down on a phone
+ * or a two-word headline eats the screen. */
+@media (max-width: 900px) {
+  .st-display    { font-size: var(--st-text-3xl); line-height: var(--st-leading-3xl); }
+  .st-display--sm { font-size: var(--st-text-2xl); line-height: var(--st-leading-2xl); }
+}
+@media (max-width: 560px) {
+  .st-display    { font-size: var(--st-text-2xl); line-height: var(--st-leading-2xl); }
+  .st-display--sm,
+  .st-display--xs { font-size: var(--st-text-xl); line-height: var(--st-leading-xl); }
+}
+
+.st-eyebrow {
+  font-size: var(--st-text-xs);
+  font-weight: var(--st-weight-medium);
+  letter-spacing: var(--st-tracking-wider);
+  text-transform: uppercase;
+  color: var(--st-muted);
+}
+
+.st-lead { font-size: var(--st-text-md); line-height: var(--st-leading-md); color: var(--st-muted); max-width: 60ch; }
+.st-muted { color: var(--st-muted); }
+.st-caption { font-size: var(--st-text-xs); color: var(--st-muted); }
+.st-numeric { font-variant-numeric: tabular-nums; }
+.st-truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.st-clamp-2, .st-clamp-3 {
+  display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;
+}
+.st-clamp-2 { -webkit-line-clamp: 2; line-clamp: 2; }
+.st-clamp-3 { -webkit-line-clamp: 3; line-clamp: 3; }
+
+/* ======================================================================
+ * BUTTONS
+ * Measured: 44px tall, 24px padding, pill radius, weight 500, 0.2s ease.
+ * ==================================================================== */
+
+.st-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--st-space-s);
+  min-height: var(--st-density-control-h, var(--st-control-height));
+  /* Never below the 44px touch target, even in compact density. */
+  min-width: var(--st-control-min-touch);
+  padding-inline: var(--st-density-control-px, var(--st-control-padding-x));
+  font-family: var(--st-font-sans);
+  font-size: var(--st-text-sm);
+  font-weight: var(--st-weight-medium);
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  border: var(--st-border-accent) solid transparent;
+  border-radius: var(--st-radius-pill);
+  cursor: pointer;
+  transition:
+    background-color var(--st-motion-base) var(--st-motion-ease),
+    border-color var(--st-motion-base) var(--st-motion-ease),
+    color var(--st-motion-base) var(--st-motion-ease);
+}
+
+/* THE accent. One per view — the linter counts these. */
+.st-btn--accent { background: var(--st-accent); color: var(--st-accent-foreground); }
+.st-btn--accent:hover:not(:disabled) { background: var(--st-accent-hover); }
+
+/* Secondary. The 2px mango outline measured on the live site. */
+.st-btn--outline { background: transparent; color: var(--st-foreground); border-color: var(--st-accent); }
+.st-btn--outline:hover:not(:disabled) { background: var(--st-accent); }
+
+/* Tertiary. No chrome until hovered. */
+.st-btn--ghost { background: transparent; color: var(--st-foreground); }
+.st-btn--ghost:hover:not(:disabled) { background: var(--st-surface); }
+
+/* Ink-filled, for a dark counterweight (the site's footer CTA). */
+.st-btn--solid { background: var(--st-foreground); color: var(--st-background); }
+.st-btn--solid:hover:not(:disabled) { opacity: 0.88; }
+
+/* Destructive. Ink text on poppy would fail, so poppy carries white here and
+ * the pairing is checked: #ea4832 vs #fffdf8 is 3.78:1 — large-text only, so
+ * destructive buttons keep weight 500 at 14.4px or above. */
+.st-btn--danger { background: var(--st-danger); color: var(--st-background); }
+.st-btn--danger:hover:not(:disabled) { opacity: 0.9; }
+
+.st-btn--sm { min-height: var(--st-control-height-sm); padding-inline: var(--st-space-base); font-size: var(--st-text-xs); }
+.st-btn--lg { min-height: var(--st-control-height-lg); padding-inline: var(--st-space-m); font-size: var(--st-text-base); }
+.st-btn--block { display: flex; width: 100%; }
+
+.st-btn:disabled, .st-btn[aria-disabled="true"] {
+  background: var(--st-disabled);
+  border-color: transparent;
+  color: var(--st-background);
+  cursor: not-allowed;
+}
+
+.st-btn--icon { padding-inline: 0; width: var(--st-density-control-h, var(--st-control-height)); }
+.st-btn--icon.st-btn--sm { width: var(--st-control-height-sm); }
+
+/* Circular floating action — the forest scroll-to-top on the live site. */
+.st-fab {
+  position: fixed;
+  right: var(--st-space-base);
+  bottom: var(--st-space-base);
+  z-index: var(--st-z-sticky);
+  display: grid;
+  place-items: center;
+  width: var(--st-control-height);
+  height: var(--st-control-height);
+  background: var(--st-success);
+  color: var(--st-background);
+  border: 0;
+  border-radius: var(--st-radius-circle);
+  cursor: pointer;
+}
+
+.st-btn-group { display: inline-flex; gap: var(--st-space-s); flex-wrap: wrap; }
+
+/* A loading button reserves its own width so the layout cannot jump. */
+.st-btn[data-loading="true"] { color: transparent; position: relative; pointer-events: none; }
+.st-btn[data-loading="true"]::after {
+  content: "";
+  position: absolute;
+  width: 1em; height: 1em;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: var(--st-radius-circle);
+  color: var(--st-accent-foreground);
+  animation: st-spin 600ms linear infinite;
+}
+@keyframes st-spin { to { transform: rotate(360deg); } }
+
+/* ======================================================================
+ * FORMS
+ * ==================================================================== */
+
+.st-field { display: flex; flex-direction: column; gap: var(--st-space-xs); }
+.st-field__label { font-size: var(--st-text-xs); font-weight: var(--st-weight-medium); letter-spacing: var(--st-tracking-wide); }
+/* The asterisk is never the only signal — it pairs with the word "required"
+ * for screen readers via aria-required on the control itself. */
+.st-field__label[data-required]::after { content: " *"; color: var(--st-danger); }
+.st-field__hint { font-size: var(--st-text-xs); color: var(--st-muted); }
+.st-field__error { font-size: var(--st-text-xs); color: var(--st-danger); display: flex; gap: var(--st-space-xs); align-items: center; }
+.st-field[data-invalid="true"] .st-input,
+.st-input[aria-invalid="true"] { border-color: var(--st-danger); }
+
+.st-input {
+  width: 100%;
+  min-height: var(--st-density-control-h, var(--st-control-height));
+  padding: var(--st-space-s) var(--st-space-base);
+  font-family: var(--st-font-sans);
+  font-size: var(--st-text-sm);
+  font-weight: var(--st-weight-light);
+  color: var(--st-foreground);
+  background: var(--st-background);
+  border: var(--st-border-hairline) solid var(--st-border-control);
+  border-radius: var(--st-radius-surface);
+  transition: border-color var(--st-motion-base) var(--st-motion-ease);
+}
+.st-input:hover:not(:disabled) { border-color: var(--st-foreground); }
+
+/* Search field with a leading glyph slot. */
+.st-search { position: relative; }
+.st-search .st-input { padding-left: var(--st-space-m); }
+.st-search__icon { position: absolute; left: var(--st-space-s); top: 50%; transform: translateY(-50%); color: var(--st-muted); pointer-events: none; }
+
+/* Switch. Ink track when off, mango when on — the accent means "active". */
+.st-switch { display: inline-flex; align-items: center; gap: var(--st-space-s); cursor: pointer; }
+.st-switch__control {
+  position: relative;
+  flex: none;
+  width: 44px; height: 24px;
+  background: var(--st-border-control);
+  border-radius: var(--st-radius-pill);
+  transition: background-color var(--st-motion-base) var(--st-motion-ease);
+}
+.st-switch__control::after {
+  content: "";
+  position: absolute;
+  top: 2px; left: 2px;
+  width: 20px; height: 20px;
+  background: var(--st-background);
+  border-radius: var(--st-radius-circle);
+  transition: transform var(--st-motion-base) var(--st-motion-ease);
+}
+.st-switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+.st-switch input:checked + .st-switch__control { background: var(--st-accent); }
+.st-switch input:checked + .st-switch__control::after { transform: translateX(20px); }
+.st-switch input:focus-visible + .st-switch__control { outline: 2px solid var(--st-ring); outline-offset: 2px; }
+
+/* Choice card — a radio or checkbox with a whole tappable surface. Reduces
+ * cognitive load over a bare radio: the target is the statement, not a dot. */
+.st-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--st-space-s);
+  padding: var(--st-space-base);
+  background: var(--st-surface);
+  border: var(--st-border-accent) solid transparent;
+  border-radius: var(--st-radius-surface);
+  cursor: pointer;
+  transition: border-color var(--st-motion-base) var(--st-motion-ease);
+}
+.st-choice:hover { border-color: var(--st-border-control); }
+.st-choice[data-selected="true"] { border-color: var(--st-accent); }
+.st-choice__title { font-weight: var(--st-weight-medium); }
+.st-choice__desc { font-size: var(--st-text-xs); color: var(--st-muted); }
+
+/* Likert / scale row — the scorecard's core interaction. */
+.st-scale { display: flex; gap: var(--st-space-xs); }
+.st-scale__item {
+  flex: 1;
+  min-height: var(--st-control-min-touch);
+  padding: var(--st-space-s);
+  font-size: var(--st-text-sm);
+  background: var(--st-surface);
+  border: var(--st-border-accent) solid transparent;
+  border-radius: var(--st-radius-surface);
+  cursor: pointer;
+  transition: border-color var(--st-motion-base) var(--st-motion-ease);
+}
+.st-scale__item[aria-pressed="true"], .st-scale__item[data-selected="true"] { border-color: var(--st-accent); }
+
+/* ======================================================================
+ * SURFACES
+ * ==================================================================== */
+
+/* A card is sand on paper. That colour step IS the elevation — there is no
+ * shadow, and adding one is the single most common way to break the look. */
+.st-card {
+  padding: var(--st-space-base);
+  background: var(--st-surface);
+  border-radius: var(--st-radius-surface);
+}
+.st-card--outline { background: transparent; border: var(--st-border-hairline) solid var(--st-border); }
+.st-card--accent { background: var(--st-accent); color: var(--st-accent-foreground); }
+.st-card--flush { padding: 0; overflow: hidden; }
+.st-card--interactive { cursor: pointer; transition: background-color var(--st-motion-base) var(--st-motion-ease); }
+.st-card--interactive:hover { background: var(--st-raised); outline: var(--st-border-hairline) solid var(--st-border-control); }
+
+.st-card__header { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--st-space-base); margin-bottom: var(--st-space-s); }
+.st-card__title { font-size: var(--st-text-md); font-weight: var(--st-weight-medium); }
+.st-card__footer { margin-top: var(--st-space-base); padding-top: var(--st-space-s); border-top: var(--st-border-hairline) solid var(--st-divider); }
+
+/* List row — the sand-filled rows measured on the live services list. */
+.st-row {
+  display: flex;
+  align-items: center;
+  gap: var(--st-space-base);
+  min-height: var(--st-control-min-touch);
+  padding: var(--st-space-base);
+  background: var(--st-surface);
+  border-radius: var(--st-radius-surface);
+}
+.st-row--plain { background: transparent; border-bottom: var(--st-border-hairline) solid var(--st-divider); border-radius: 0; }
+
+/* Stat tile. */
+.st-stat { display: flex; flex-direction: column; gap: var(--st-space-xs); }
+.st-stat__value { font-family: var(--st-font-display); font-size: var(--st-text-2xl); line-height: var(--st-leading-2xl); font-weight: var(--st-weight-light); font-variant-numeric: tabular-nums; }
+.st-stat__label { font-size: var(--st-text-xs); color: var(--st-muted); letter-spacing: var(--st-tracking-wide); }
+.st-stat__delta { font-size: var(--st-text-xs); font-weight: var(--st-weight-medium); }
+.st-stat__delta[data-dir="up"] { color: var(--st-success); }
+.st-stat__delta[data-dir="down"] { color: var(--st-danger); }
+
+/* ======================================================================
+ * MARKS — badge, chip, tag, dot, avatar
+ * Marks are never section backgrounds. They are small by definition.
+ * ==================================================================== */
+
+.st-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--st-space-xs);
+  padding: 2px var(--st-space-s);
+  font-size: var(--st-text-xs);
+  font-weight: var(--st-weight-medium);
+  line-height: 1.6;
+  background: var(--st-surface);
+  color: var(--st-foreground);
+  border-radius: var(--st-radius-pill);
+  white-space: nowrap;
+}
+.st-badge--accent  { background: var(--st-accent); color: var(--st-accent-foreground); }
+.st-badge--info    { background: var(--st-info);    color: var(--st-background); }
+.st-badge--success { background: var(--st-success); color: var(--st-background); }
+.st-badge--danger  { background: var(--st-danger);  color: var(--st-background); }
+.st-badge--outline { background: transparent; border: var(--st-border-hairline) solid var(--st-border-control); }
+
+/* Status dot. Colour alone never carries meaning — the dot always sits beside
+ * a text label, which is why this class has no standalone variant. */
+.st-dot { display: inline-block; width: 8px; height: 8px; border-radius: var(--st-radius-circle); background: currentColor; flex: none; }
+.st-dot--info { color: var(--st-info); }
+.st-dot--success { color: var(--st-success); }
+.st-dot--danger { color: var(--st-danger); }
+.st-dot--warning { color: var(--st-warning); }
+.st-dot--muted { color: var(--st-muted); }
+
+/* Removable chip. */
+.st-chip {
+  display: inline-flex; align-items: center; gap: var(--st-space-xs);
+  min-height: var(--st-control-height-sm);
+  padding: 0 var(--st-space-s) 0 var(--st-space-base);
+  font-size: var(--st-text-xs);
+  background: var(--st-surface);
+  border-radius: var(--st-radius-pill);
+}
+.st-chip__remove {
+  display: grid; place-items: center;
+  width: 20px; height: 20px; padding: 0;
+  min-height: 0; min-width: 0;
+  background: transparent; border: 0; border-radius: var(--st-radius-circle);
+  color: var(--st-muted); cursor: pointer;
+}
+.st-chip__remove:hover { background: var(--st-border); color: var(--st-foreground); }
+
+.st-avatar {
+  display: grid; place-items: center; flex: none;
+  width: var(--st-control-height-sm); height: var(--st-control-height-sm);
+  font-size: var(--st-text-xs); font-weight: var(--st-weight-medium);
+  background: var(--st-accent); color: var(--st-accent-foreground);
+  border-radius: var(--st-radius-circle);
+  overflow: hidden;
+}
+.st-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.st-avatar--lg { width: var(--st-control-height-lg); height: var(--st-control-height-lg); font-size: var(--st-text-sm); }
+.st-avatar-group { display: flex; }
+.st-avatar-group .st-avatar + .st-avatar { margin-left: -10px; outline: 2px solid var(--st-background); }
+
+/* ======================================================================
+ * PROGRESS
+ * ==================================================================== */
+
+.st-progress { height: 6px; background: var(--st-border); border-radius: var(--st-radius-pill); overflow: hidden; }
+.st-progress__bar { height: 100%; background: var(--st-accent); border-radius: inherit; transition: width var(--st-motion-slow) var(--st-motion-ease); }
+
+.st-meter { display: flex; flex-direction: column; gap: var(--st-space-xs); }
+.st-meter__head { display: flex; justify-content: space-between; font-size: var(--st-text-xs); }
+
+/* Skeleton. A calm opacity pulse — never a sweeping shimmer, which reads as
+ * decorative motion and violates the motion rule. */
+.st-skeleton {
+  background: var(--st-surface);
+  border-radius: var(--st-radius-surface);
+  animation: st-pulse 1.6s ease-in-out infinite;
+}
+@keyframes st-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+
+.st-spinner {
+  width: 1em; height: 1em;
+  border: 2px solid var(--st-border-control);
+  border-top-color: var(--st-foreground);
+  border-radius: var(--st-radius-circle);
+  animation: st-spin 600ms linear infinite;
+}
+
+/* ======================================================================
+ * NAVIGATION
+ * ==================================================================== */
+
+.st-navbar {
+  position: sticky; top: 0; z-index: var(--st-z-sticky);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--st-space-base);
+  min-height: var(--st-control-height-lg);
+  padding: var(--st-space-s) var(--st-layout-gutter);
+  background: var(--st-background);
+  border-bottom: var(--st-border-hairline) solid var(--st-divider);
+}
+.st-navbar__links { display: flex; align-items: center; gap: var(--st-space-base); }
+.st-navbar__link {
+  font-size: var(--st-text-sm);
+  text-decoration: none;
+  color: var(--st-muted);
+  transition: color var(--st-motion-base) var(--st-motion-ease);
+}
+.st-navbar__link:hover, .st-navbar__link[aria-current] { color: var(--st-foreground); }
+
+/* Tabs. The active tab is marked by an ink rule, not by the accent — the
+ * accent is reserved for the next action, and a tab is a location. */
+.st-tabs { display: flex; gap: var(--st-space-base); border-bottom: var(--st-border-hairline) solid var(--st-divider); }
+.st-tabs__tab {
+  min-height: var(--st-control-min-touch);
+  padding: var(--st-space-s) 0;
+  background: none; border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  font-size: var(--st-text-sm);
+  color: var(--st-muted);
+  cursor: pointer;
+  transition: color var(--st-motion-base) var(--st-motion-ease), border-color var(--st-motion-base) var(--st-motion-ease);
+}
+.st-tabs__tab[aria-selected="true"] { color: var(--st-foreground); border-bottom-color: var(--st-foreground); }
+
+/* Segmented control — a pill track with a sliding sand thumb. */
+.st-segmented { display: inline-flex; padding: 3px; gap: 2px; background: var(--st-surface); border-radius: var(--st-radius-pill); }
+.st-segmented__item {
+  min-height: var(--st-control-height-sm);
+  padding-inline: var(--st-space-base);
+  background: transparent; border: 0;
+  border-radius: var(--st-radius-pill);
+  font-size: var(--st-text-xs); color: var(--st-muted);
+  cursor: pointer;
+  transition: background-color var(--st-motion-base) var(--st-motion-ease), color var(--st-motion-base) var(--st-motion-ease);
+}
+.st-segmented__item[aria-pressed="true"] { background: var(--st-background); color: var(--st-foreground); }
+
+.st-breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: var(--st-space-xs); font-size: var(--st-text-xs); color: var(--st-muted); }
+.st-breadcrumb__sep { opacity: 0.6; }
+
+.st-pagination { display: flex; align-items: center; gap: var(--st-space-xs); }
+
+/* Stepper — progressive disclosure made visible. */
+.st-stepper { display: flex; align-items: center; gap: var(--st-space-s); }
+.st-stepper__step { display: flex; align-items: center; gap: var(--st-space-xs); font-size: var(--st-text-xs); color: var(--st-muted); }
+.st-stepper__dot {
+  display: grid; place-items: center; flex: none;
+  width: 24px; height: 24px;
+  font-size: var(--st-text-2xs);
+  background: var(--st-surface);
+  border-radius: var(--st-radius-circle);
+}
+.st-stepper__step[data-state="current"] { color: var(--st-foreground); }
+.st-stepper__step[data-state="current"] .st-stepper__dot { background: var(--st-accent); color: var(--st-accent-foreground); }
+.st-stepper__step[data-state="done"] .st-stepper__dot { background: var(--st-success); color: var(--st-background); }
+.st-stepper__line { flex: 1; height: 1px; background: var(--st-divider); min-width: var(--st-space-base); }
+
+.st-sidebar {
+  display: flex; flex-direction: column; gap: var(--st-space-xs);
+  width: 240px; padding: var(--st-space-base);
+  background: var(--st-surface);
+  border-radius: var(--st-radius-surface);
+}
+.st-sidebar__link {
+  display: flex; align-items: center; gap: var(--st-space-s);
+  min-height: var(--st-control-height-sm);
+  padding: var(--st-space-xs) var(--st-space-s);
+  font-size: var(--st-text-sm); text-decoration: none;
+  color: var(--st-muted);
+  border-radius: var(--st-radius-surface);
+  transition: background-color var(--st-motion-base) var(--st-motion-ease), color var(--st-motion-base) var(--st-motion-ease);
+}
+.st-sidebar__link:hover { background: var(--st-background); color: var(--st-foreground); }
+.st-sidebar__link[aria-current="page"] { background: var(--st-background); color: var(--st-foreground); font-weight: var(--st-weight-medium); }
+
+/* ======================================================================
+ * OVERLAYS — the ONLY place a shadow is permitted
+ * ==================================================================== */
+
+.st-overlay {
+  position: fixed; inset: 0; z-index: var(--st-z-overlay);
+  background: rgb(25 24 23 / 0.4);
+  animation: st-fade var(--st-motion-base) var(--st-motion-ease);
+}
+@keyframes st-fade { from { opacity: 0; } to { opacity: 1; } }
+
+.st-modal {
+  position: fixed; z-index: var(--st-z-modal);
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: min(540px, calc(100vw - var(--st-space-m)));
+  max-height: calc(100svh - var(--st-space-m));
+  overflow-y: auto;
+  padding: var(--st-space-m);
+  background: var(--st-background);
+  border-radius: var(--st-radius-surface);
+  /* Detached from the page, so the escape hatch applies. Counted by the
+   * cognitive-load linter every time it is used. */
+  box-shadow: var(--st-elevation-escape-hatch);
+}
+.st-modal__title { font-size: var(--st-text-md); font-weight: var(--st-weight-medium); margin-bottom: var(--st-space-s); }
+.st-modal__actions { display: flex; justify-content: flex-end; gap: var(--st-space-s); margin-top: var(--st-space-m); }
+
+.st-drawer {
+  position: fixed; z-index: var(--st-z-modal);
+  top: 0; right: 0; bottom: 0;
+  width: min(420px, 100vw);
+  overflow-y: auto;
+  padding: var(--st-space-m);
+  background: var(--st-background);
+  box-shadow: var(--st-elevation-escape-hatch);
+}
+/* Bottom sheet on small screens — a side drawer on a phone is a mis-fit. */
+@media (max-width: 560px) {
+  .st-drawer { top: auto; left: 0; width: 100%; max-height: 85svh; border-radius: var(--st-radius-surface) var(--st-radius-surface) 0 0; }
+}
+
+.st-popover {
+  z-index: var(--st-z-overlay);
+  min-width: 200px;
+  padding: var(--st-space-s);
+  background: var(--st-background);
+  border: var(--st-border-hairline) solid var(--st-border);
+  border-radius: var(--st-radius-surface);
+  box-shadow: var(--st-elevation-escape-hatch);
+}
+
+.st-menu { display: flex; flex-direction: column; gap: 2px; }
+.st-menu__item {
+  display: flex; align-items: center; gap: var(--st-space-s);
+  min-height: var(--st-control-height-sm);
+  padding: var(--st-space-xs) var(--st-space-s);
+  width: 100%;
+  font-size: var(--st-text-sm); text-align: left;
+  background: transparent; border: 0; border-radius: var(--st-radius-surface);
+  cursor: pointer;
+}
+.st-menu__item:hover { background: var(--st-surface); }
+.st-menu__item[data-danger] { color: var(--st-danger); }
+
+.st-tooltip {
+  z-index: var(--st-z-overlay);
+  padding: var(--st-space-xs) var(--st-space-s);
+  font-size: var(--st-text-xs);
+  background: var(--st-foreground);
+  color: var(--st-background);
+  border-radius: calc(var(--st-radius-surface) / 2);
+  max-width: 240px;
+}
+
+.st-toast {
+  display: flex; align-items: flex-start; gap: var(--st-space-s);
+  min-width: 280px; max-width: 400px;
+  padding: var(--st-space-base);
+  background: var(--st-background);
+  border: var(--st-border-hairline) solid var(--st-border);
+  border-radius: var(--st-radius-surface);
+  box-shadow: var(--st-elevation-escape-hatch);
+}
+.st-toast-region { position: fixed; z-index: var(--st-z-toast); right: var(--st-space-base); bottom: var(--st-space-base); display: flex; flex-direction: column; gap: var(--st-space-s); }
+
+/* Inline messages. Flat — a banner is part of the page, not floating above it.
+ * The left rule carries the semantic colour so the fill can stay neutral. */
+.st-alert {
+  display: flex; gap: var(--st-space-s);
+  padding: var(--st-space-base);
+  background: var(--st-surface);
+  border-left: 3px solid var(--st-border-control);
+  border-radius: var(--st-radius-surface);
+  font-size: var(--st-text-sm);
+}
+.st-alert--info    { border-left-color: var(--st-info); }
+.st-alert--success { border-left-color: var(--st-success); }
+.st-alert--warning { border-left-color: var(--st-warning); }
+.st-alert--danger  { border-left-color: var(--st-danger); }
+
+/* ======================================================================
+ * DATA
+ * ==================================================================== */
+
+.st-table-wrap { overflow-x: auto; border-radius: var(--st-radius-surface); }
+.st-table { width: 100%; border-collapse: collapse; font-size: var(--st-text-sm); }
+.st-table th {
+  position: sticky; top: 0;
+  padding: var(--st-space-s) var(--st-space-base);
+  font-weight: var(--st-weight-medium);
+  letter-spacing: var(--st-tracking-wide);
+  text-align: left;
+  background: var(--st-surface);
+  border-bottom: var(--st-border-hairline) solid var(--st-border-control);
+  white-space: nowrap;
+}
+.st-table td { padding: var(--st-space-s) var(--st-space-base); border-bottom: var(--st-border-hairline) solid var(--st-divider); }
+.st-table tbody tr:hover { background: var(--st-surface); }
+.st-table [data-numeric] { text-align: right; font-variant-numeric: tabular-nums; }
+
+.st-empty { display: flex; flex-direction: column; align-items: center; gap: var(--st-space-s); padding: var(--st-space-xl) var(--st-space-base); text-align: center; color: var(--st-muted); }
+.st-empty__title { font-size: var(--st-text-md); color: var(--st-foreground); font-weight: var(--st-weight-medium); }
+
+.st-kv { display: grid; grid-template-columns: auto 1fr; gap: var(--st-space-s) var(--st-space-base); font-size: var(--st-text-sm); }
+.st-kv dt { color: var(--st-muted); }
+.st-kv dd { margin: 0; }
+
+.st-timeline { display: flex; flex-direction: column; gap: var(--st-space-base); }
+.st-timeline__item { display: grid; grid-template-columns: auto 1fr; gap: var(--st-space-base); position: relative; }
+.st-timeline__marker { width: 10px; height: 10px; margin-top: 6px; background: var(--st-accent); border-radius: var(--st-radius-circle); }
+
+/* Chart marks. THE STROKE RULE: every fill carries a boundary, because mango
+ * at 1.43:1 and sky at 1.99:1 on paper are not identifiable on their own. */
+.st-chart-mark { stroke: var(--st-chart-stroke); stroke-width: 1px; }
+.st-chart-1 { fill: var(--st-chart-1); color: var(--st-chart-1); }
+.st-chart-2 { fill: var(--st-chart-2); color: var(--st-chart-2); }
+.st-chart-3 { fill: var(--st-chart-3); color: var(--st-chart-3); }
+.st-chart-4 { fill: var(--st-chart-4); color: var(--st-chart-4); }
+.st-chart-5 { fill: var(--st-chart-5); color: var(--st-chart-5); }
+.st-chart-6 { fill: var(--st-chart-6); color: var(--st-chart-6); }
+
+/* ======================================================================
+ * CHAT / AI SURFACES
+ * ==================================================================== */
+
+.st-chat { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+.st-chat__log { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: var(--st-space-base); padding: var(--st-space-base); }
+
+.st-msg { display: flex; gap: var(--st-space-s); max-width: 100%; }
+.st-msg--user { flex-direction: row-reverse; }
+.st-msg__body {
+  max-width: 78%;
+  padding: var(--st-space-s) var(--st-space-base);
+  border-radius: var(--st-radius-surface);
+  font-size: var(--st-text-sm);
+  line-height: var(--st-leading-sm);
+  /* A long token with no spaces (a URL, a hash) must not widen the page. */
+  overflow-wrap: anywhere;
+}
+/* The user speaks in sand; the assistant speaks on paper. Neither is mango —
+ * an accent-coloured bubble would spend the view's one accent on every
+ * single message, which is exactly the mistake the budget exists to prevent. */
+.st-msg--user .st-msg__body { background: var(--st-surface); }
+.st-msg--assistant .st-msg__body { background: transparent; padding-inline: 0; max-width: 100%; }
+.st-msg--system .st-msg__body { background: transparent; font-size: var(--st-text-xs); color: var(--st-muted); text-align: center; max-width: 100%; }
+.st-msg__meta { font-size: var(--st-text-2xs); color: var(--st-muted); margin-top: var(--st-space-xs); }
+
+/* Actions appear on hover, but stay permanently visible on touch, where
+ * there is no hover and a hidden control is simply an unreachable one. */
+.st-msg__actions { display: flex; gap: var(--st-space-xs); opacity: 0; transition: opacity var(--st-motion-base) var(--st-motion-ease); }
+.st-msg:hover .st-msg__actions, .st-msg:focus-within .st-msg__actions { opacity: 1; }
+@media (hover: none) { .st-msg__actions { opacity: 1; } }
+
+.st-typing { display: inline-flex; gap: 4px; align-items: center; padding: var(--st-space-s) 0; }
+.st-typing span { width: 6px; height: 6px; background: var(--st-muted); border-radius: var(--st-radius-circle); animation: st-typing 1.2s ease-in-out infinite; }
+.st-typing span:nth-child(2) { animation-delay: 0.15s; }
+.st-typing span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes st-typing { 0%, 80%, 100% { opacity: 0.3; } 40% { opacity: 1; } }
+
+/* Streaming caret — the only continuously animating element in the language,
+ * permitted because it communicates live state rather than decorating. */
+.st-stream::after { content: ""; display: inline-block; width: 2px; height: 1em; margin-left: 2px; background: currentColor; vertical-align: text-bottom; animation: st-caret 1s steps(2) infinite; }
+@keyframes st-caret { 50% { opacity: 0; } }
+
+.st-composer {
+  display: flex; align-items: flex-end; gap: var(--st-space-s);
+  padding: var(--st-space-s);
+  background: var(--st-background);
+  border: var(--st-border-hairline) solid var(--st-border-control);
+  border-radius: var(--st-radius-surface);
+}
+.st-composer:focus-within { border-color: var(--st-foreground); }
+.st-composer__input {
+  flex: 1;
+  min-height: var(--st-control-height-sm);
+  max-height: 200px;
+  padding: var(--st-space-xs) var(--st-space-s);
+  font-family: inherit; font-size: var(--st-text-sm); font-weight: var(--st-weight-light);
+  color: var(--st-foreground);
+  background: transparent; border: 0; outline: none; resize: none;
+}
+
+/* Tool call / reasoning — collapsed by default. Progressive disclosure is the
+ * default state for machine detail, not an option the user has to discover. */
+.st-toolcall {
+  border: var(--st-border-hairline) solid var(--st-border);
+  border-radius: var(--st-radius-surface);
+  font-size: var(--st-text-xs);
+  overflow: hidden;
+}
+.st-toolcall__head { display: flex; align-items: center; gap: var(--st-space-s); padding: var(--st-space-s) var(--st-space-base); background: var(--st-surface); cursor: pointer; width: 100%; border: 0; text-align: left; min-height: var(--st-control-min-touch); }
+.st-toolcall__body { padding: var(--st-space-base); font-family: var(--st-font-mono); overflow-x: auto; }
+
+.st-citation {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 18px; height: 18px; padding-inline: 5px;
+  font-size: var(--st-text-2xs); vertical-align: super;
+  background: var(--st-surface); color: var(--st-muted);
+  border-radius: var(--st-radius-pill); text-decoration: none;
+}
+.st-citation:hover { background: var(--st-accent); color: var(--st-accent-foreground); }
+
+.st-prompts { display: flex; flex-wrap: wrap; gap: var(--st-space-s); }
+.st-prompts__item {
+  padding: var(--st-space-s) var(--st-space-base);
+  min-height: var(--st-control-min-touch);
+  font-size: var(--st-text-xs); text-align: left;
+  background: transparent;
+  border: var(--st-border-hairline) solid var(--st-border-control);
+  border-radius: var(--st-radius-pill);
+  cursor: pointer;
+  transition: background-color var(--st-motion-base) var(--st-motion-ease);
+}
+.st-prompts__item:hover { background: var(--st-surface); }
+
+/* ======================================================================
+ * MARKETING
+ * ==================================================================== */
+
+.st-hero { display: flex; flex-direction: column; gap: var(--st-space-base); padding-block: var(--st-space-section) var(--st-space-2xl); }
+.st-hero--center { align-items: center; text-align: center; }
+
+.st-section-header { display: flex; flex-direction: column; gap: var(--st-space-s); margin-bottom: var(--st-space-m); max-width: 60ch; }
+.st-section-header--center { align-items: center; text-align: center; margin-inline: auto; }
+
+.st-feature-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--st-space-l); align-items: center; }
+.st-feature-row--flip > :first-child { order: 2; }
+@media (max-width: 800px) { .st-feature-row { grid-template-columns: 1fr; } .st-feature-row--flip > :first-child { order: 0; } }
+
+.st-logo-wall { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--st-space-m); opacity: 0.7; }
+
+.st-quote { display: flex; flex-direction: column; gap: var(--st-space-base); }
+.st-quote__text { font-family: var(--st-font-display); font-size: var(--st-text-xl); line-height: var(--st-leading-xl); font-weight: var(--st-weight-light); }
+
+.st-cta-band { display: flex; flex-direction: column; align-items: center; gap: var(--st-space-base); padding: var(--st-space-xl) var(--st-space-base); text-align: center; background: var(--st-surface); border-radius: var(--st-radius-surface); }
+
+.st-price { display: flex; flex-direction: column; gap: var(--st-space-base); padding: var(--st-space-m); background: var(--st-surface); border: var(--st-border-accent) solid transparent; border-radius: var(--st-radius-surface); }
+.st-price[data-featured="true"] { border-color: var(--st-accent); }
+.st-price__amount { font-family: var(--st-font-display); font-size: var(--st-text-2xl); line-height: 1; font-weight: var(--st-weight-light); }
+
+/* ======================================================================
+ * REVEAL — the one sanctioned entrance animation
+ * ==================================================================== */
+
+.st-reveal { animation: st-reveal var(--st-motion-reveal) var(--st-motion-ease) both; }
+@keyframes st-reveal { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }

@@ -1,0 +1,23 @@
+/* Structure — the Kwapso design language.
+ *
+ * The one-line adoption path. Link or import this file and an app speaks
+ * Structure: tokens, the semantic-HTML reskin, and the component classes.
+ *
+ *   <link rel="stylesheet" href="structure.css">
+ *
+ * or, in a bundler:
+ *
+ *   import "@kwapso/structure/structure.css"
+ *
+ * Want only the variables, so you can map them onto your own components?
+ * Import dist/tokens.css alone — it has no opinions about markup.
+ *
+ * Fonts are NOT bundled. Saans and Serrif Condensed are licensed typefaces
+ * and this repo has no right to redistribute them. Self-host them in your
+ * app and the language picks them up; see ADOPTION.md. Without them you get
+ * the open fallback stack, which keeps the proportions and the feel.
+ */
+
+@import "./dist/tokens.css";
+@import "./css/base.css";
+@import "./css/components.css";

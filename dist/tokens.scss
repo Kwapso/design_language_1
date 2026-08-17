@@ -1,0 +1,44 @@
+// Structure — the Kwapso design language.
+// GENERATED FILE. Do not edit by hand: edit tokens/tokens.json and run
+// `npm run build:tokens`. Source of truth measured from https://kwapso.com.
+// 
+ 
+
+$st-color-ink: #191817;
+$st-color-paper: #fffdf8;
+$st-color-sand: #f7f2eb;
+$st-color-mango: #ffd066;
+$st-color-sky: #89bce5;
+$st-color-forest: #1d9159;
+$st-color-poppy: #ea4832;
+$st-color-grey: #bab8b4;
+$st-color-ink-10: rgba(25, 24, 23, 0.10);
+$st-color-ink-15: rgba(25, 24, 23, 0.15);
+$st-color-ink-30: rgba(25, 24, 23, 0.30);
+$st-color-ink-50: rgba(25, 24, 23, 0.50);
+$st-color-ink-65: rgba(25, 24, 23, 0.65);
+$st-color-mango-deep: #e8b244;
+$st-color-sky-deep: #6489a7;
+$st-space-0: 0;
+$st-space-xs: 5px;
+$st-space-s: 10px;
+$st-space-base: 20px;
+$st-space-m: 40px;
+$st-space-l: 60px;
+$st-space-xl: 80px;
+$st-space-2xl: 100px;
+$st-space-section: 150px;
+$st-radius-none: 0;
+$st-radius-surface: 10px;
+$st-radius-pill: 50px;
+$st-radius-circle: 50%;
+$st-motion-ease: cubic-bezier(0.645, 0.045, 0.355, 1);
+$st-motion-fast: 120ms;
+$st-motion-base: 200ms;
+$st-motion-slow: 400ms;
+$st-motion-reveal: 800ms;
+$st-motion-max-allowed: 400ms;
+$st-layout-measure: 950px;
+$st-layout-frame: 1920px;
+$st-layout-gutter: 20px;
+$st-layout-gutter-wide: 60px;

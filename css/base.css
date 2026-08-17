@@ -1,0 +1,378 @@
+/* Structure — base layer.
+ *
+ * THE RESKIN. This file styles plain semantic HTML, so an existing app can
+ * adopt the language without changing a single line of markup: link this
+ * file, and <h1>, <p>, <button>, <input>, <table> already speak Structure.
+ *
+ * It defines no class names except the escape hatches at the bottom. Every
+ * value resolves to a token — there is not one literal colour or size below.
+ *
+ * Load order:  tokens.css  ->  base.css  ->  components.css
+ * structure-definitions — this file DEFINES the vocabulary; view budgets do not apply.
+ */
+
+/* ---------------------------------------------------------------- reset */
+/* Minimal, and only where a default actively fights the language. */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  /* No screen scrolls sideways. Designated scrollers opt in per component. */
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--st-background);
+  color: var(--st-foreground);
+  font-family: var(--st-font-sans);
+  font-size: var(--st-density-body, var(--st-text-sm));
+  font-weight: var(--st-weight-light);
+  line-height: var(--st-leading-sm);
+  /* Warm paper deserves proper rendering; the light weight needs it most. */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  min-height: 100svh;
+}
+
+/* A page with content that fits must not move. Sign-in, empty states and
+ * confirmations sit perfectly still — including the mobile rubber-band. */
+html, body { overscroll-behavior: none; }
+
+img, svg, video, canvas, picture { display: block; max-width: 100%; height: auto; }
+svg { fill: none; stroke: currentColor; }
+
+/* ------------------------------------------------------------- headings */
+/* Sans, weight 500, POSITIVE tracking. The positive tracking is measured and
+ * deliberate — it is the opposite of the tight-tracking default, and it is a
+ * large part of why the brand reads as calm rather than urgent. */
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: var(--st-font-sans);
+  font-weight: var(--st-weight-medium);
+  letter-spacing: var(--st-tracking-wide);
+  color: var(--st-foreground);
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--st-text-2xl);  line-height: var(--st-leading-2xl); }
+h2 { font-size: var(--st-text-xl);   line-height: var(--st-leading-xl); }
+h3 { font-size: var(--st-text-lg);   line-height: var(--st-leading-lg); }
+h4 { font-size: var(--st-text-md);   line-height: var(--st-leading-md); }
+h5 { font-size: var(--st-text-base); line-height: var(--st-leading-base); }
+h6 { font-size: var(--st-text-sm);   line-height: var(--st-leading-sm); }
+
+/* ------------------------------------------------------------ body copy */
+
+p, ul, ol, dl, blockquote, pre, figure, table { margin: 0 0 var(--st-space-base); }
+:where(p, ul, ol, dl, blockquote, pre, figure, table):last-child { margin-bottom: 0; }
+
+p { max-width: 68ch; text-wrap: pretty; }
+
+small { font-size: var(--st-text-xs); color: var(--st-muted); }
+strong, b { font-weight: var(--st-weight-medium); }
+em, i { font-style: italic; }
+
+/* Links carry an ink underline, never the accent colour. Mango means "next
+ * action" and a body link is not that — colouring links mango would spend the
+ * accent budget on prose. */
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--st-border-control);
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color var(--st-motion-base) var(--st-motion-ease);
+}
+a:hover { text-decoration-color: currentColor; }
+
+blockquote {
+  padding-left: var(--st-space-base);
+  border-left: var(--st-border-accent) solid var(--st-accent);
+  font-family: var(--st-font-display);
+  font-size: var(--st-text-md);
+  font-weight: var(--st-weight-light);
+}
+
+hr {
+  height: 0;
+  margin: var(--st-space-m) 0;
+  border: 0;
+  border-top: var(--st-border-hairline) solid var(--st-divider);
+}
+
+ul, ol { padding-left: var(--st-space-base); }
+li { margin-bottom: var(--st-space-xs); }
+li::marker { color: var(--st-muted); }
+
+code, kbd, samp, pre { font-family: var(--st-font-mono); font-size: 0.9em; }
+code {
+  padding: 0.1em 0.35em;
+  background: var(--st-surface);
+  border-radius: var(--st-radius-surface);
+}
+pre {
+  padding: var(--st-space-base);
+  overflow-x: auto;
+  background: var(--st-surface);
+  border-radius: var(--st-radius-surface);
+}
+pre code { padding: 0; background: none; }
+
+kbd {
+  padding: 0.15em 0.45em;
+  font-size: var(--st-text-xs);
+  background: var(--st-surface);
+  border: var(--st-border-hairline) solid var(--st-border-control);
+  border-radius: calc(var(--st-radius-surface) / 2);
+}
+
+/* ---------------------------------------------------------------- media */
+
+figure { margin-inline: 0; }
+figcaption {
+  margin-top: var(--st-space-s);
+  font-size: var(--st-text-xs);
+  color: var(--st-muted);
+}
+
+/* ---------------------------------------------------------------- table */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--st-text-sm);
+}
+caption {
+  margin-bottom: var(--st-space-s);
+  font-size: var(--st-text-xs);
+  color: var(--st-muted);
+  text-align: left;
+}
+th {
+  font-weight: var(--st-weight-medium);
+  letter-spacing: var(--st-tracking-wide);
+  text-align: left;
+}
+th, td {
+  padding: var(--st-space-s) var(--st-space-base);
+  border-bottom: var(--st-border-hairline) solid var(--st-divider);
+}
+thead th { border-bottom-color: var(--st-border-control); }
+tbody tr:last-child td { border-bottom: 0; }
+
+/* -------------------------------------------------------------- buttons */
+/* Bare <button> gets the accent treatment, because in unstyled markup a
+ * button is nearly always the primary action. Anything secondary should say
+ * so with .st-btn--outline / --ghost from components.css. */
+
+button, [type="button"], [type="submit"], [type="reset"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--st-space-s);
+  min-height: var(--st-density-control-h, var(--st-control-height));
+  padding-inline: var(--st-density-control-px, var(--st-control-padding-x));
+  font-family: inherit;
+  font-size: var(--st-text-sm);
+  font-weight: var(--st-weight-medium);
+  line-height: 1;
+  color: var(--st-accent-foreground);
+  background-color: var(--st-accent);
+  border: var(--st-border-accent) solid transparent;
+  border-radius: var(--st-radius-pill);
+  cursor: pointer;
+  transition:
+    background-color var(--st-motion-base) var(--st-motion-ease),
+    border-color var(--st-motion-base) var(--st-motion-ease),
+    color var(--st-motion-base) var(--st-motion-ease),
+    opacity var(--st-motion-base) var(--st-motion-ease);
+}
+button:hover, [type="button"]:hover, [type="submit"]:hover { background-color: var(--st-accent-hover); }
+button:disabled, [type="button"]:disabled, [type="submit"]:disabled {
+  background-color: var(--st-disabled);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* --------------------------------------------------------------- inputs */
+
+input, textarea, select {
+  width: 100%;
+  min-height: var(--st-density-control-h, var(--st-control-height));
+  padding: var(--st-space-s) var(--st-space-base);
+  font-family: inherit;
+  font-size: var(--st-text-sm);
+  font-weight: var(--st-weight-light);
+  color: var(--st-foreground);
+  background-color: var(--st-background);
+  /* border-control, NOT the decorative hairline: this edge is the only thing
+   * telling a user where the field is, so it must clear 3:1. */
+  border: var(--st-border-hairline) solid var(--st-border-control);
+  border-radius: var(--st-radius-surface);
+  transition:
+    border-color var(--st-motion-base) var(--st-motion-ease),
+    box-shadow var(--st-motion-base) var(--st-motion-ease);
+}
+textarea { min-height: calc(var(--st-control-height) * 2); resize: vertical; }
+
+input::placeholder, textarea::placeholder {
+  color: var(--st-placeholder);
+  /* Never shear a letter: an overflowing placeholder ellipsises. */
+  text-overflow: ellipsis;
+}
+
+input:disabled, textarea:disabled, select:disabled {
+  background-color: var(--st-surface);
+  color: var(--st-muted);
+  cursor: not-allowed;
+}
+
+input[type="checkbox"], input[type="radio"] {
+  width: var(--st-space-base);
+  min-height: 0;
+  height: var(--st-space-base);
+  padding: 0;
+  accent-color: var(--st-accent);
+  cursor: pointer;
+}
+input[type="radio"] { border-radius: var(--st-radius-circle); }
+
+input[type="range"] { padding: 0; border: 0; accent-color: var(--st-accent); }
+input[type="file"] { padding: var(--st-space-s); }
+
+select {
+  /* Chevron drawn in ink so it inherits the theme; no image request. */
+  appearance: none;
+  padding-right: var(--st-space-m);
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+                    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 22px) calc(50% + 2px), calc(100% - 16px) calc(50% + 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: var(--st-space-xs);
+  font-size: var(--st-text-xs);
+  font-weight: var(--st-weight-medium);
+  letter-spacing: var(--st-tracking-wide);
+}
+
+fieldset {
+  margin: 0 0 var(--st-space-base);
+  padding: var(--st-space-base);
+  border: var(--st-border-hairline) solid var(--st-border);
+  border-radius: var(--st-radius-surface);
+}
+legend { padding-inline: var(--st-space-xs); font-weight: var(--st-weight-medium); }
+
+/* ------------------------------------------------------------ disclosure */
+
+details {
+  border-bottom: var(--st-border-hairline) solid var(--st-divider);
+}
+summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--st-space-base);
+  min-height: var(--st-control-min-touch);
+  padding: var(--st-space-s) 0;
+  font-weight: var(--st-weight-medium);
+  cursor: pointer;
+  list-style: none;
+}
+summary::-webkit-details-marker { display: none; }
+summary::after {
+  content: "";
+  flex: none;
+  width: 8px; height: 8px;
+  border-right: var(--st-border-hairline) solid currentColor;
+  border-bottom: var(--st-border-hairline) solid currentColor;
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform var(--st-motion-base) var(--st-motion-ease);
+}
+details[open] summary::after { transform: rotate(-135deg) translate(-2px, -2px); }
+details > :not(summary) { padding-bottom: var(--st-space-base); }
+
+/* ----------------------------------------------------------------- focus */
+/* One focus treatment for the entire language. Never removed, never mango:
+ * a focus ring is not an accent, and it must survive on top of a mango
+ * button — where a mango ring would be invisible. */
+
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--st-ring);
+  outline-offset: 2px;
+  border-radius: var(--st-radius-surface);
+}
+/* Pill controls get a pill-shaped ring rather than a rectangle around them. */
+button:focus-visible,
+[type="button"]:focus-visible,
+[type="submit"]:focus-visible { border-radius: var(--st-radius-pill); }
+
+::selection { background: var(--st-accent); color: var(--st-accent-foreground); }
+
+/* ---------------------------------------------------------------- misc */
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--st-border-control);
+  border-radius: var(--st-radius-pill);
+}
+
+[hidden] { display: none !important; }
+
+/* Screen-reader-only, and the skip link that uses it. */
+.st-sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.st-skip-link {
+  position: absolute;
+  top: var(--st-space-s);
+  left: var(--st-space-s);
+  z-index: var(--st-z-toast);
+  padding: var(--st-space-s) var(--st-space-base);
+  background: var(--st-accent);
+  color: var(--st-accent-foreground);
+  border-radius: var(--st-radius-pill);
+  transform: translateY(-200%);
+  transition: transform var(--st-motion-base) var(--st-motion-ease);
+}
+.st-skip-link:focus-visible { transform: translateY(0); }
+
+/* ------------------------------------------------------- reduced motion */
+/* Not a courtesy. Motion in this language is functional only, so removing it
+ * costs nothing and honouring the preference is unconditional. */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --------------------------------------------------------------- print */
+
+@media print {
+  body { background: #fff; color: #000; }
+  a { text-decoration: underline; }
+  button, [type="button"], .st-no-print { display: none !important; }
+}

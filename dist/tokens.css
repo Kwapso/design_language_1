@@ -1,0 +1,204 @@
+/* Structure — the Kwapso design language.
+ * GENERATED FILE. Do not edit by hand: edit tokens/tokens.json and run
+ * `npm run build:tokens`. Source of truth measured from https://kwapso.com.
+ * 
+ */
+:root {
+  /* ---- brand primitives ---- */
+  --st-color-ink: #191817;
+  --st-color-paper: #fffdf8;
+  --st-color-sand: #f7f2eb;
+  --st-color-mango: #ffd066;
+  --st-color-sky: #89bce5;
+  --st-color-forest: #1d9159;
+  --st-color-poppy: #ea4832;
+  --st-color-grey: #bab8b4;
+  --st-color-ink-10: rgba(25, 24, 23, 0.10);
+  --st-color-ink-15: rgba(25, 24, 23, 0.15);
+  --st-color-ink-30: rgba(25, 24, 23, 0.30);
+  --st-color-ink-50: rgba(25, 24, 23, 0.50);
+  --st-color-ink-65: rgba(25, 24, 23, 0.65);
+  --st-color-mango-deep: #e8b244;
+  --st-color-sky-deep: #6489a7;
+
+  /* ---- semantic (light) ---- */
+  --st-background: #fffdf8;
+  --st-foreground: #191817;
+  --st-surface: #f7f2eb;
+  --st-surface-foreground: #191817;
+  --st-raised: #fffdf8;
+  --st-muted: rgba(25, 24, 23, 0.65);
+  --st-accent: #ffd066;
+  --st-accent-hover: #e8b244;
+  --st-accent-foreground: #191817;
+  --st-border: rgba(25, 24, 23, 0.15);
+  --st-border-control: rgba(25, 24, 23, 0.50);
+  --st-divider: rgba(25, 24, 23, 0.10);
+  --st-ring: rgba(25, 24, 23, 0.50);
+  --st-placeholder: rgba(25, 24, 23, 0.50);
+  --st-chart-stroke: rgba(25, 24, 23, 0.65);
+  --st-disabled: #bab8b4;
+  --st-info: #6489a7;
+  --st-success: #1d9159;
+  --st-danger: #ea4832;
+  --st-warning: #e8b244;
+
+  /* ---- chart series ---- */
+  --st-chart-1: #ffd066;
+  --st-chart-2: #89bce5;
+  --st-chart-3: #1d9159;
+  --st-chart-4: #ea4832;
+  --st-chart-5: #bab8b4;
+  --st-chart-6: #e8b244;
+  --st-chart-stroke-width: 1px;
+
+  /* ---- type ---- */
+  --st-font-display: "Serrif Condensed", "Serrifcondensed", "Playfair Display", "Times New Roman", serif;
+  --st-font-sans: "Saans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  --st-font-mono: "SF Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --st-weight-light: 300;
+  --st-weight-medium: 500;
+  --st-text-2xs: 0.675rem;
+  --st-leading-2xs: 1.1;
+  --st-text-xs: 0.75rem;
+  --st-leading-xs: 1.5;
+  --st-text-sm: 0.9rem;
+  --st-leading-sm: 1.5;
+  --st-text-base: 1rem;
+  --st-leading-base: 1.5;
+  --st-text-md: 1.125rem;
+  --st-leading-md: 1.5;
+  --st-text-lg: 1.25rem;
+  --st-leading-lg: 1.5;
+  --st-text-xl: 1.8rem;
+  --st-leading-xl: 1.2;
+  --st-text-2xl: 2.925rem;
+  --st-leading-2xl: 1.0;
+  --st-text-3xl: 4.77rem;
+  --st-leading-3xl: 1.05;
+  --st-text-4xl: 6.75rem;
+  --st-leading-4xl: 0.8;
+  --st-tracking-normal: 0;
+  --st-tracking-wide: 0.5px;
+  --st-tracking-wider: 1px;
+
+  /* ---- space ---- */
+  --st-space-0: 0;
+  --st-space-xs: 5px;
+  --st-space-s: 10px;
+  --st-space-base: 20px;
+  --st-space-m: 40px;
+  --st-space-l: 60px;
+  --st-space-xl: 80px;
+  --st-space-2xl: 100px;
+  --st-space-section: 150px;
+
+  /* ---- form ---- */
+  --st-radius-none: 0;
+  --st-radius-surface: 10px;
+  --st-radius-pill: 50px;
+  --st-radius-circle: 50%;
+  --st-border-hairline: 1px;
+  --st-border-accent: 2px;
+  --st-elevation-flat: none;
+  --st-elevation-escape-hatch: 0 4px 16px rgba(25, 24, 23, 0.08);
+
+  /* ---- motion ---- */
+  --st-motion-ease: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --st-motion-fast: 120ms;
+  --st-motion-base: 200ms;
+  --st-motion-slow: 400ms;
+  --st-motion-reveal: 800ms;
+  --st-motion-max-allowed: 400ms;
+
+  /* ---- layout ---- */
+  --st-layout-measure: 950px;
+  --st-layout-frame: 1920px;
+  --st-layout-gutter: 20px;
+  --st-layout-gutter-wide: 60px;
+  --st-control-height: 44px;
+  --st-control-height-sm: 36px;
+  --st-control-height-lg: 52px;
+  --st-control-padding-x: 24px;
+  --st-control-min-touch: 44px;
+  --st-z-base: 0;
+  --st-z-sticky: 100;
+  --st-z-overlay: 200;
+  --st-z-modal: 300;
+  --st-z-toast: 400;
+
+  /* ---- density: comfortable is the default ---- */
+  --st-density-body: [object Object];
+  --st-density-section-y: 100px;
+  --st-density-block-y: 60px;
+  --st-density-stack: 20px;
+  --st-density-control-h: 44px;
+  --st-density-control-px: 24px;
+}
+
+/* Density is a cognitive-load control, not a style. See COGNITIVE-LOAD.md. */
+[data-density="compact"] {
+  --st-density-body: [object Object];
+  --st-density-section-y: 40px;
+  --st-density-block-y: 20px;
+  --st-density-stack: 10px;
+  --st-density-control-h: 36px;
+  --st-density-control-px: 16px;
+}
+[data-density="comfortable"] {
+  --st-density-body: [object Object];
+  --st-density-section-y: 100px;
+  --st-density-block-y: 60px;
+  --st-density-stack: 20px;
+  --st-density-control-h: 44px;
+  --st-density-control-px: 24px;
+}
+
+/* Dark. Explicit [data-theme] wins over the system preference in both directions. */
+[data-theme="dark"] {
+  --st-background: #191817;
+  --st-foreground: #fffdf8;
+  --st-surface: #232120;
+  --st-surface-foreground: #fffdf8;
+  --st-raised: #2c2a28;
+  --st-muted: rgba(255, 253, 248, 0.60);
+  --st-accent: #ffd066;
+  --st-accent-hover: #ffdd8a;
+  --st-accent-foreground: #191817;
+  --st-border: rgba(255, 253, 248, 0.15);
+  --st-border-control: rgba(255, 253, 248, 0.45);
+  --st-divider: rgba(255, 253, 248, 0.10);
+  --st-ring: rgba(255, 253, 248, 0.45);
+  --st-placeholder: rgba(255, 253, 248, 0.40);
+  --st-chart-stroke: rgba(255, 253, 248, 0.55);
+  --st-disabled: rgba(255, 253, 248, 0.35);
+  --st-info: #89bce5;
+  --st-success: #2eb673;
+  --st-danger: #f26350;
+  --st-warning: #e8b244;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --st-background: #191817;
+    --st-foreground: #fffdf8;
+    --st-surface: #232120;
+    --st-surface-foreground: #fffdf8;
+    --st-raised: #2c2a28;
+    --st-muted: rgba(255, 253, 248, 0.60);
+    --st-accent: #ffd066;
+    --st-accent-hover: #ffdd8a;
+    --st-accent-foreground: #191817;
+    --st-border: rgba(255, 253, 248, 0.15);
+    --st-border-control: rgba(255, 253, 248, 0.45);
+    --st-divider: rgba(255, 253, 248, 0.10);
+    --st-ring: rgba(255, 253, 248, 0.45);
+    --st-placeholder: rgba(255, 253, 248, 0.40);
+    --st-chart-stroke: rgba(255, 253, 248, 0.55);
+    --st-disabled: rgba(255, 253, 248, 0.35);
+    --st-info: #89bce5;
+    --st-success: #2eb673;
+    --st-danger: #f26350;
+    --st-warning: #e8b244;
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "name": "@kwapso/structure",
+  "version": "1.0.0",
+  "description": "Structure \u2014 the Kwapso design language. Tokens, a framework-free reskin layer, components, and an enforced cognitive-load budget.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kwapso/design_language_1.git"
+  },
+  "homepage": "https://kwapso.github.io/design_language_1/",
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist",
+    "css",
+    "react",
+    "tokens",
+    "structure.css",
+    "LANGUAGE.md",
+    "COGNITIVE-LOAD.md",
+    "ADOPTION.md",
+    "bin",
+    "scripts"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/tokens.d.ts",
+      "default": "./dist/tokens.js"
+    },
+    "./structure.css": "./structure.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./base.css": "./css/base.css",
+    "./components.css": "./css/components.css",
+    "./tailwind": "./dist/tailwind-preset.js",
+    "./tokens.json": "./tokens/tokens.json",
+    "./react": "./react/index.ts",
+    "./react/*": "./react/*.tsx"
+  },
+  "scripts": {
+    "build": "node scripts/build-tokens.mjs",
+    "build:tokens": "node scripts/build-tokens.mjs",
+    "check:contrast": "node scripts/check-contrast.mjs",
+    "check:cognitive": "node scripts/cognitive-load.mjs --self",
+    "check:types": "tsc --noEmit",
+    "check": "npm run build && npm run check:contrast && npm run check:cognitive && npm run check:types",
+    "docs": "npx --yes serve docs"
+  },
+  "keywords": [
+    "design-system",
+    "design-tokens",
+    "design-language",
+    "css",
+    "react",
+    "tailwind",
+    "accessibility",
+    "cognitive-load",
+    "kwapso"
+  ],
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "@types/react": "^18.3.0",
+    "@types/node": "^22.0.0"
+  },
+  "bin": {
+    "structure-lint": "./bin/structure-lint.mjs"
+  }
+}

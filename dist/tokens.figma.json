@@ -1,0 +1,179 @@
+{
+  "color/ink": {
+    "$type": "color",
+    "$value": "#191817",
+    "$description": "All text, all icons, all borders. Warm near-black — never pure #000."
+  },
+  "color/paper": {
+    "$type": "color",
+    "$value": "#fffdf8",
+    "$description": "The page. Solid — no gradients, no patterns, no ambient glow."
+  },
+  "color/sand": {
+    "$type": "color",
+    "$value": "#f7f2eb",
+    "$description": "The second surface. Cards, list rows, wells, inset panels sit on paper in sand."
+  },
+  "color/mango": {
+    "$type": "color",
+    "$value": "#ffd066",
+    "$description": "The accent. One per view. It means 'this is the next action'. Fill or 2px border only — never a gradient, never text."
+  },
+  "color/sky": {
+    "$type": "color",
+    "$value": "#89bce5",
+    "$description": "Informational mark. Chart series, status dot, chip. Never a section background."
+  },
+  "color/forest": {
+    "$type": "color",
+    "$value": "#1d9159",
+    "$description": "Success / positive mark. Also the scroll-to-top control on the live site."
+  },
+  "color/poppy": {
+    "$type": "color",
+    "$value": "#ea4832",
+    "$description": "Destructive / error mark. Never decorative."
+  },
+  "color/grey": {
+    "$type": "color",
+    "$value": "#bab8b4",
+    "$description": "Disabled state and non-semantic chart series."
+  },
+  "color/ink-10": {
+    "$type": "color",
+    "$value": "rgba(25, 24, 23, 0.10)",
+    "$description": "Decorative hairline dividers and rules only. Deliberately below 3:1 — a divider is not a control, so WCAG 1.4.11 does not apply to it. Never use this to outline a control."
+  },
+  "color/ink-15": {
+    "$type": "color",
+    "$value": "rgba(25, 24, 23, 0.15)",
+    "$description": "Card and section outlines — decorative, alongside a surface-colour change that already does the work."
+  },
+  "color/ink-30": {
+    "$type": "color",
+    "$value": "rgba(25, 24, 23, 0.30)",
+    "$description": "Placeholder text and disabled glyphs. NOT for focus rings or control borders — it measures 1.95:1 and fails WCAG 1.4.11."
+  },
+  "color/ink-50": {
+    "$type": "color",
+    "$value": "rgba(25, 24, 23, 0.50)",
+    "$description": "Control borders and focus rings — anything whose visible boundary is the only thing identifying a component. 3.30:1 on paper, 3.21:1 on sand: clears WCAG 1.4.11's 3:1 non-text floor on both surfaces."
+  },
+  "color/ink-65": {
+    "$type": "color",
+    "$value": "rgba(25, 24, 23, 0.65)",
+    "$description": "Muted text — hints, timestamps, captions. 5.16:1 on paper, 4.98:1 on sand: clears WCAG AA body text on both surfaces."
+  },
+  "color/mango-deep": {
+    "$type": "color",
+    "$value": "#e8b244",
+    "$description": "Mango hover/pressed only. Not a second accent."
+  },
+  "color/sky-deep": {
+    "$type": "color",
+    "$value": "#6489a7",
+    "$description": "The INFORMATIONAL role — status dots, info banners, anything where sky carries meaning rather than decoration. Brand sky is 1.99:1 on paper: invisible as a status mark. 3.63:1 on paper, 3.31:1 on sand."
+  },
+  "space/0": {
+    "$type": "dimension",
+    "$value": "0"
+  },
+  "space/xs": {
+    "$type": "dimension",
+    "$value": "5px"
+  },
+  "space/s": {
+    "$type": "dimension",
+    "$value": "10px"
+  },
+  "space/base": {
+    "$type": "dimension",
+    "$value": "20px"
+  },
+  "space/m": {
+    "$type": "dimension",
+    "$value": "40px"
+  },
+  "space/l": {
+    "$type": "dimension",
+    "$value": "60px"
+  },
+  "space/xl": {
+    "$type": "dimension",
+    "$value": "80px"
+  },
+  "space/2xl": {
+    "$type": "dimension",
+    "$value": "100px"
+  },
+  "space/section": {
+    "$type": "dimension",
+    "$value": "150px"
+  },
+  "radius/none": {
+    "$type": "dimension",
+    "$value": "0"
+  },
+  "radius/surface": {
+    "$type": "dimension",
+    "$value": "10px"
+  },
+  "radius/pill": {
+    "$type": "dimension",
+    "$value": "50px"
+  },
+  "radius/circle": {
+    "$type": "dimension",
+    "$value": "50%"
+  },
+  "text/2xs": {
+    "$type": "dimension",
+    "$value": "0.675rem",
+    "$description": "Legal, captions in dense tables. Use sparingly."
+  },
+  "text/xs": {
+    "$type": "dimension",
+    "$value": "0.75rem",
+    "$description": "Meta, timestamps, table secondary."
+  },
+  "text/sm": {
+    "$type": "dimension",
+    "$value": "0.9rem",
+    "$description": "BODY DEFAULT. The site's most common size by a factor of ten."
+  },
+  "text/base": {
+    "$type": "dimension",
+    "$value": "1rem",
+    "$description": "Body in compact/app density, and lead-in paragraphs on web."
+  },
+  "text/md": {
+    "$type": "dimension",
+    "$value": "1.125rem",
+    "$description": "Lead paragraph under a heading."
+  },
+  "text/lg": {
+    "$type": "dimension",
+    "$value": "1.25rem",
+    "$description": "Large lead, standfirst."
+  },
+  "text/xl": {
+    "$type": "dimension",
+    "$value": "1.8rem",
+    "$description": "H3 / card title at web density."
+  },
+  "text/2xl": {
+    "$type": "dimension",
+    "$value": "2.925rem",
+    "$description": "H2. Section headings. Weight 500, tracking +0.5px."
+  },
+  "text/3xl": {
+    "$type": "dimension",
+    "$value": "4.77rem",
+    "$description": "Display, secondary scale."
+  },
+  "text/4xl": {
+    "$type": "dimension",
+    "$value": "6.75rem",
+    "$description": "Display, hero. Serif, weight 300, negative leading."
+  }
+}
