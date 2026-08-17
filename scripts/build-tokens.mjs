@@ -257,8 +257,14 @@ const bundle =
   ].join("\n\n")
 
 writeFileSync(join(dist, "structure.bundle.css"), bundle)
+
+/* GitHub Pages publishes docs/ as the site root, so anything the docs page
+ * loads has to live inside docs/ — a relative hop up to dist/ resolves off the
+ * end of the site and 404s. Copy both artifacts in rather than teaching the
+ * page two different paths for local and deployed. */
 mkdirSync(join(root, "docs/assets"), { recursive: true })
 writeFileSync(join(root, "docs/assets/structure.css"), bundle)
+writeFileSync(join(root, "docs/assets/tokens.js"), readFileSync(join(dist, "tokens.js"), "utf8"))
 
 /* ------------------------------------------------------------- report */
 
