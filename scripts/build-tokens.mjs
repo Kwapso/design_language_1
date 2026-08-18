@@ -242,6 +242,18 @@ for (const [k, v] of real(tokens.radius)) figma[`radius/${k}`] = { $type: "dimen
 for (const [k, v] of real(tokens.text)) figma[`text/${k}`] = { $type: "dimension", $value: v.size, $description: v.use }
 writeFileSync(join(dist, "tokens.figma.json"), JSON.stringify(figma, null, 2) + "\n")
 
+/* An INVERTED region: ink surface, paper text. kwapso.com uses this for its
+ * dark CTA bands. It re-scopes the semantic tokens to the dark set rather than
+ * restating colours, so every child component works unchanged inside it — and
+ * a page in dark mode still gets a genuinely inverted band rather than a
+ * no-op. Generated from semantic.dark so it can never drift from the theme. */
+css += `\n/* Inverted band — re-scopes semantics, so children need no special casing. */\n`
+css += `.st-invert {\n${cssVars("dark")}\n  color: var(--st-foreground);\n  background-color: var(--st-background);\n}\n`
+css += `[data-theme="dark"] .st-invert {\n${cssVars("light")}\n  color: var(--st-foreground);\n  background-color: var(--st-background);\n}\n`
+css += `@media (prefers-color-scheme: dark) {\n  :root:not([data-theme="light"]) .st-invert {\n${cssVars("light").split("\n").map((l) => "  " + l).join("\n")}\n  }\n}\n`
+
+writeFileSync(join(dist, "tokens.css"), css)
+
 /* --------------------------------------------------- structure.bundle.css */
 
 /* One self-contained file: tokens + reskin + components, no @import chain.

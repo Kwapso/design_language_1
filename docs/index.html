@@ -4,36 +4,88 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Structure — the Kwapso design language</title>
-<meta name="description" content="Tokens, a framework-free reskin layer, components, and an enforced cognitive-load budget. Measured from kwapso.com.">
-<!-- The docs are rendered by the exact artifact a consumer installs. If this
-     page looks right, the bundle is right. -->
-<!-- structure-ignore accent-budget: this page is a component gallery. It shows
-     every button variant side by side on purpose, which is the one context
-     where more than one filled accent is the correct thing to render. The rule
-     is right about product views and does not apply to a specimen sheet. -->
+<meta name="description" content="The design language behind kwapso.com. Tokens, a one-line reskin layer, components for apps, websites and chat, and a cognitive-load budget the build enforces.">
+
+<!-- Local-only: the real Saans + Serrif Condensed. Gitignored, never published.
+     Without this file the page falls back to an open stack. -->
+<link rel="stylesheet" href="./assets/fonts.css">
+<!-- The page is rendered by the exact bundle a consumer installs.
+     If this looks right, the system is right. -->
 <link rel="stylesheet" href="./assets/structure.css">
+
+<!-- structure-ignore accent-budget: a specimen sheet shows every accent variant
+     side by side on purpose. The rule is right about product views. -->
+<!-- structure-ignore type-scale: this page documents the whole type scale, so it
+     necessarily renders every step of it. -->
 <style>
-  /* Page chrome for the documentation itself. Uses only Structure tokens. */
-  .doc-layout { display: grid; grid-template-columns: 220px 1fr; gap: var(--st-space-l); align-items: start; }
-  @media (max-width: 900px) { .doc-layout { grid-template-columns: 1fr; } .doc-nav { position: static !important; } }
-  .doc-nav { position: sticky; top: 80px; }
-  .swatch { height: 72px; border-radius: var(--st-radius-surface); border: 1px solid var(--st-border); }
+  /* ---- page chrome for the showcase itself. Tokens only. ---- */
+
+  /* Full-bleed band that still respects the reading column inside. */
+  .bleed { width: 100%; }
+  .wide  { width: min(1400px, 100% - 80px); margin-inline: auto; }
+  @media (max-width: 700px) { .wide { width: calc(100% - 40px); } }
+
+  /* The hero occupies the screen. Scale is the brand's loudest signal, and a
+     108px headline in a 950px column does not read as scale — it reads as a
+     big word in a small box. */
+  .hero { min-height: 92svh; display: flex; flex-direction: column; justify-content: center; }
+  .hero__type {
+    font-family: var(--st-font-display);
+    font-weight: 300;
+    /* Fluid, and deliberately enormous at the top end. */
+    font-size: clamp(3.5rem, 13vw, 13rem);
+    line-height: 0.82;
+    letter-spacing: -0.005em;
+  }
+
+  .rule { border: 0; border-top: 1px solid var(--st-divider); margin: 0; }
+  .sand-band { background: var(--st-surface); }
+
+  /* Numbered manifesto entries. */
+  .tenet { display: grid; grid-template-columns: auto 1fr; gap: var(--st-space-base) var(--st-space-m); align-items: start; }
+  .tenet__n {
+    font-family: var(--st-font-display); font-weight: 300;
+    font-size: 3.5rem; line-height: .8; opacity: .28;
+  }
+
+  /* Colour presented as fields you can judge, not chips you have to squint at. */
+  .field { display: flex; flex-direction: column; justify-content: flex-end; min-height: 230px; padding: var(--st-space-base); }
+  .field__meta { display: flex; justify-content: space-between; align-items: baseline; gap: var(--st-space-s); }
+  .mono { font-family: var(--st-font-mono); font-size: var(--st-text-xs); }
+
+  /* A browser frame, so a composed screen reads as a product rather than a div. */
+  .frame { border: 1px solid var(--st-border-control); border-radius: var(--st-radius-surface); overflow: hidden; background: var(--st-background); }
+  .frame__bar { display: flex; align-items: center; gap: 6px; padding: 10px var(--st-space-base); border-bottom: 1px solid var(--st-divider); background: var(--st-surface); }
+  .frame__dot { width: 9px; height: 9px; border-radius: 50%; background: var(--st-border-control); }
+  .frame__url { margin-left: var(--st-space-s); font-family: var(--st-font-mono); font-size: 11px; color: var(--st-muted); }
+  .frame__body { padding: var(--st-space-m); }
+  .frame__body--flush { padding: 0; }
+
+  /* Phone frame for the mobile proof. */
+  .phone { width: 300px; border: 1px solid var(--st-border-control); border-radius: 28px; overflow: hidden; background: var(--st-background); }
+  .phone__notch { height: 26px; display: grid; place-items: center; background: var(--st-surface); }
+  .phone__pill { width: 70px; height: 5px; border-radius: 3px; background: var(--st-border-control); }
+
+  .specimen { font-family: var(--st-font-display); font-weight: 300; line-height: .86; }
+  .swatch-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .sticky-nav { position: sticky; top: 0; z-index: 100; backdrop-filter: none; }
   .spec { font-family: var(--st-font-mono); font-size: var(--st-text-xs); color: var(--st-muted); }
-  .demo { padding: var(--st-space-base); border: 1px solid var(--st-border); border-radius: var(--st-radius-surface); }
-  .doc-h { scroll-margin-top: 90px; }
+  .demo { padding: var(--st-space-m); border: 1px solid var(--st-border); border-radius: var(--st-radius-surface); }
+  h2.doc-h { scroll-margin-top: 80px; }
+  .kicker { font-family: var(--st-font-display); font-weight: 300; font-size: clamp(2rem, 5vw, 3.6rem); line-height: .95; }
 </style>
 </head>
 <body>
 
 <a href="#main" class="st-skip-link">Skip to content</a>
 
-<header class="st-navbar">
+<header class="st-navbar sticky-nav">
   <strong style="letter-spacing:var(--st-tracking-wide)">Structure</strong>
   <nav class="st-navbar__links" aria-label="Main">
-    <a class="st-navbar__link" href="#foundations">Foundations</a>
-    <a class="st-navbar__link" href="#components">Components</a>
-    <a class="st-navbar__link" href="#chat">Chat</a>
-    <a class="st-navbar__link" href="#cognitive">Cognitive load</a>
+    <a class="st-navbar__link" href="#tenets">Principles</a>
+    <a class="st-navbar__link" href="#screens">In use</a>
+    <a class="st-navbar__link" href="#type">Type</a>
+    <a class="st-navbar__link" href="#parts">Parts</a>
     <a class="st-navbar__link" href="#adopt">Adopt</a>
   </nav>
   <div class="st-cluster">
@@ -47,358 +99,473 @@
 
 <main id="main">
 
-<!-- ================================================================ HERO -->
-<section class="st-container st-section">
+<!-- ═══════════════════════════════════════════════════════════════ HERO -->
+<section class="wide hero">
   <p class="st-eyebrow">The Kwapso design language</p>
-  <h1 class="st-display" style="margin-top:var(--st-space-base)">Work, structured.</h1>
-  <p class="st-lead" style="margin-top:var(--st-space-base)">
-    Every value in this system was measured off the live kwapso.com — not invented, not
-    approximated. Tokens, a framework-free reskin layer, components for apps, websites,
-    interfaces and chat, and a cognitive-load budget the build actually enforces.
-  </p>
+  <h1 class="hero__type" style="margin-top:var(--st-space-base)">Work,<br>structured.</h1>
+  <div style="max-width:52ch;margin-top:var(--st-space-m)">
+    <p style="font-size:var(--st-text-md);line-height:1.5">
+      Every value measured off the live site — not invented, not approximated.
+      A design language you can drop onto an existing app in one line.
+    </p>
+  </div>
   <div class="st-cluster" style="margin-top:var(--st-space-m)">
     <a class="st-btn st-btn--accent" href="#adopt">Adopt it</a>
-    <a class="st-btn st-btn--outline" href="https://github.com/Kwapso/design_language_1">View the repo</a>
+    <a class="st-btn st-btn--outline" href="https://github.com/Kwapso/design_language_1">The repo</a>
   </div>
 </section>
 
-<div class="st-container st-section--tight">
-  <div class="st-grid">
-    <div class="st-card"><div class="st-stat"><span class="st-stat__value">0</span><span class="st-stat__label">Box-shadows on kwapso.com</span></div></div>
-    <div class="st-card"><div class="st-stat"><span class="st-stat__value">1</span><span class="st-stat__label">Accent, per view</span></div></div>
-    <div class="st-card"><div class="st-stat"><span class="st-stat__value">3</span><span class="st-stat__label">Curves in the whole system</span></div></div>
-    <div class="st-card"><div class="st-stat"><span class="st-stat__value">2</span><span class="st-stat__label">Type weights. There is no bold</span></div></div>
+<!-- ══════════════════════════════════════════════════════════ THE NUMBERS -->
+<section class="bleed st-invert">
+  <div class="wide" style="padding-block:var(--st-space-xl)">
+    <div class="st-grid st-grid--fixed-2" style="gap:var(--st-space-l)">
+      <div>
+        <p class="st-eyebrow">What the site actually does</p>
+        <p class="kicker" style="margin-top:var(--st-space-s)">Restraint, counted.</p>
+      </div>
+      <div class="st-grid" style="gap:var(--st-space-m)">
+        <div><div class="specimen" style="font-size:3.2rem">0</div><p class="st-caption" style="margin-top:4px">box-shadows across 5,142px</p></div>
+        <div><div class="specimen" style="font-size:3.2rem">1</div><p class="st-caption" style="margin-top:4px">accent, per view</p></div>
+        <div><div class="specimen" style="font-size:3.2rem">3</div><p class="st-caption" style="margin-top:4px">curves in the system</p></div>
+        <div><div class="specimen" style="font-size:3.2rem">2</div><p class="st-caption" style="margin-top:4px">weights. no bold</p></div>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
-<div class="st-container doc-layout st-section">
+<!-- ═════════════════════════════════════════════════════════════ TENETS -->
+<section id="tenets" class="wide" style="padding-block:var(--st-space-2xl)">
+  <p class="st-eyebrow">Four decisions</p>
+  <p class="kicker" style="margin-top:var(--st-space-s);max-width:20ch">Everything else follows from these.</p>
 
-  <!-- =============================================================== NAV
-       Two groups rather than one list of eight. The grouping rule flagged the
-       flat version at 8 items, and it was right: a labelled split is easier to
-       scan than a list with em-dashes standing in for hierarchy. -->
-  <div class="doc-nav st-stack st-stack--s">
-    <nav class="st-sidebar" aria-label="Foundations">
-      <p class="st-eyebrow" style="padding:0 var(--st-space-s)">Foundations</p>
-      <a class="st-sidebar__link" href="#foundations">Principles</a>
-      <a class="st-sidebar__link" href="#colour">Colour</a>
-      <a class="st-sidebar__link" href="#type">Type</a>
-      <a class="st-sidebar__link" href="#space">Space &amp; curves</a>
-    </nav>
-    <nav class="st-sidebar" aria-label="Building">
-      <p class="st-eyebrow" style="padding:0 var(--st-space-s)">Building</p>
-      <a class="st-sidebar__link" href="#components">Components</a>
-      <a class="st-sidebar__link" href="#chat">Chat &amp; AI</a>
-      <a class="st-sidebar__link" href="#cognitive">Cognitive load</a>
-      <a class="st-sidebar__link" href="#adopt">Adoption</a>
-    </nav>
+  <div class="st-stack st-stack--l" style="margin-top:var(--st-space-xl)">
+    <hr class="rule">
+    <div class="tenet">
+      <span class="tenet__n">01</span>
+      <div style="max-width:62ch">
+        <h3 style="font-size:var(--st-text-xl);line-height:1.2">It is flat</h3>
+        <p style="margin-top:var(--st-space-s)">kwapso.com uses zero box-shadows across its entire length. Not subtle
+        ones — none. A card is sand on paper, and that colour step <em>is</em> the elevation. Only a genuinely
+        detached surface — a modal, a popover — may opt out, and every use is counted by the linter.</p>
+      </div>
+    </div>
+    <hr class="rule">
+    <div class="tenet">
+      <span class="tenet__n">02</span>
+      <div style="max-width:62ch">
+        <h3 style="font-size:var(--st-text-xl);line-height:1.2">One accent, held back</h3>
+        <p style="margin-top:var(--st-space-s)">Mango means <em>“this is the next action.”</em> Across a five-thousand-pixel
+        page it appears on eleven filled elements. Used twice on a view it stops being an instruction and becomes
+        a colour. This is the rule people most want to break and the one that matters most.</p>
+      </div>
+    </div>
+    <hr class="rule">
+    <div class="tenet">
+      <span class="tenet__n">03</span>
+      <div style="max-width:62ch">
+        <h3 style="font-size:var(--st-text-xl);line-height:1.2">Two faces, two weights</h3>
+        <p style="margin-top:var(--st-space-s)">A condensed serif for statements, set at <strong>0.8 line-height</strong> —
+        the line box smaller than the type. A grotesk at 300 and 500 for everything else. There is no bold.</p>
+      </div>
+    </div>
+    <hr class="rule">
+    <div class="tenet">
+      <span class="tenet__n">04</span>
+      <div style="max-width:62ch">
+        <h3 style="font-size:var(--st-text-xl);line-height:1.2">Tracking opens, not tightens</h3>
+        <p style="margin-top:var(--st-space-s)">Headings carry <strong>+0.5px</strong>. Nearly every system of the last
+        decade tightens heading tracking. This one opens it — which is why the brand reads deliberate rather than urgent.</p>
+      </div>
+    </div>
+    <hr class="rule">
   </div>
+</section>
 
-  <div class="st-stack st-stack--l">
+<!-- ═════════════════════════════════════════════════════════════ SCREENS -->
+<section id="screens" class="bleed sand-band">
+  <div class="wide" style="padding-block:var(--st-space-2xl)">
+    <p class="st-eyebrow">In use</p>
+    <p class="kicker" style="margin-top:var(--st-space-s);max-width:24ch">Four real screens, built only from the language.</p>
+    <p class="st-lead" style="margin-top:var(--st-space-base)">
+      Nothing below is a mockup or an image. Every screen is live HTML using the same classes
+      you get on install — which is the only demonstration that actually proves anything.
+    </p>
 
-    <!-- ====================================================== FOUNDATIONS -->
-    <section id="foundations">
-      <h2 class="doc-h">Foundations</h2>
-      <p class="st-lead">Four decisions carry the entire language.</p>
-
-      <div class="st-grid st-grid--2" style="margin-top:var(--st-space-base)">
-        <div class="st-card">
-          <h3 class="st-card__title">It is flat</h3>
-          <p>kwapso.com uses zero box-shadows across a 5,142px page. Depth is expressed by
-          surface colour and space alone. A card is sand on paper — that colour step
-          <em>is</em> the elevation. Only detached overlays may opt out.</p>
-        </div>
-        <div class="st-card">
-          <h3 class="st-card__title">One accent, held back</h3>
-          <p>Mango means “this is the next action”. On a page of five thousand pixels it
-          appears on eleven filled elements. A second accent on a view makes both mean
-          “something”. The restraint is the brand.</p>
-        </div>
-        <div class="st-card">
-          <h3 class="st-card__title">Two faces, two weights</h3>
-          <p>A condensed serif for statements, set at <strong>0.8 line-height</strong> — negative
-          leading is the most recognisable thing here. A grotesk for everything else, at
-          300 and 500. There is no bold.</p>
-        </div>
-        <div class="st-card">
-          <h3 class="st-card__title">Tracking opens, not tightens</h3>
-          <p>Headings and labels carry <strong>+0.5px</strong>. That is the opposite of the
-          tight-tracking default nearly every system ships, and it is a large part of why
-          the brand reads as calm rather than urgent.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- =========================================================== COLOUR -->
-    <section id="colour">
-      <h2 class="doc-h">Colour</h2>
-      <p>Eight brand values. Ink and paper carry every screen; mango is the single accent;
-      sky, forest and poppy are marks — never section backgrounds.</p>
-      <div class="st-grid" id="swatches" style="margin-top:var(--st-space-base)"></div>
-
-      <div class="st-alert st-alert--info" style="margin-top:var(--st-space-base)">
-        <div>
-          <strong>Every pairing is verified, not assumed.</strong>
-          <p style="margin-top:var(--st-space-xs)"><code>npm run check:contrast</code> tests 30 text and
-          non-text pairings against WCAG 2.1 on both surfaces, in both themes, and fails the
-          build on a regression. Where a pairing sits below the floor on purpose — mango is a
-          pale yellow and always will be — the exemption is printed with its reason on every
-          run, so it has to be re-justified rather than quietly inherited.</p>
+    <!-- ── 1 · marketing ────────────────────────────────────────────── -->
+    <div style="margin-top:var(--st-space-xl)">
+      <p class="spec" style="margin-bottom:var(--st-space-s)">01 — Marketing page · comfortable density</p>
+      <div class="frame">
+        <div class="frame__bar"><span class="frame__dot"></span><span class="frame__dot"></span><span class="frame__dot"></span><span class="frame__url">kwapso.com/services</span></div>
+        <div class="frame__body">
+          <p class="st-eyebrow">Process audit &amp; design</p>
+          <h3 class="st-display st-display--sm" style="margin-top:var(--st-space-s)">From chaos to full overview.</h3>
+          <p class="st-lead" style="margin-top:var(--st-space-base)">We map how work actually moves through your
+          business, price the bottlenecks, and hand you a roadmap in priority order.</p>
+          <div class="st-cluster" style="margin-top:var(--st-space-base)">
+            <a class="st-btn st-btn--accent" href="#screens">Book a process check</a>
+            <a class="st-btn st-btn--ghost" href="#screens">See a case study</a>
+          </div>
+          <div class="st-grid" style="margin-top:var(--st-space-l)">
+            <div class="st-row"><span class="st-badge">01</span><span>Full operational process map</span></div>
+            <div class="st-row"><span class="st-badge">02</span><span>Bottleneck cost calculation</span></div>
+            <div class="st-row"><span class="st-badge">03</span><span>Prioritised action roadmap</span></div>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- ============================================================= TYPE -->
-    <section id="type">
-      <h2 class="doc-h">Type</h2>
-      <div class="st-stack" id="typescale"></div>
-      <div class="st-alert st-alert--warning" style="margin-top:var(--st-space-base)">
-        <div>
-          <strong>Fonts are not bundled.</strong>
-          <p style="margin-top:var(--st-space-xs)">Saans and Serrif Condensed are licensed
-          typefaces; this repository has no right to redistribute them, so it ships none.
-          Self-host them in your app and the language picks them up. Without them you are
-          seeing the open fallback stack, which keeps the proportions and the feel.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================ SPACE -->
-    <section id="space">
-      <h2 class="doc-h">Space &amp; curves</h2>
-      <p>Base 20. The site's whole rhythm is 10 / 20 / 40 / 60 / 80 / 100 / 150.</p>
-      <div class="st-stack st-stack--s" id="spacescale" style="margin-top:var(--st-space-base)"></div>
-
-      <h3 style="margin-top:var(--st-space-m)">Three curves, nothing between</h3>
-      <div class="st-cluster" style="margin-top:var(--st-space-s)">
-        <div class="st-card" style="width:130px;text-align:center"><div style="height:44px;background:var(--st-accent);border-radius:var(--st-radius-surface)"></div><p class="spec" style="margin-top:8px">10px surface</p></div>
-        <div class="st-card" style="width:130px;text-align:center"><div style="height:44px;background:var(--st-accent);border-radius:var(--st-radius-pill)"></div><p class="spec" style="margin-top:8px">50px pill</p></div>
-        <div class="st-card" style="width:130px;text-align:center"><div style="height:44px;width:44px;margin:0 auto;background:var(--st-accent);border-radius:50%"></div><p class="spec" style="margin-top:8px">circle</p></div>
-      </div>
-      <p class="st-caption" style="margin-top:var(--st-space-s)">An in-between radius is the fastest way to make a system look generated rather than designed.</p>
-    </section>
-
-    <!-- ======================================================= COMPONENTS -->
-    <section id="components">
-      <h2 class="doc-h">Components</h2>
-
-      <h3 style="margin-top:var(--st-space-base)">Buttons</h3>
-      <div class="demo st-cluster">
-        <button class="st-btn st-btn--accent">Take the scorecard</button>
-        <button class="st-btn st-btn--outline">Talk to us</button>
-        <button class="st-btn st-btn--ghost">Read more</button>
-        <button class="st-btn st-btn--solid">Contact</button>
-        <button class="st-btn st-btn--danger">Delete</button>
-        <button class="st-btn st-btn--accent" disabled>Disabled</button>
-      </div>
-      <p class="spec">44px tall · 24px padding · pill · weight 500 · 0.2s cubic-bezier(.645,.045,.355,1)</p>
-
-      <h3 style="margin-top:var(--st-space-m)">Form</h3>
-      <div class="demo st-stack">
-        <div class="st-field">
-          <label class="st-field__label" for="d1" data-required>Company name</label>
-          <input class="st-input" id="d1" placeholder="Kwapso GmbH">
-          <p class="st-field__hint">As it appears on your invoices.</p>
-        </div>
-        <div class="st-field" data-invalid="true">
-          <label class="st-field__label" for="d2">Work email</label>
-          <input class="st-input" id="d2" value="not-an-email" aria-invalid="true">
-          <p class="st-field__error" role="alert">Enter a valid email address.</p>
-        </div>
-        <label class="st-switch">
-          <input type="checkbox" role="switch" checked>
-          <span class="st-switch__control" aria-hidden="true"></span>
-          <span>Send me the summary</span>
-        </label>
-        <div class="st-scale" role="radiogroup" aria-label="How structured are your operations?">
-          <button class="st-scale__item" aria-checked="false" role="radio">Never</button>
-          <button class="st-scale__item" aria-checked="false" role="radio">Rarely</button>
-          <button class="st-scale__item" data-selected="true" aria-checked="true" role="radio">Sometimes</button>
-          <button class="st-scale__item" aria-checked="false" role="radio">Often</button>
-          <button class="st-scale__item" aria-checked="false" role="radio">Always</button>
-        </div>
-      </div>
-
-      <h3 style="margin-top:var(--st-space-m)">Marks &amp; data</h3>
-      <div class="demo st-stack">
-        <div class="st-cluster">
-          <span class="st-badge st-badge--accent">Featured</span>
-          <span class="st-badge">Draft</span>
-          <span class="st-badge st-badge--outline">Archived</span>
-          <span class="st-cluster" style="gap:var(--st-space-xs)"><span class="st-dot st-dot--success"></span>Operational</span>
-          <span class="st-cluster" style="gap:var(--st-space-xs)"><span class="st-dot st-dot--danger"></span>Blocked</span>
-          <span class="st-chip">Workflow <button class="st-chip__remove" aria-label="Remove Workflow">&times;</button></span>
-          <span class="st-avatar">AK</span>
-        </div>
-        <div class="st-meter">
-          <div class="st-meter__head"><span>Operational health</span><span class="st-numeric">68/100</span></div>
-          <div class="st-progress" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100" aria-label="Operational health"><div class="st-progress__bar" style="width:68%"></div></div>
-        </div>
-        <div class="st-table-wrap st-scroll-x">
-          <table class="st-table">
-            <thead><tr><th scope="col">Process</th><th scope="col">Owner</th><th scope="col" data-numeric>Hours / week</th></tr></thead>
-            <tbody>
-              <tr><td>Invoice approval</td><td>Finance</td><td data-numeric>12.5</td></tr>
-              <tr><td>Onboarding</td><td>People</td><td data-numeric>8.0</td></tr>
-              <tr><td>Quote to order</td><td>Sales</td><td data-numeric>21.25</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <h3 style="margin-top:var(--st-space-m)">Navigation &amp; disclosure</h3>
-      <div class="demo st-stack">
-        <div class="st-tabs" role="tablist" aria-label="Example">
-          <button class="st-tabs__tab" role="tab" aria-selected="true">Overview</button>
-          <button class="st-tabs__tab" role="tab" aria-selected="false">Processes</button>
-          <button class="st-tabs__tab" role="tab" aria-selected="false">Team</button>
-        </div>
-        <ol class="st-stepper" style="list-style:none;padding:0;margin:0">
-          <li class="st-stepper__step" data-state="done"><span class="st-stepper__dot">✓</span><span>Audit</span></li>
-          <li class="st-stepper__line"></li>
-          <li class="st-stepper__step" data-state="current" aria-current="step"><span class="st-stepper__dot">2</span><span>Design</span></li>
-          <li class="st-stepper__line"></li>
-          <li class="st-stepper__step" data-state="todo"><span class="st-stepper__dot">3</span><span>Build</span></li>
-        </ol>
-        <div>
-          <details><summary>Who or what is kwapso?</summary><div>The operational partner for established, owner-led businesses in the DACH region.</div></details>
-          <details><summary>How long does the scorecard take?</summary><div>About five minutes — thirty questions from your everyday work.</div></details>
-        </div>
-        <div class="st-alert st-alert--success"><div>Your process map is ready to review.</div></div>
-      </div>
-    </section>
-
-    <!-- ============================================================= CHAT -->
-    <section id="chat">
-      <h2 class="doc-h">Chat &amp; AI</h2>
-      <p class="st-lead">The assistant does not speak in a bubble.</p>
-      <p>Long generated text inside a tinted, rounded container is measurably harder to read
-      than the same text set on the page. Bubbles suit short turns. So the user keeps a sand
-      bubble — short, and findable when scrolling back — and the assistant gets the page.
-      Neither is mango: an accent-coloured bubble would spend the view's one accent on every
-      single message.</p>
-
-      <div class="demo" style="margin-top:var(--st-space-base)">
-        <div class="st-chat" style="height:380px">
-          <div class="st-chat__log" role="log" aria-live="polite">
-            <div class="st-msg st-msg--user"><div><div class="st-msg__body">Where is our biggest operational bottleneck?</div></div></div>
-            <div class="st-msg st-msg--assistant">
-              <div>
-                <div class="st-msg__body">
-                  Quote-to-order is costing the most time — 21.25 hours a week across three
-                  people, against 12.5 for invoice approval.<a class="st-citation" href="#">1</a>
-                  The delay sits in the manual re-keying between the CRM and the order sheet.
-                </div>
-                <div class="st-cluster" style="gap:var(--st-space-s)">
-                  <span class="st-msg__meta">Just now</span>
-                  <span class="st-msg__actions">
-                    <button class="st-btn st-btn--ghost st-btn--sm">Copy</button>
-                    <button class="st-btn st-btn--ghost st-btn--sm">Retry</button>
-                  </span>
-                </div>
-              </div>
+    <!-- ── 2 · dashboard ────────────────────────────────────────────── -->
+    <div style="margin-top:var(--st-space-xl)">
+      <p class="spec" style="margin-bottom:var(--st-space-s)">02 — Operations dashboard · compact density</p>
+      <div class="frame" data-density="compact">
+        <div class="frame__bar"><span class="frame__dot"></span><span class="frame__dot"></span><span class="frame__dot"></span><span class="frame__url">app.kwapso.com/operations</span></div>
+        <div class="frame__body">
+          <div class="st-cluster st-cluster--between" style="margin-bottom:var(--st-space-base)">
+            <div>
+              <h3 style="font-size:var(--st-text-lg)">Operations</h3>
+              <p class="st-caption">Week 34 · updated 8 minutes ago</p>
             </div>
-            <div class="st-msg st-msg--assistant">
-              <div style="width:100%">
-                <div class="st-toolcall">
-                  <button class="st-toolcall__head" aria-expanded="false">
-                    <span class="st-dot st-dot--success"></span><span>query_process_times</span>
-                    <span class="st-spacer"></span><span aria-hidden="true">+</span>
+            <div class="st-cluster">
+              <button class="st-btn st-btn--ghost st-btn--sm">Export</button>
+              <button class="st-btn st-btn--accent st-btn--sm">New process</button>
+            </div>
+          </div>
+
+          <div class="st-grid" style="margin-bottom:var(--st-space-base)">
+            <div class="st-card"><div class="st-stat"><span class="st-stat__value">68</span><span class="st-stat__label">Operational health</span><span class="st-stat__delta" data-dir="up">↑ 6 this month</span></div></div>
+            <div class="st-card"><div class="st-stat"><span class="st-stat__value">41.75</span><span class="st-stat__label">Hours / week manual</span><span class="st-stat__delta" data-dir="down">↓ 3.2</span></div></div>
+            <div class="st-card"><div class="st-stat"><span class="st-stat__value">7</span><span class="st-stat__label">Active processes</span></div></div>
+            <div class="st-card"><div class="st-stat"><span class="st-stat__value">3</span><span class="st-stat__label">Blocked</span></div></div>
+          </div>
+
+          <div class="st-table-wrap st-scroll-x">
+            <table class="st-table">
+              <thead><tr><th scope="col">Process</th><th scope="col">Owner</th><th scope="col">Status</th><th scope="col" data-numeric>Hrs / wk</th><th scope="col" data-numeric>Automatable</th></tr></thead>
+              <tbody>
+                <tr><td>Quote to order</td><td>Sales</td><td><span class="st-cluster" style="gap:var(--st-space-xs)"><span class="st-dot st-dot--danger"></span>Blocked</span></td><td data-numeric>21.25</td><td data-numeric>82%</td></tr>
+                <tr><td>Invoice approval</td><td>Finance</td><td><span class="st-cluster" style="gap:var(--st-space-xs)"><span class="st-dot st-dot--warning"></span>In review</span></td><td data-numeric>12.50</td><td data-numeric>64%</td></tr>
+                <tr><td>Onboarding</td><td>People</td><td><span class="st-cluster" style="gap:var(--st-space-xs)"><span class="st-dot st-dot--success"></span>Live</span></td><td data-numeric>8.00</td><td data-numeric>45%</td></tr>
+                <tr><td>Supplier intake</td><td>Ops</td><td><span class="st-cluster" style="gap:var(--st-space-xs)"><span class="st-dot st-dot--muted"></span>Draft</span></td><td data-numeric>4.75</td><td data-numeric>30%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 3 · chat + 4 · scorecard, side by side ───────────────────── -->
+    <div class="st-grid st-grid--2" style="margin-top:var(--st-space-xl);gap:var(--st-space-l)">
+
+      <div>
+        <p class="spec" style="margin-bottom:var(--st-space-s)">03 — Assistant · compact density</p>
+        <div class="frame" data-density="compact">
+          <div class="frame__bar"><span class="frame__dot"></span><span class="frame__dot"></span><span class="frame__dot"></span><span class="frame__url">app.kwapso.com/assistant</span></div>
+          <div class="frame__body frame__body--flush">
+            <div class="st-chat" style="height:440px">
+              <div class="st-chat__log" role="log">
+                <div class="st-msg st-msg--user"><div><div class="st-msg__body">Where is our biggest bottleneck?</div></div></div>
+                <div class="st-msg st-msg--assistant">
+                  <div>
+                    <div class="st-msg__body">Quote-to-order, and it isn't close. It costs 21.25 hours a week
+                    across three people against 12.5 for invoice approval.<a class="st-citation" href="#screens">1</a>
+                    The delay is manual re-keying between the CRM and the order sheet — about 82% of it is automatable.</div>
+                    <div class="st-cluster" style="gap:var(--st-space-s)">
+                      <span class="st-msg__meta">Just now</span>
+                      <span class="st-msg__actions">
+                        <button class="st-btn st-btn--ghost st-btn--sm">Copy</button>
+                        <button class="st-btn st-btn--ghost st-btn--sm">Retry</button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="st-msg st-msg--assistant">
+                  <div style="width:100%">
+                    <div class="st-toolcall">
+                      <button class="st-toolcall__head" aria-expanded="false">
+                        <span class="st-dot st-dot--success"></span><span>query_process_times</span>
+                        <span class="st-spacer"></span><span aria-hidden="true">+</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="st-msg st-msg--assistant"><div class="st-typing"><span></span><span></span><span></span></div></div>
+              </div>
+              <div class="st-stack st-stack--s" style="padding:var(--st-space-base);padding-top:0">
+                <div class="st-prompts">
+                  <button class="st-prompts__item">What would automation save?</button>
+                  <button class="st-prompts__item">Show the map</button>
+                </div>
+                <div class="st-composer">
+                  <textarea class="st-composer__input" rows="1" placeholder="Message…" aria-label="Message"></textarea>
+                  <button class="st-btn st-btn--accent st-btn--icon st-btn--sm" aria-label="Send message">
+                    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </button>
                 </div>
               </div>
             </div>
-            <div class="st-msg st-msg--assistant"><div class="st-typing"><span></span><span></span><span></span></div></div>
           </div>
-          <div class="st-stack st-stack--s" style="padding:var(--st-space-base);padding-top:0">
-            <div class="st-prompts">
-              <button class="st-prompts__item">Show the full process map</button>
-              <button class="st-prompts__item">What would automation save?</button>
-            </div>
-            <div class="st-composer">
-              <textarea class="st-composer__input" rows="1" placeholder="Message…" aria-label="Message"></textarea>
-              <button class="st-btn st-btn--accent st-btn--icon st-btn--sm" aria-label="Send message">
-                <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M4 7l4-4 4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
+        </div>
+      </div>
+
+      <div>
+        <p class="spec" style="margin-bottom:var(--st-space-s)">04 — Scorecard, one question at a time · mobile</p>
+        <div class="st-cluster st-cluster--center">
+          <div class="phone">
+            <div class="phone__notch"><span class="phone__pill"></span></div>
+            <div style="padding:var(--st-space-base)">
+              <div class="st-cluster st-cluster--between" style="margin-bottom:var(--st-space-base)">
+                <span class="st-caption">Question 12 of 30</span>
+                <span class="st-badge">Processes</span>
+              </div>
+              <div class="st-progress" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" aria-label="Progress" style="margin-bottom:var(--st-space-m)"><div class="st-progress__bar" style="width:40%"></div></div>
+
+              <h4 class="st-display st-display--xs" style="font-size:1.75rem;line-height:1.1">When someone new joins, is there a written process to follow?</h4>
+
+              <div class="st-stack st-stack--s" style="margin-top:var(--st-space-m)">
+                <label class="st-choice"><input type="radio" name="q12"><span><span class="st-choice__title">Never</span></span></label>
+                <label class="st-choice"><input type="radio" name="q12"><span><span class="st-choice__title">Sometimes</span></span></label>
+                <label class="st-choice" data-selected="true"><input type="radio" name="q12" checked><span><span class="st-choice__title">Usually</span><span class="st-choice__desc" style="display:block">Most roles have one</span></span></label>
+                <label class="st-choice"><input type="radio" name="q12"><span><span class="st-choice__title">Always</span></span></label>
+              </div>
+
+              <button class="st-btn st-btn--accent st-btn--block" style="margin-top:var(--st-space-m)">Next</button>
             </div>
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- ======================================================== COGNITIVE -->
-    <section id="cognitive">
-      <h2 class="doc-h">Cognitive load</h2>
-      <p class="st-lead">Most design systems ship taste. This one ships constraints the build checks.</p>
-      <p>Run <code>npx @kwapso/structure lint src/</code> — or
-      <code>node scripts/cognitive-load.mjs</code> — over your views. Budgets live in
-      <code>tokens/tokens.json</code>, so they are versioned and arguable in a pull request
-      rather than buried in a script. Every rule can be suppressed inline with a reason,
-      because a rule you cannot override is a rule people route around entirely.</p>
-
-      <div class="st-table-wrap st-scroll-x" style="margin-top:var(--st-space-base)">
-        <table class="st-table">
-          <thead><tr><th scope="col">Rule</th><th scope="col" data-numeric>Budget</th><th scope="col">Why</th></tr></thead>
-          <tbody>
-            <tr><td>accent-budget</td><td data-numeric>1</td><td>A second mango makes both mean “something”.</td></tr>
-            <tr><td>type-scale</td><td data-numeric>3</td><td>Every size added is another thing the eye must rank.</td></tr>
-            <tr><td>grouping</td><td data-numeric>7</td><td>Past seven, a list stops being scanned and starts being searched.</td></tr>
-            <tr><td>flatness</td><td data-numeric>2</td><td>Only detached overlays may cast a shadow.</td></tr>
-            <tr><td>motion-budget</td><td data-numeric>400ms</td><td>Beyond this, motion reads as a wait, not as feedback.</td></tr>
-            <tr><td>touch-target</td><td data-numeric>44px</td><td>The brand's control height and the WCAG floor agree.</td></tr>
-            <tr><td>hardcoded-value</td><td data-numeric>0</td><td>A literal colour cannot be re-themed or dark-moded.</td></tr>
-            <tr><td>colour-only-meaning</td><td data-numeric>0</td><td>Colour alone is invisible to about one man in twelve.</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <h3 style="margin-top:var(--st-space-m)">Density is a cognitive control, not a style</h3>
-      <p>Marketing pages need air to feel considered; a dashboard someone works in all day
-      needs proximity, so a scan is one movement instead of ten. One attribute switches the
-      rhythm of an entire subtree — try the toggle in the header.</p>
-      <pre><code>&lt;div data-density="compact"&gt;…&lt;/div&gt;</code></pre>
-    </section>
-
-    <!-- ============================================================ ADOPT -->
-    <section id="adopt">
-      <h2 class="doc-h">Adoption</h2>
-      <p class="st-lead">Three doors. Take as much as you want.</p>
-
-      <h3 style="margin-top:var(--st-space-base)">1 — Reskin an existing app (one line)</h3>
-      <p>Semantic HTML is styled for you. No markup changes, no build step, no framework.</p>
-      <pre><code>&lt;link rel="stylesheet" href="structure.css"&gt;</code></pre>
-
-      <h3 style="margin-top:var(--st-space-m)">2 — Tokens only</h3>
-      <p>Map the variables onto components you already have.</p>
-      <pre><code>@import "@kwapso/structure/tokens.css";
-
-.my-button { background: var(--st-accent); border-radius: var(--st-radius-pill); }</code></pre>
-
-      <h3 style="margin-top:var(--st-space-m)">3 — Tailwind or React</h3>
-      <pre><code>// tailwind.config.js
-module.exports = { presets: [require("@kwapso/structure/tailwind")] }</code></pre>
-      <pre><code>import { Button, Card, Chat } from "@kwapso/structure/react"
-import "@kwapso/structure/structure.css"</code></pre>
-
-      <div class="st-cta-band" style="margin-top:var(--st-space-l)">
-        <p class="st-display st-display--xs">Make work visible.</p>
-        <p class="st-lead" style="text-align:center">Read the language, then the budgets.</p>
-        <div class="st-cluster">
-          <a class="st-btn st-btn--outline" href="https://github.com/Kwapso/design_language_1/blob/main/LANGUAGE.md">LANGUAGE.md</a>
-          <a class="st-btn st-btn--outline" href="https://github.com/Kwapso/design_language_1/blob/main/COGNITIVE-LOAD.md">COGNITIVE-LOAD.md</a>
-        </div>
-      </div>
-    </section>
-
+    </div>
   </div>
-</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ TYPE -->
+<section id="type" class="wide" style="padding-block:var(--st-space-2xl)">
+  <p class="st-eyebrow">Type</p>
+  <p class="kicker" style="margin-top:var(--st-space-s);max-width:22ch">Two faces. Two weights. No bold.</p>
+
+  <div style="margin-top:var(--st-space-xl);border-top:1px solid var(--st-divider);padding-top:var(--st-space-m)">
+    <div class="st-cluster st-cluster--between">
+      <p class="spec">Serrif Condensed Light · display only</p>
+      <p class="spec">line-height 0.8 — negative leading</p>
+    </div>
+    <p class="specimen" style="font-size:clamp(3rem,11vw,10rem);margin-top:var(--st-space-base)">Make work<br>visible.</p>
+    <p class="specimen" style="font-size:clamp(1.6rem,4vw,3rem);opacity:.32;margin-top:var(--st-space-base)">ABCDEFGHIJKLMNOPQRSTUVWXYZ&nbsp;1234567890</p>
+  </div>
+
+  <div style="margin-top:var(--st-space-xl);border-top:1px solid var(--st-divider);padding-top:var(--st-space-m)">
+    <div class="st-cluster st-cluster--between">
+      <p class="spec">Saans · 300 and 500</p>
+      <p class="spec">+0.5px tracking on headings</p>
+    </div>
+    <p style="font-size:clamp(1.5rem,3.4vw,2.6rem);font-weight:300;line-height:1.25;margin-top:var(--st-space-base);max-width:24ch">
+      Structure you can see, data you can trust, and a team that works from one system instead of ten.</p>
+  </div>
+
+  <h3 style="margin-top:var(--st-space-xl);font-size:var(--st-text-lg)">The scale</h3>
+  <div class="st-stack" id="typescale" style="margin-top:var(--st-space-base)"></div>
+
+  <div class="st-alert st-alert--warning" style="margin-top:var(--st-space-m)">
+    <div><strong>The repo ships no font files.</strong>
+      <p style="margin-top:var(--st-space-xs)">Saans and Serrif Condensed are licensed typefaces. This page loads a
+      local copy that is gitignored and never published; consuming apps self-host their own. Without them the
+      language falls back to an open stack that keeps the proportions but not the letterforms.</p></div>
+  </div>
+</section>
+
+<!-- ═════════════════════════════════════════════════════════════ COLOUR -->
+<section id="colour" class="bleed">
+  <div class="wide" style="padding-top:var(--st-space-2xl)">
+    <p class="st-eyebrow">Colour</p>
+    <p class="kicker" style="margin-top:var(--st-space-s);max-width:26ch">Ink and paper carry every screen.</p>
+    <p class="st-lead" style="margin-top:var(--st-space-base)">Mango is the single accent. Sky, forest and poppy are
+    marks — a dot, a series, a rule down the side of an alert. None of them is ever a section background.</p>
+  </div>
+  <div class="swatch-row" id="swatches" style="margin-top:var(--st-space-l)"></div>
+
+  <div class="wide" style="padding-block:var(--st-space-m) var(--st-space-2xl)">
+    <div class="st-alert st-alert--info">
+      <div><strong>30 pairings verified against WCAG 2.1, both themes, on every run.</strong>
+        <p style="margin-top:var(--st-space-xs)">The first run failed 12 of them — including one where the value's own
+        documented ratio was wrong. Two tokens exist purely to make meaning safe: <code>sky-deep</code> for the
+        informational role (brand sky is 1.99:1 on paper, invisible as a status mark), and the <strong>stroke rule</strong>,
+        which outlines every chart mark so the boundary carries what a pale fill cannot. Deliberate exemptions print
+        their reason on every run, so they must be re-argued rather than inherited.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ PARTS -->
+<section id="parts" class="bleed sand-band">
+  <div class="wide" style="padding-block:var(--st-space-2xl)">
+    <p class="st-eyebrow">Parts</p>
+    <p class="kicker" style="margin-top:var(--st-space-s);max-width:22ch">Roughly seventy, framework-free.</p>
+
+    <div class="st-grid st-grid--2" style="margin-top:var(--st-space-xl);gap:var(--st-space-l)">
+
+      <div class="st-stack">
+        <p class="spec">Buttons</p>
+        <div class="demo st-cluster" style="background:var(--st-background)">
+          <button class="st-btn st-btn--accent">Take the scorecard</button>
+          <button class="st-btn st-btn--outline">Talk to us</button>
+          <button class="st-btn st-btn--ghost">Read more</button>
+          <button class="st-btn st-btn--solid">Contact</button>
+          <button class="st-btn st-btn--danger">Delete</button>
+          <button class="st-btn st-btn--accent" disabled>Disabled</button>
+        </div>
+        <p class="spec">44px · 24px padding · pill · 500 · 0.2s cubic-bezier(.645,.045,.355,1)</p>
+      </div>
+
+      <div class="st-stack">
+        <p class="spec">Marks</p>
+        <div class="demo st-cluster" style="background:var(--st-background)">
+          <span class="st-badge st-badge--accent">Featured</span>
+          <span class="st-badge">Draft</span>
+          <span class="st-badge st-badge--outline">Archived</span>
+          <span class="st-cluster" style="gap:var(--st-space-xs)"><span class="st-dot st-dot--success"></span>Live</span>
+          <span class="st-cluster" style="gap:var(--st-space-xs)"><span class="st-dot st-dot--danger"></span>Blocked</span>
+          <span class="st-chip">Workflow <button class="st-chip__remove" aria-label="Remove Workflow">&times;</button></span>
+          <span class="st-avatar">AK</span>
+        </div>
+        <p class="spec">Colour never carries meaning alone — every dot ships with its label.</p>
+      </div>
+
+      <div class="st-stack">
+        <p class="spec">Form</p>
+        <div class="demo st-stack" style="background:var(--st-background)">
+          <div class="st-field">
+            <label class="st-field__label" for="d1" data-required>Company name</label>
+            <input class="st-input" id="d1" placeholder="Kwapso GmbH">
+            <p class="st-field__hint">As it appears on your invoices.</p>
+          </div>
+          <div class="st-field" data-invalid="true">
+            <label class="st-field__label" for="d2">Work email</label>
+            <input class="st-input" id="d2" value="not-an-email" aria-invalid="true">
+            <p class="st-field__error" role="alert">Enter a valid email address.</p>
+          </div>
+          <label class="st-switch"><input type="checkbox" role="switch" checked><span class="st-switch__control" aria-hidden="true"></span><span>Send me the summary</span></label>
+        </div>
+      </div>
+
+      <div class="st-stack">
+        <p class="spec">Navigation &amp; disclosure</p>
+        <div class="demo st-stack" style="background:var(--st-background)">
+          <div class="st-tabs" role="tablist" aria-label="Example">
+            <button class="st-tabs__tab" role="tab" aria-selected="true">Overview</button>
+            <button class="st-tabs__tab" role="tab" aria-selected="false">Processes</button>
+            <button class="st-tabs__tab" role="tab" aria-selected="false">Team</button>
+          </div>
+          <ol class="st-stepper" style="list-style:none;padding:0;margin:0">
+            <li class="st-stepper__step" data-state="done"><span class="st-stepper__dot">✓</span><span>Audit</span></li>
+            <li class="st-stepper__line"></li>
+            <li class="st-stepper__step" data-state="current" aria-current="step"><span class="st-stepper__dot">2</span><span>Design</span></li>
+            <li class="st-stepper__line"></li>
+            <li class="st-stepper__step" data-state="todo"><span class="st-stepper__dot">3</span><span>Build</span></li>
+          </ol>
+          <div>
+            <details><summary>Who or what is kwapso?</summary><div>The operational partner for established, owner-led businesses in the DACH region.</div></details>
+            <details><summary>How long does the scorecard take?</summary><div>About five minutes — thirty questions from your everyday work.</div></details>
+          </div>
+        </div>
+      </div>
+
+      <div class="st-stack">
+        <p class="spec">Scale · the scorecard's core interaction</p>
+        <div class="demo" style="background:var(--st-background)">
+          <div class="st-scale" role="radiogroup" aria-label="How structured are your operations?">
+            <button class="st-scale__item" role="radio" aria-checked="false">Never</button>
+            <button class="st-scale__item" role="radio" aria-checked="false">Rarely</button>
+            <button class="st-scale__item" role="radio" aria-checked="true" data-selected="true">Sometimes</button>
+            <button class="st-scale__item" role="radio" aria-checked="false">Often</button>
+            <button class="st-scale__item" role="radio" aria-checked="false">Always</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="st-stack">
+        <p class="spec">Feedback</p>
+        <div class="demo st-stack" style="background:var(--st-background)">
+          <div class="st-alert st-alert--success"><div>Your process map is ready to review.</div></div>
+          <div class="st-alert st-alert--danger"><div>Three processes have no owner assigned.</div></div>
+          <div class="st-meter">
+            <div class="st-meter__head"><span>Operational health</span><span class="st-numeric">68/100</span></div>
+            <div class="st-progress" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100" aria-label="Operational health"><div class="st-progress__bar" style="width:68%"></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ COGNITIVE LOAD -->
+<section id="cognitive" class="wide" style="padding-block:var(--st-space-2xl)">
+  <p class="st-eyebrow">Cognitive load</p>
+  <p class="kicker" style="margin-top:var(--st-space-s);max-width:24ch">Most systems ship taste. Taste loses to a deadline.</p>
+  <p class="st-lead" style="margin-top:var(--st-space-base)">So the budgets are counted by the build. They live in
+  <code>tokens.json</code>, which makes them versioned and arguable in a pull request rather than buried in a script.</p>
+
+  <div class="st-table-wrap st-scroll-x" style="margin-top:var(--st-space-m)">
+    <table class="st-table">
+      <thead><tr><th scope="col">Rule</th><th scope="col" data-numeric>Budget</th><th scope="col">Why</th></tr></thead>
+      <tbody>
+        <tr><td><code>accent-budget</code></td><td data-numeric>1</td><td>A second mango makes both mean “something”.</td></tr>
+        <tr><td><code>type-scale</code></td><td data-numeric>3</td><td>Every size added is another thing the eye must rank.</td></tr>
+        <tr><td><code>grouping</code></td><td data-numeric>7</td><td>Past seven, a list stops being scanned and starts being searched.</td></tr>
+        <tr><td><code>flatness</code></td><td data-numeric>2</td><td>Only detached overlays may cast a shadow.</td></tr>
+        <tr><td><code>motion-budget</code></td><td data-numeric>400ms</td><td>Beyond this, motion reads as a wait, not feedback.</td></tr>
+        <tr><td><code>touch-target</code></td><td data-numeric>44px</td><td>The brand's control height and the WCAG floor agree.</td></tr>
+        <tr><td><code>hardcoded-value</code></td><td data-numeric>0</td><td>A literal colour cannot be re-themed or dark-moded.</td></tr>
+        <tr><td><code>colour-only-meaning</code></td><td data-numeric>0</td><td>Colour alone is invisible to about one man in twelve.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="st-caption" style="margin-top:var(--st-space-s)">Building this page, the grouping rule caught an eight-item
+  sidebar and the flatness rule caught a regex bug that was silently passing every shadow. Both were real.</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ ADOPT -->
+<section id="adopt" class="bleed st-invert">
+  <div class="wide" style="padding-block:var(--st-space-2xl)">
+    <p class="st-eyebrow">Adopt</p>
+    <p class="kicker" style="margin-top:var(--st-space-s);max-width:20ch">Three doors. Take as much as you want.</p>
+
+    <div class="st-grid st-grid--fixed-3" style="margin-top:var(--st-space-xl);gap:var(--st-space-l)">
+      <div>
+        <p class="specimen" style="font-size:2.4rem">01</p>
+        <h3 style="margin-top:var(--st-space-s);font-size:var(--st-text-md)">Reskin, one line</h3>
+        <p class="st-muted" style="margin-top:var(--st-space-s)">Semantic HTML is styled for you. No markup
+        changes, no build step, no framework. This is the Webflow path too.</p>
+      </div>
+      <div>
+        <p class="specimen" style="font-size:2.4rem">02</p>
+        <h3 style="margin-top:var(--st-space-s);font-size:var(--st-text-md)">Tokens only</h3>
+        <p class="st-muted" style="margin-top:var(--st-space-s)">Map the variables onto components you
+        already have. CSS, SCSS, typed JS, Tailwind preset, or Figma.</p>
+      </div>
+      <div>
+        <p class="specimen" style="font-size:2.4rem">03</p>
+        <h3 style="margin-top:var(--st-space-s);font-size:var(--st-text-md)">React</h3>
+        <p class="st-muted" style="margin-top:var(--st-space-s)">Components that render exactly the same
+        class names — one implementation, two front doors, so they cannot drift.</p>
+      </div>
+    </div>
+
+    <pre style="margin-top:var(--st-space-l)"><code>&lt;link rel="stylesheet" href="structure.css"&gt;
+&lt;body data-density="comfortable"&gt;   &lt;!-- or "compact" for app screens --&gt;</code></pre>
+
+    <div class="st-cluster" style="margin-top:var(--st-space-m)">
+      <a class="st-btn st-btn--accent" href="https://github.com/Kwapso/design_language_1">Get the repo</a>
+      <a class="st-btn st-btn--ghost" href="https://github.com/Kwapso/design_language_1/blob/main/LANGUAGE.md">Read the language</a>
+    </div>
+  </div>
+</section>
+
 </main>
 
-<footer class="st-container st-section--tight">
-  <hr class="st-divider">
+<footer class="wide" style="padding-block:var(--st-space-m)">
+  <hr class="rule">
   <p class="st-caption" style="margin-top:var(--st-space-base)">
-    Structure — the Kwapso design language. Values measured from kwapso.com. MIT licensed;
-    typefaces are not included and remain the property of their foundries.
+    Structure — the Kwapso design language. Values measured from kwapso.com, 17 August 2026.
+    MIT licensed; typefaces are not included and remain the property of their foundries.
   </p>
 </footer>
 
@@ -407,23 +574,27 @@ import "@kwapso/structure/structure.css"</code></pre>
 </button>
 
 <script type="module">
-/* The docs read the built token file, so this page can never document a value
-   the system does not actually ship. */
+/* The page reads the built token file, so it can never document a value the
+   system does not actually ship. */
 const tokens = (await import("./assets/tokens.js")).default
 
-const swatches = [
-  ["ink", "Text, icons, borders"], ["paper", "The page"], ["sand", "Cards and rows"],
-  ["mango", "The accent — one per view"], ["sky", "Informational mark"],
-  ["forest", "Success"], ["poppy", "Destructive"], ["grey", "Disabled"],
+/* ---- colour fields ---- */
+const fields = [
+  ["ink", "Text, icons, borders", "light"], ["paper", "The page", "dark"],
+  ["sand", "Cards and rows", "dark"], ["mango", "The accent — one per view", "dark"],
+  ["sky", "Informational mark", "dark"], ["forest", "Success", "light"],
+  ["poppy", "Destructive", "light"], ["grey", "Disabled", "dark"],
 ]
-document.getElementById("swatches").innerHTML = swatches.map(([k, use]) => `
-  <div>
-    <div class="swatch" style="background:${tokens.color[k]}"></div>
-    <p style="margin-top:var(--st-space-s);font-weight:var(--st-weight-medium)">${k}</p>
-    <p class="spec">${tokens.color[k]}</p>
-    <p class="st-caption">${use}</p>
+document.getElementById("swatches").innerHTML = fields.map(([k, use, on]) => `
+  <div class="field" style="background:${tokens.color[k]};color:${on === "light" ? tokens.color.paper : tokens.color.ink}">
+    <div class="field__meta">
+      <span style="font-weight:500">${k}</span>
+      <span class="mono" style="opacity:.7">${tokens.color[k]}</span>
+    </div>
+    <p style="font-size:var(--st-text-xs);opacity:.75;margin-top:4px">${use}</p>
   </div>`).join("")
 
+/* ---- type scale ---- */
 const samples = {
   "4xl": "Work, structured.", "3xl": "Make work visible.", "2xl": "Process Audit & Design",
   xl: "From chaos to full overview", lg: "Real progress, every few weeks",
@@ -433,22 +604,14 @@ const samples = {
 }
 const serif = new Set(["4xl", "3xl"])
 document.getElementById("typescale").innerHTML = Object.entries(tokens.text).reverse().map(([k, v]) => `
-  <div style="border-bottom:1px solid var(--st-divider);padding-bottom:var(--st-space-s)">
+  <div style="border-bottom:1px solid var(--st-divider);padding-bottom:var(--st-space-s);overflow:hidden">
     <div style="font-size:${v.size};line-height:${v.lineHeight};${serif.has(k)
       ? "font-family:var(--st-font-display);font-weight:300"
       : "font-weight:500;letter-spacing:var(--st-tracking-wide)"}">${samples[k] ?? k}</div>
-    <p class="spec" style="margin-top:var(--st-space-xs)">${k} — ${v.px}px / line-height ${v.lineHeight}</p>
+    <p class="spec" style="margin-top:var(--st-space-xs)">${k} — ${v.px}px / ${v.lineHeight}</p>
   </div>`).join("")
 
-document.getElementById("spacescale").innerHTML = Object.entries(tokens.space)
-  .filter(([k]) => k !== "0").map(([k, v]) => `
-  <div class="st-cluster">
-    <span style="width:70px" class="spec">${k}</span>
-    <span style="height:16px;width:${v};background:var(--st-accent);border-radius:2px"></span>
-    <span class="spec">${v}</span>
-  </div>`).join("")
-
-/* Theme: light -> dark -> system, matching ThemeProvider's cycle exactly. */
+/* ---- theme: light → dark → system, matching ThemeProvider exactly ---- */
 const order = ["light", "dark", "system"]
 let ti = 0
 document.getElementById("theme").onclick = (e) => {
@@ -460,29 +623,33 @@ document.getElementById("theme").onclick = (e) => {
   e.currentTarget.setAttribute("aria-label", `Theme: ${t}. Switch to ${order[(ti + 1) % order.length]}.`)
 }
 
+/* ---- density ---- */
 document.querySelectorAll("[data-density]").forEach((b) => {
+  if (!b.matches("button")) return
   b.onclick = () => {
     document.documentElement.setAttribute("data-density", b.dataset.density)
-    document.querySelectorAll("[data-density]").forEach((o) =>
-      o.setAttribute("aria-pressed", String(o === b)))
+    document.querySelectorAll("button[data-density]").forEach((o) => o.setAttribute("aria-pressed", String(o === b)))
   }
 })
 
 document.getElementById("totop").onclick = () => window.scrollTo({ top: 0, behavior: "smooth" })
 
-/* Demo-only interactivity so the examples respond like the real components. */
+/* ---- demo interactivity, so the examples behave like the real components ---- */
 document.querySelectorAll(".st-scale").forEach((g) =>
   g.querySelectorAll(".st-scale__item").forEach((b) => b.onclick = () => {
-    g.querySelectorAll(".st-scale__item").forEach((o) => {
-      o.removeAttribute("data-selected"); o.setAttribute("aria-checked", "false")
-    })
+    g.querySelectorAll(".st-scale__item").forEach((o) => { o.removeAttribute("data-selected"); o.setAttribute("aria-checked", "false") })
     b.setAttribute("data-selected", "true"); b.setAttribute("aria-checked", "true")
   }))
 
 document.querySelectorAll('[role="tablist"]').forEach((g) =>
-  g.querySelectorAll('[role="tab"]').forEach((b) => b.onclick = () => {
-    g.querySelectorAll('[role="tab"]').forEach((o) => o.setAttribute("aria-selected", String(o === b)))
-  }))
+  g.querySelectorAll('[role="tab"]').forEach((b) => b.onclick = () =>
+    g.querySelectorAll('[role="tab"]').forEach((o) => o.setAttribute("aria-selected", String(o === b)))))
+
+document.querySelectorAll(".st-choice input").forEach((i) => i.onchange = () => {
+  document.querySelectorAll(`.st-choice:has(input[name="${i.name}"])`)
+    .forEach((c) => c.removeAttribute("data-selected"))
+  i.closest(".st-choice").setAttribute("data-selected", "true")
+})
 
 document.querySelectorAll(".st-toolcall__head").forEach((h) => h.onclick = () => {
   const open = h.getAttribute("aria-expanded") === "true"
