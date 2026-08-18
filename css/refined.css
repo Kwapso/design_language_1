@@ -1,0 +1,254 @@
+/* Structure — refinement.
+ * structure-definitions — this file DEFINES the vocabulary; view budgets do not apply.
+ *
+ * Deference, clarity, depth — applied honestly rather than imitated.
+ *
+ * The temptation when someone says "design it like Apple" is to reach for
+ * frosted glass and a spring curve. Neither is the actual idea, and both are
+ * forbidden here anyway. The actual ideas are:
+ *
+ *   DEFERENCE  the content is the interface. Chrome recedes when it is not
+ *              needed and returns when it is. A title is large when you
+ *              arrive and small once you are reading.
+ *   CLARITY    grouping, alignment and negative space do the explaining, so
+ *              the copy does not have to. This is the single largest
+ *              cognitive-load lever in the whole system.
+ *   DEPTH      layers and transitions convey where you are and where you came
+ *              from. Apple does that with translucency; we do it with surface,
+ *              inset and motion, which say the same thing on paper.
+ *
+ * Nothing here breaks a rule: still flat, still one accent, still two
+ * typefaces, still under 400ms.
+ */
+
+/* ======================================================================
+ * INSET GROUPED LIST — the highest-value pattern in this file
+ *
+ * A settings screen as fifteen equal rows is fifteen decisions. The same
+ * fifteen in four labelled groups is four decisions and then a short scan.
+ * The grouping is doing the work, not the styling.
+ *
+ * Details that matter and are usually missed:
+ *   · the divider starts where the LABEL starts, not at the container edge,
+ *     so the eye reads one column rather than a grid;
+ *   · the last row has no divider, so the group closes cleanly;
+ *   · the corners round only on the first and last row.
+ * ==================================================================== */
+
+.st-inset {
+  background: var(--st-surface);
+  border-radius: var(--st-radius-surface);
+  overflow: clip;                       /* clip, so rounded corners cut rows */
+}
+.st-inset__row {
+  display: flex;
+  align-items: center;
+  gap: var(--st-space-base);
+  min-height: var(--st-control-min-touch);
+  padding: var(--st-space-s) var(--st-space-base);
+  /* The inset divider: drawn on the row, offset to the content's left edge. */
+  box-shadow: inset 0 -1px 0 var(--st-divider);
+  transition: background-color var(--st-motion-fast) var(--st-motion-ease);
+}
+.st-inset__row:last-child { box-shadow: none; }
+.st-inset__row > :first-child { flex: 1; min-width: 0; }
+
+/* When rows carry a leading glyph, the divider starts after it. */
+.st-inset--iconic .st-inset__row {
+  box-shadow: inset calc(var(--st-space-base) + 28px) -1px 0 -0px var(--st-divider);
+}
+
+/* Tappable rows respond, and show the affordance only where it belongs. */
+a.st-inset__row,
+button.st-inset__row {
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: var(--st-surface);
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+a.st-inset__row:hover,
+button.st-inset__row:hover { background: var(--st-raised); }
+a.st-inset__row:active,
+button.st-inset__row:active { background: var(--st-border); }
+
+.st-inset__label { font-size: var(--st-text-sm); }
+.st-inset__value { color: var(--st-muted); font-size: var(--st-text-sm); white-space: nowrap; }
+.st-inset__chevron { color: var(--st-muted); flex: none; }
+
+/* The group header and footer. The footer is where the explanation goes —
+ * moving it out of the row is what lets the row stay one short line. */
+.st-inset-group { margin-bottom: var(--st-space-m); }
+.st-inset-group__title {
+  font-size: var(--st-text-xs);
+  letter-spacing: var(--st-tracking-wider);
+  text-transform: uppercase;
+  color: var(--st-muted);
+  padding: 0 var(--st-space-base) var(--st-space-xs);
+}
+.st-inset-group__note {
+  font-size: var(--st-text-xs);
+  color: var(--st-muted);
+  padding: var(--st-space-xs) var(--st-space-base) 0;
+  max-width: 60ch;
+}
+
+/* ======================================================================
+ * LARGE TITLE — deference, made literal
+ *
+ * The title is large on arrival, because that is when you need to know where
+ * you are. It shrinks into the bar as you read, because by then you don't.
+ *
+ * Driven by a scroll-timeline where supported, so it runs on the compositor
+ * and costs nothing; the JS fallback in react/refined.tsx does the same for
+ * the rest.
+ * ==================================================================== */
+
+.st-large-title {
+  font-family: var(--st-font-display);
+  font-weight: var(--st-weight-light);
+  font-size: var(--st-text-2xl);
+  line-height: 1.05;
+  letter-spacing: var(--st-tracking-normal);
+  padding-block: var(--st-space-s) var(--st-space-base);
+  transform-origin: left center;
+}
+
+@supports (animation-timeline: scroll()) {
+  .st-large-title[data-collapse] {
+    animation: st-title-collapse linear both;
+    animation-timeline: scroll(nearest block);
+    animation-range: 0 120px;
+  }
+  @keyframes st-title-collapse {
+    to { font-size: var(--st-text-md); opacity: .999; }
+  }
+  /* The bar's own hairline only appears once content has moved under it. */
+  .st-shell__head[data-collapse],
+  .st-navbar[data-collapse] {
+    animation: st-bar-settle linear both;
+    animation-timeline: scroll(nearest block);
+    animation-range: 0 80px;
+  }
+  @keyframes st-bar-settle {
+    from { border-bottom-color: transparent; }
+    to   { border-bottom-color: var(--st-divider); }
+  }
+}
+
+/* Fallback + JS-driven state. */
+.st-large-title[data-collapsed="true"] { font-size: var(--st-text-md); }
+.st-large-title { transition: font-size var(--st-motion-base) var(--st-motion-ease); }
+
+/* ======================================================================
+ * SCROLL PROGRESS — where am I in this document
+ * ==================================================================== */
+
+.st-scroll-progress {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: var(--st-z-sticky);
+  height: 2px;
+  background: var(--st-accent);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+@supports (animation-timeline: scroll()) {
+  .st-scroll-progress {
+    animation: st-progress-scroll linear both;
+    animation-timeline: scroll(root block);
+  }
+  @keyframes st-progress-scroll { to { transform: scaleX(1); } }
+}
+
+/* ======================================================================
+ * SHEET WITH DETENTS — depth, without translucency
+ *
+ * A half-height sheet keeps the screen behind it visible and in place, so
+ * the user never loses their context. The grabber is what tells them it moves.
+ * ==================================================================== */
+
+.st-sheet {
+  position: fixed; z-index: var(--st-z-modal);
+  left: 0; right: 0; bottom: 0;
+  max-height: 92svh;
+  display: flex; flex-direction: column;
+  background: var(--st-background);
+  border-radius: var(--st-radius-surface) var(--st-radius-surface) 0 0;
+  box-shadow: var(--st-elevation-escape-hatch);
+  animation: st-enter-up var(--st-motion-base) var(--st-motion-ease-entrance) both;
+  transition: height var(--st-motion-base) var(--st-motion-ease);
+}
+.st-sheet[data-detent="half"]  { height: 50svh; }
+.st-sheet[data-detent="large"] { height: 92svh; }
+.st-sheet[data-detent="auto"]  { height: auto; }
+.st-sheet__grabber {
+  flex: none;
+  width: 36px; height: 5px;
+  margin: var(--st-space-s) auto;
+  border-radius: var(--st-radius-pill);
+  background: var(--st-border-control);
+}
+.st-sheet__body { overflow-y: auto; padding: var(--st-space-base) var(--st-space-base) calc(var(--st-space-base) + env(safe-area-inset-bottom)); }
+
+/* On a wide screen a bottom sheet is wrong — it becomes a centred panel. */
+@media (min-width: 720px) {
+  .st-sheet {
+    left: 50%; bottom: var(--st-space-m);
+    transform: translateX(-50%);
+    width: min(560px, calc(100vw - var(--st-space-m)));
+    border-radius: var(--st-radius-surface);
+  }
+}
+
+/* ======================================================================
+ * CLARITY — optical corrections
+ *
+ * Small, and the reason well-set text looks effortless.
+ * ==================================================================== */
+
+/* Punctuation hangs into the margin so the text edge reads straight. */
+.st-prose, .st-lead, .st-display { hanging-punctuation: first last; }
+
+/* Headings balance across lines; body avoids a one-word last line. */
+h1, h2, h3, .st-display, .st-large-title { text-wrap: balance; }
+p, .st-lead { text-wrap: pretty; }
+
+/* Figures in a column must align, always. */
+.st-table [data-numeric], .st-stat__value, .st-numeric, .st-count,
+.st-inset__value { font-variant-numeric: tabular-nums; }
+
+/* A focus ring that follows the shape it is on, rather than boxing it. */
+:focus-visible { transition: outline-offset var(--st-motion-fast) var(--st-motion-ease); }
+.st-inset__row:focus-visible { outline-offset: -2px; }
+
+/* ======================================================================
+ * DEPTH — hierarchy by inset, not by shadow
+ * ==================================================================== */
+
+/* A surface that sits *below* the page rather than above it. Reads as a
+ * container for something, which a raised card does not. */
+.st-recessed {
+  background: var(--st-surface);
+  box-shadow: inset 0 1px 0 var(--st-divider);
+  border-radius: var(--st-radius-surface);
+}
+
+/* ======================================================================
+ * DISCLOSURE — the row that opens
+ * ==================================================================== */
+
+.st-inset__row[aria-expanded] .st-inset__chevron {
+  transition: transform var(--st-motion-base) var(--st-motion-ease);
+}
+.st-inset__row[aria-expanded="true"] .st-inset__chevron { transform: rotate(90deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .st-large-title, .st-sheet, .st-scroll-progress,
+  .st-shell__head[data-collapse], .st-navbar[data-collapse] {
+    animation: none !important;
+    transition: none !important;
+  }
+  .st-scroll-progress { transform: scaleX(1); }
+}

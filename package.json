@@ -47,7 +47,8 @@
     "check:types": "tsc --noEmit",
     "check": "npm run build && npm run check:coverage && npm run check:contrast && npm run check:cognitive && npm run check:types",
     "docs": "npx --yes serve docs",
-    "check:coverage": "node scripts/check-coverage.mjs"
+    "check:coverage": "node scripts/check-coverage.mjs",
+    "deploy:cf": "npm run build && npx --yes wrangler pages deploy docs --project-name=structure-design-language --branch=main --commit-dirty=true"
   },
   "keywords": [
     "design-system",

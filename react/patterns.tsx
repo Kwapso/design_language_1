@@ -197,17 +197,8 @@ export function ConfirmDialog({ open, onClose, onConfirm, title, children, confi
   )
 }
 
-export const Sheet = ({ open, onClose, title, children }: {
-  open: boolean; onClose: () => void; title: string; children: React.ReactNode
-}) => {
-  if (!open) return null
-  return (
-    <>
-      <div className="st-overlay" onClick={onClose} aria-hidden="true" />
-      <aside className="st-drawer" role="dialog" aria-modal="true" aria-label={title}>{children}</aside>
-    </>
-  )
-}
+/* Sheet lives in ./refined — the detented version supersedes this one, since a
+ * half-height sheet keeps the screen behind it visible and in place. */
 
 export function ContextMenu({ items, children }: {
   items: Array<{ label: string; onSelect: () => void; danger?: boolean }>

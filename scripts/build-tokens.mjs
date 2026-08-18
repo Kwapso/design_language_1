@@ -270,6 +270,7 @@ const bundle =
     readFileSync(join(root, "css/extended.css"), "utf8"),
     readFileSync(join(root, "css/loaders.css"), "utf8"),
     readFileSync(join(root, "css/screens.css"), "utf8"),
+    readFileSync(join(root, "css/refined.css"), "utf8"),
     readFileSync(join(root, "css/motion.css"), "utf8"),
   ].join("\n\n")
 

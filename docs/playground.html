@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Playground — Structure</title>
+<meta name="description" content="Move the tokens and watch the whole system respond, contrast check included.">
+<link rel="stylesheet" href="./assets/fonts.css">
+<link rel="stylesheet" href="./assets/structure.css">
+<!-- structure-ignore accent-budget: the preview screen carries its own accent
+     alongside the editor's, which no single product view would do. -->
+<!-- structure-ignore type-scale: a specimen preview spans the scale. -->
+<style>
+  .wide { width: min(1400px, 100% - 80px); margin-inline: auto; }
+  @media (max-width: 700px) { .wide { width: calc(100% - 40px); } }
+  .spec { font-family: var(--st-font-mono); font-size: var(--st-text-xs); color: var(--st-muted); }
+  .kicker { font-family: var(--st-font-display); font-weight: 300; font-size: clamp(2rem, 5vw, 3.4rem); line-height: .95; }
+
+  /* Editor beside the thing it edits, so cause and effect are one glance
+     apart. A control panel on another screen is a guessing game. */
+  .lab { display: grid; grid-template-columns: 320px 1fr; gap: var(--st-space-l); align-items: start; }
+  .lab > * { min-width: 0; }
+  @media (max-width: 980px) { .lab { grid-template-columns: 1fr; } .panel { position: static !important; } }
+  .panel { position: sticky; top: 76px; }
+
+  .phone { width: 320px; margin-inline: auto; border: 1px solid var(--st-border-control); border-radius: 30px; overflow: hidden; }
+  .phone__notch { height: 26px; display: grid; place-items: center; background: var(--st-surface); }
+  .phone__pill { width: 70px; height: 5px; border-radius: 3px; background: var(--st-border-control); }
+
+  .swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(44px, 1fr)); gap: 6px; }
+  .sw { aspect-ratio: 1; border-radius: var(--st-radius-surface); border: 1px solid var(--st-border); cursor: pointer; padding: 0; min-height: 0; min-width: 0; }
+  .sw[aria-pressed="true"] { outline: 2px solid var(--st-foreground); outline-offset: 2px; }
+
+  /* The verdict badge. Colour is never the only signal — it always carries
+     the ratio and the word. */
+  .verdict { display: inline-flex; align-items: center; gap: var(--st-space-xs); font-size: var(--st-text-xs); }
+</style>
+</head>
+<body>
+<a href="#main" class="st-skip-link">Skip to content</a>
+<div class="st-scroll-progress" role="progressbar" aria-label="Reading progress"></div>
+
+<header class="st-navbar" style="position:sticky;top:0;z-index:100">
+  <strong style="letter-spacing:var(--st-tracking-wide)"><a href="./" style="text-decoration:none">Structure</a></strong>
+  <nav class="st-navbar__links" aria-label="Main">
+    <a class="st-navbar__link" href="./">Overview</a>
+    <a class="st-navbar__link" href="./components.html">Components</a>
+    <a class="st-navbar__link" href="./screens.html">Screens</a>
+    <a class="st-navbar__link" href="./loaders.html">Loaders</a>
+    <a class="st-navbar__link" href="./playground.html" aria-current="page">Playground</a>
+  </nav>
+  <button class="st-btn st-btn--ghost st-btn--sm" id="theme" aria-label="Switch theme">Theme</button>
+</header>
+
+<main id="main" class="wide" style="padding-block:var(--st-space-xl)">
+  <p class="st-eyebrow">Playground</p>
+  <h1 class="kicker" style="margin-top:var(--st-space-s);max-width:22ch">Move a token. Watch everything move.</h1>
+  <p class="st-lead" style="margin-top:var(--st-space-base)">
+    This is the whole argument for a token layer, made touchable: nothing on the right hardcodes a
+    value, so changing one variable re-themes a screen, a chart and a chat at once. The contrast
+    check runs live — the same arithmetic that gates the build.
+  </p>
+
+  <div class="lab" style="margin-top:var(--st-space-xl)">
+
+    <!-- ═══════════════════════════════════════════════ THE EDITOR -->
+    <div class="panel st-stack">
+      <div class="st-inset-group">
+        <h3 class="st-inset-group__title">Accent</h3>
+        <div class="st-inset">
+          <div class="st-inset__row" style="display:block">
+            <div class="swatches" id="accents"></div>
+          </div>
+          <label class="st-inset__row">
+            <span class="st-inset__label">Custom</span>
+            <input type="color" id="accent-pick" aria-label="Custom accent colour"
+                   style="width:44px;height:28px;padding:0;border:0;background:none;min-height:0">
+          </label>
+        </div>
+        <p class="st-inset-group__note">Mango means “the next action”. Change it and every filled
+        button, chart series and progress bar follows — because none of them owns a colour.</p>
+      </div>
+
+      <div class="st-inset-group">
+        <h3 class="st-inset-group__title">Contrast, checked live</h3>
+        <div class="st-inset" id="contrast"></div>
+        <p class="st-inset-group__note">The same 3:1 and 4.5:1 thresholds <code>npm run check:contrast</code>
+        enforces. A pale accent fails as body text and passes as a button, because the ink label carries it.</p>
+      </div>
+
+      <div class="st-inset-group">
+        <h3 class="st-inset-group__title">Form</h3>
+        <div class="st-inset">
+          <div class="st-inset__row">
+            <span class="st-inset__label">Corner</span>
+            <span class="st-inset__value" id="radius-val">10px</span>
+          </div>
+          <div class="st-inset__row" style="display:block">
+            <input class="st-slider" type="range" id="radius" min="0" max="24" value="10" aria-label="Corner radius">
+          </div>
+          <div class="st-inset__row">
+            <span class="st-inset__label">Density</span>
+            <div class="st-segmented" id="density">
+              <span class="st-segmented__thumb" aria-hidden="true"></span>
+              <button class="st-segmented__item" aria-pressed="true" data-d="comfortable">Comfortable</button>
+              <button class="st-segmented__item" aria-pressed="false" data-d="compact">Compact</button>
+            </div>
+          </div>
+        </div>
+        <p class="st-inset-group__note">Density is a cognitive-load control, not a style: marketing needs
+        air, a screen you work in all day needs proximity.</p>
+      </div>
+
+      <div class="st-inset-group">
+        <h3 class="st-inset-group__title">Motion</h3>
+        <div class="st-inset">
+          <label class="st-inset__row">
+            <span class="st-inset__label">Reduce motion</span>
+            <span class="st-switch"><input type="checkbox" role="switch" id="rm"><span class="st-switch__control"></span></span>
+          </label>
+          <button class="st-inset__row" id="replay">
+            <span class="st-inset__label">Replay the entrance</span>
+          </button>
+        </div>
+        <p class="st-inset-group__note">Turning motion off is a complete alternative rendering, not a
+        downgrade — nothing here carries meaning that only movement conveys.</p>
+      </div>
+
+      <div class="st-cluster">
+        <button class="st-btn st-btn--outline st-btn--sm" id="reset">Reset</button>
+        <button class="st-btn st-btn--ghost st-btn--sm" id="copy">Copy as CSS</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════ THE PREVIEW -->
+    <div id="preview" class="st-stack st-stack--m">
+
+      <div class="phone">
+        <div class="phone__notch"><span class="phone__pill"></span></div>
+        <div data-density="comfortable" id="phone-body" style="height:520px;overflow-y:auto;position:relative">
+          <div style="padding:var(--st-space-base)">
+            <h1 class="st-large-title">Today</h1>
+
+            <div class="st-stagger" id="live-stack" style="display:flex;flex-direction:column;gap:var(--st-space-s)">
+              <div class="st-card">
+                <div class="st-meter">
+                  <div class="st-meter__head"><span>Operational health</span><span class="st-numeric" id="pv-health">68</span></div>
+                  <div class="st-progress"><div class="st-progress__bar" id="pv-bar" style="width:68%"></div></div>
+                </div>
+              </div>
+
+              <div class="st-inset-group" style="margin:0">
+                <h3 class="st-inset-group__title">This week</h3>
+                <div class="st-inset">
+                  <button class="st-inset__row"><span class="st-inset__label">Quote to order</span><span class="st-inset__value">21.25 h</span>
+                    <svg class="st-inset__chevron" width="14" height="14" viewBox="0 0 14 14"><path d="M5 3l4 4-4 4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                  <button class="st-inset__row"><span class="st-inset__label">Invoice approval</span><span class="st-inset__value">12.50 h</span>
+                    <svg class="st-inset__chevron" width="14" height="14" viewBox="0 0 14 14"><path d="M5 3l4 4-4 4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                  <button class="st-inset__row"><span class="st-inset__label">Onboarding</span><span class="st-inset__value">8.00 h</span>
+                    <svg class="st-inset__chevron" width="14" height="14" viewBox="0 0 14 14"><path d="M5 3l4 4-4 4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                </div>
+              </div>
+
+              <div class="st-card">
+                <figure class="st-chart" style="margin:0">
+                  <figcaption class="st-caption" style="margin-bottom:var(--st-space-xs)">Hours by process</figcaption>
+                  <svg viewBox="0 0 100 60" preserveAspectRatio="none" role="img" aria-label="Bar chart">
+                    <line class="st-chart__grid" x1="0" x2="100" y1="2" y2="2"/>
+                    <line class="st-chart__grid" x1="0" x2="100" y1="30" y2="30"/>
+                    <line class="st-chart__grid" x1="0" x2="100" y1="58" y2="58"/>
+                    <rect class="st-chart-mark st-chart-1" vector-effect="non-scaling-stroke" x="6"  y="8"  width="14" height="50" rx="1"/>
+                    <rect class="st-chart-mark st-chart-2" vector-effect="non-scaling-stroke" x="29" y="24" width="14" height="34" rx="1"/>
+                    <rect class="st-chart-mark st-chart-3" vector-effect="non-scaling-stroke" x="52" y="36" width="14" height="22" rx="1"/>
+                    <rect class="st-chart-mark st-chart-4" vector-effect="non-scaling-stroke" x="75" y="45" width="14" height="13" rx="1"/>
+                  </svg>
+                </figure>
+              </div>
+
+              <div class="st-card" style="padding:0;overflow:hidden">
+                <div class="st-chat" style="height:190px">
+                  <div class="st-chat__log" role="log">
+                    <div class="st-msg st-msg--user"><div><div class="st-msg__body">Biggest bottleneck?</div></div></div>
+                    <div class="st-msg st-msg--assistant"><div><div class="st-msg__body">Quote-to-order — 21.25 hours a week, 82% automatable.</div></div></div>
+                  </div>
+                  <div style="padding:var(--st-space-s)">
+                    <div class="st-composer">
+                      <textarea class="st-composer__input" rows="1" placeholder="Message…" aria-label="Message"></textarea>
+                      <button class="st-btn st-btn--accent st-btn--icon st-btn--sm" aria-label="Send">
+                        <svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 13V3M4 7l4-4 4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button class="st-btn st-btn--accent st-btn--block">Book a process check</button>
+            </div>
+          </div>
+
+          <nav class="st-tabbar" aria-label="Primary" style="position:sticky;bottom:12px">
+            <button class="st-tabbar__item" aria-current="page" aria-label="Home">
+              <svg width="18" height="18" viewBox="0 0 18 18"><path d="M3 8l6-5 6 5v7a1 1 0 0 1-1 1h-3v-4H7v4H4a1 1 0 0 1-1-1z" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="st-tabbar__item" aria-label="Saved">
+              <svg width="18" height="18" viewBox="0 0 18 18"><path d="M9 15S3 11.5 3 7.5A3 3 0 0 1 9 6a3 3 0 0 1 6 1.5C15 11.5 9 15 9 15z" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="st-tabbar__item st-tabbar__action" aria-label="New process">
+              <svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 4v12M4 10h12" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </button>
+            <button class="st-tabbar__item" aria-label="Messages">
+              <svg width="18" height="18" viewBox="0 0 18 18"><path d="M3 4h12v8H7l-4 3z" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            </button>
+          </nav>
+        </div>
+      </div>
+
+      <p class="st-caption" style="text-align:center">
+        One screen, six components, zero hardcoded values. Everything above follows the panel.
+      </p>
+    </div>
+  </div>
+</main>
+
+<footer class="wide" style="padding-block:var(--st-space-m)">
+  <hr class="st-divider">
+  <p class="st-caption" style="margin-top:var(--st-space-base)">Structure — the Kwapso design language.</p>
+</footer>
+
+<script type="module">
+const tokens = (await import("./assets/tokens.js")).default
+const root = document.documentElement
+
+/* ── colour maths, identical to scripts/check-contrast.mjs ────────────── */
+const hex2 = (h) => { const m = h.replace("#",""); const f = m.length===3 ? m.split("").map(c=>c+c).join("") : m
+  return [0,2,4].map(i => parseInt(f.slice(i,i+2),16)) }
+const lum = ([r,g,b]) => { const f=v=>{v/=255;return v<=0.03928?v/12.92:((v+0.055)/1.055)**2.4}
+  return .2126*f(r)+.7152*f(g)+.0722*f(b) }
+const ratio = (a,b) => { const [x,y]=[lum(a),lum(b)].sort((p,q)=>q-p); return (x+.05)/(y+.05) }
+/** Darken along the same hue — how mango-deep and sky-deep are derived. */
+const deepen = (rgb, f=0.9) => rgb.map(v => Math.round(v*f))
+const toHex = (c) => "#" + c.map(v => Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,"0")).join("")
+
+const PRESETS = [
+  ["Mango", tokens.color.mango], ["Forest", tokens.color.forest], ["Sky", tokens.color.sky],
+  ["Poppy", tokens.color.poppy], ["Ink", tokens.color.ink], ["Deep mango", tokens.color["mango-deep"]],
+]
+document.getElementById("accents").innerHTML = PRESETS.map(([n,c]) =>
+  `<button class="sw" style="background:${c}" data-c="${c}" aria-label="${n}" title="${n}"
+     aria-pressed="${c===tokens.color.mango}"></button>`).join("")
+
+/* ── apply ────────────────────────────────────────────────────────────── */
+let accent = tokens.color.mango
+document.getElementById("accent-pick").value = accent
+
+function apply() {
+  const rgb = hex2(accent)
+  const ink = hex2(tokens.color.ink), paper = hex2(tokens.color.paper)
+
+  /* The foreground on the accent is chosen, not assumed: whichever of ink or
+     paper wins on contrast. That is the rule the language already follows —
+     it just usually resolves to ink because mango is pale. */
+  const onAccent = ratio(rgb, ink) >= ratio(rgb, paper) ? tokens.color.ink : tokens.color.paper
+
+  root.style.setProperty("--st-accent", accent)
+  root.style.setProperty("--st-accent-foreground", onAccent)
+  root.style.setProperty("--st-accent-hover", toHex(deepen(rgb)))
+  root.style.setProperty("--st-chart-1", accent)
+
+  /* ── the live verdict ───────────────────────────────────────────────── */
+  const best = Math.max(ratio(rgb, ink), ratio(rgb, paper))
+  const rows = [
+    ["Label on the accent fill", ratio(rgb, hex2(onAccent)), 4.5,
+     best >= 4.5
+       ? `The button's text, set in ${onAccent === tokens.color.ink ? "ink" : "paper"} — whichever of the two contrasts better.`
+       : `NO label colour clears AA on this accent. Ink reaches ${ratio(rgb, ink).toFixed(2)}:1 and paper ${ratio(rgb, paper).toFixed(2)}:1, so this hue cannot carry a filled button at body size. Darken it, or keep it as a mark.`],
+    ["Accent as body text on paper", ratio(rgb, paper), 4.5,
+     "Why the accent is never used for text in this language."],
+    ["Accent fill against the page", ratio(rgb, paper), 3.0,
+     "Exempt: the ink label and the pill silhouette identify the button, not the fill."],
+  ]
+  document.getElementById("contrast").innerHTML = rows.map(([label, r, min, why]) => {
+    const pass = r >= min
+    const exempt = label.startsWith("Accent fill")
+    const tone = exempt ? "muted" : pass ? "success" : "danger"
+    const word = exempt ? "exempt" : pass ? "passes" : "fails"
+    return `<div class="st-inset__row" style="align-items:flex-start">
+      <span style="flex:1;min-width:0">
+        <span class="st-inset__label">${label}</span>
+        <span class="st-caption" style="display:block">${why}</span>
+      </span>
+      <span class="verdict">
+        <span class="st-dot st-dot--${tone}"></span>
+        <span class="st-numeric">${r.toFixed(2)}:1</span>
+        <span class="st-caption">${word}</span>
+      </span>
+    </div>`
+  }).join("")
+}
+
+document.getElementById("accents").addEventListener("click", (e) => {
+  const b = e.target.closest(".sw"); if (!b) return
+  accent = b.dataset.c
+  document.querySelectorAll(".sw").forEach(o => o.setAttribute("aria-pressed", String(o === b)))
+  document.getElementById("accent-pick").value = accent
+  apply()
+})
+document.getElementById("accent-pick").addEventListener("input", (e) => {
+  accent = e.target.value
+  document.querySelectorAll(".sw").forEach(o => o.setAttribute("aria-pressed", "false"))
+  apply()
+})
+
+/* Radius: every rounded thing in the preview moves together, because they all
+   resolve to the same two variables. */
+const radius = document.getElementById("radius")
+radius.addEventListener("input", () => {
+  root.style.setProperty("--st-radius-surface", radius.value + "px")
+  document.getElementById("radius-val").textContent = radius.value + "px"
+})
+
+/* Density on the preview only, so the editor itself stays put — changing the
+   thing you are reading while you read it is disorienting. */
+const density = document.getElementById("density")
+density.addEventListener("click", (e) => {
+  const b = e.target.closest(".st-segmented__item"); if (!b) return
+  density.querySelectorAll(".st-segmented__item").forEach(o => o.setAttribute("aria-pressed", String(o === b)))
+  document.getElementById("phone-body").setAttribute("data-density", b.dataset.d)
+  placeThumb()
+})
+function placeThumb() {
+  const on = density.querySelector('[aria-pressed="true"]')
+  const t = density.querySelector(".st-segmented__thumb")
+  if (!on || !t) return
+  t.style.width = on.offsetWidth + "px"
+  t.style.transform = `translateX(${on.offsetLeft}px)`
+}
+placeThumb(); new ResizeObserver(placeThumb).observe(density)
+
+/* Reduce motion, forced on for testing. Real preference still wins by default. */
+document.getElementById("rm").addEventListener("change", (e) => {
+  document.getElementById("preview").style.setProperty("--st-motion-base", e.target.checked ? "1ms" : "")
+  document.getElementById("preview").style.setProperty("--st-motion-reveal", e.target.checked ? "1ms" : "")
+  document.getElementById("preview").style.setProperty("--st-motion-fast", e.target.checked ? "1ms" : "")
+})
+
+document.getElementById("replay").addEventListener("click", () => {
+  const s = document.getElementById("live-stack")
+  s.classList.remove("st-stagger"); void s.offsetWidth; s.classList.add("st-stagger")
+})
+
+document.getElementById("reset").addEventListener("click", () => {
+  accent = tokens.color.mango
+  root.style.removeProperty("--st-radius-surface")
+  radius.value = 10; document.getElementById("radius-val").textContent = "10px"
+  document.getElementById("accent-pick").value = accent
+  document.querySelectorAll(".sw").forEach(o => o.setAttribute("aria-pressed", String(o.dataset.c === accent)))
+  apply()
+})
+
+/* The output is the point: whatever you land on is three lines of CSS. */
+document.getElementById("copy").addEventListener("click", async (e) => {
+  const css = `:root {\n  --st-accent: ${accent};\n  --st-accent-foreground: ${root.style.getPropertyValue("--st-accent-foreground").trim()};\n  --st-radius-surface: ${radius.value}px;\n}`
+  try { await navigator.clipboard.writeText(css); e.target.textContent = "Copied" }
+  catch { e.target.textContent = "Press ⌘C" }
+  setTimeout(() => { e.target.textContent = "Copy as CSS" }, 1600)
+})
+
+const order = ["light","dark","system"]; let ti = 0
+document.getElementById("theme").onclick = (e) => {
+  ti = (ti + 1) % 3; const t = order[ti]
+  if (t === "system") root.removeAttribute("data-theme"); else root.setAttribute("data-theme", t)
+  e.currentTarget.textContent = t
+}
+
+/* Scroll progress fallback where scroll-timeline is unsupported. */
+if (!CSS.supports?.("animation-timeline: scroll()")) {
+  const bar = document.querySelector(".st-scroll-progress")
+  const read = () => {
+    const max = document.documentElement.scrollHeight - innerHeight
+    bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`
+  }
+  read(); addEventListener("scroll", read, { passive: true })
+}
+
+apply()
+</script>
+</body>
+</html>

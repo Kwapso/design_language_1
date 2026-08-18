@@ -2,7 +2,7 @@
   "$schema": "./registry.schema.json",
   "$comment": "THE MANIFEST. Every item the design system promises to ship. scripts/check-coverage.mjs verifies each one resolves to a real CSS class and, where applicable, a real React export \u2014 so 'all components are made' is a checked fact rather than a claim. Sources: shadcn/ui, swift-struck-ui (92 items), and the surfaces kwapso.com and score.kwapso.com actually use.",
   "name": "structure",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "layers": {
     "primitive": "Atoms. Built from tokens only.",
     "composite": "Built from primitives. Still generic.",
@@ -556,7 +556,7 @@
     {
       "name": "sheet",
       "layer": "composite",
-      "css": "st-drawer",
+      "css": "st-sheet",
       "react": "Sheet"
     },
     {
@@ -1254,6 +1254,42 @@
       "layer": "primitive",
       "css": null,
       "react": "useReducedMotion"
+    },
+    {
+      "name": "inset-group",
+      "layer": "composite",
+      "css": "st-inset-group",
+      "react": "InsetGroup"
+    },
+    {
+      "name": "inset-row",
+      "layer": "composite",
+      "css": "st-inset__row",
+      "react": "InsetRow"
+    },
+    {
+      "name": "large-title",
+      "layer": "composite",
+      "css": "st-large-title",
+      "react": "LargeTitle"
+    },
+    {
+      "name": "scroll-progress",
+      "layer": "primitive",
+      "css": "st-scroll-progress",
+      "react": "ScrollProgress"
+    },
+    {
+      "name": "sheet-detent",
+      "layer": "composite",
+      "css": "st-sheet",
+      "react": "Sheet"
+    },
+    {
+      "name": "recessed",
+      "layer": "primitive",
+      "css": "st-recessed",
+      "react": "Recessed"
     }
   ]
 }
