@@ -111,10 +111,15 @@
 
   /* ---- motion ---- */
   --st-motion-ease: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --st-motion-ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+  --st-motion-stagger: 45ms;
+  --st-motion-stagger-max: 8;
+  --st-motion-rise: 10px;
+  --st-motion-press: 0.97;
   --st-motion-fast: 120ms;
   --st-motion-base: 200ms;
   --st-motion-slow: 400ms;
-  --st-motion-reveal: 800ms;
+  --st-motion-reveal: 360ms;
   --st-motion-max-allowed: 400ms;
 
   /* ---- layout ---- */
@@ -2322,3 +2327,286 @@ button:focus-visible,
   cursor: pointer;
 }
 .st-bottom-nav__item[aria-current] { color: var(--st-foreground); }
+
+
+/* Structure — motion.
+ * structure-definitions — this file DEFINES the vocabulary; view budgets do not apply.
+ *
+ * Liveliness, on this language's terms.
+ *
+ * The temptation with "make it feel alive" is to reach for gradients, glow,
+ * bounce and drift. All four are forbidden here, and for a reason: they are
+ * decoration, and decoration is what makes a considered interface look
+ * generated. So life comes from somewhere else —
+ *
+ *   1. ARRIVAL. Things enter rather than appear. A card that rises 10px into
+ *      place reads as placed; the same card popping in reads as a repaint.
+ *   2. STAGGER. A list whose items arrive 45ms apart reads as a sequence
+ *      rather than a flash. This is the single highest-value effect here and
+ *      it costs nothing but a delay.
+ *   3. RESPONSE. Every pressable thing acknowledges the press within 120ms.
+ *      Touch UI feels dead almost entirely because nothing answers the finger.
+ *   4. CONTINUITY. When a number changes, it counts. When a bar moves, it
+ *      travels. The eye follows the change instead of re-reading the screen.
+ *
+ * Rules that still hold: no gradients, no shadows outside overlays, nothing
+ * over 400ms, two easings only, and everything below collapses to a still,
+ * legible state under prefers-reduced-motion.
+ */
+
+/* ======================================================================
+ * 1 · ARRIVAL
+ * ==================================================================== */
+
+/* The base entrance: rise and fade. Used on almost everything. */
+@keyframes st-enter {
+  from { opacity: 0; transform: translateY(var(--st-motion-rise)); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes st-enter-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes st-enter-scale {
+  from { opacity: 0; transform: scale(.96); }
+  to   { opacity: 1; transform: none; }
+}
+/* Directional, for panels and drawers that come from an edge. */
+@keyframes st-enter-right { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: none; } }
+@keyframes st-enter-left  { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: none; } }
+@keyframes st-enter-up    { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+.st-enter        { animation: st-enter var(--st-motion-reveal) var(--st-motion-ease-entrance) both; }
+.st-enter--fade  { animation-name: st-enter-fade; }
+.st-enter--scale { animation-name: st-enter-scale; }
+.st-enter--right { animation-name: st-enter-right; }
+.st-enter--left  { animation-name: st-enter-left; }
+.st-enter--up    { animation-name: st-enter-up; }
+
+/* ======================================================================
+ * 2 · STAGGER
+ *
+ * Applied to a CONTAINER; children inherit an increasing delay. Capped at
+ * eight, because past that the last item arrives late enough to feel broken
+ * rather than choreographed — a twenty-item list would keep someone waiting
+ * nearly a second for the bottom row.
+ * ==================================================================== */
+
+.st-stagger > * { animation: st-enter var(--st-motion-reveal) var(--st-motion-ease-entrance) both; }
+.st-stagger > *:nth-child(1) { animation-delay: 0ms; }
+.st-stagger > *:nth-child(2) { animation-delay: 45ms; }
+.st-stagger > *:nth-child(3) { animation-delay: 90ms; }
+.st-stagger > *:nth-child(4) { animation-delay: 135ms; }
+.st-stagger > *:nth-child(5) { animation-delay: 180ms; }
+.st-stagger > *:nth-child(6) { animation-delay: 225ms; }
+.st-stagger > *:nth-child(7) { animation-delay: 270ms; }
+.st-stagger > *:nth-child(8) { animation-delay: 315ms; }
+/* Everything past the cap arrives together rather than ever later. */
+.st-stagger > *:nth-child(n+9) { animation-delay: 360ms; }
+
+/* ======================================================================
+ * 3 · RESPONSE — the press
+ *
+ * The most under-rated interaction in mobile UI. A control that does not
+ * acknowledge the finger feels broken even when it works, because the only
+ * feedback arrives after the network does.
+ *
+ * :active is used rather than a JS handler so it fires on the DOWN stroke,
+ * which is the whole point — waiting for a click event is already too late.
+ * ==================================================================== */
+
+.st-btn,
+.st-choice,
+.st-scale__item,
+.st-prompts__item,
+.st-card--interactive,
+.st-kanban__card,
+.st-segmented__item,
+.st-menu__item,
+.st-command__item,
+.st-bottom-nav__item {
+  transition:
+    transform var(--st-motion-fast) var(--st-motion-ease),
+    background-color var(--st-motion-base) var(--st-motion-ease),
+    border-color var(--st-motion-base) var(--st-motion-ease),
+    color var(--st-motion-base) var(--st-motion-ease);
+}
+.st-btn:active:not(:disabled),
+.st-choice:active,
+.st-scale__item:active,
+.st-prompts__item:active,
+.st-card--interactive:active,
+.st-kanban__card:active,
+.st-segmented__item:active,
+.st-menu__item:active,
+.st-command__item:active,
+.st-bottom-nav__item:active {
+  transform: scale(var(--st-motion-press));
+}
+
+/* A card lifts by changing surface, never by casting a shadow. */
+.st-card--interactive { transition: background-color var(--st-motion-base) var(--st-motion-ease), transform var(--st-motion-fast) var(--st-motion-ease); }
+
+/* ======================================================================
+ * 4 · CONTINUITY — things travel to their new value
+ * ==================================================================== */
+
+/* Bars grow from zero on first paint, then animate between values. */
+.st-progress__bar { transition: width var(--st-motion-slow) var(--st-motion-ease-entrance); }
+.st-progress--enter .st-progress__bar { animation: st-grow var(--st-motion-slow) var(--st-motion-ease-entrance) both; }
+@keyframes st-grow { from { width: 0 !important; } }
+
+.st-ring__bar { transition: stroke-dashoffset var(--st-motion-slow) var(--st-motion-ease-entrance); }
+
+/* Chart marks grow from their baseline. transform-box + transform-origin are
+ * required or an SVG rect scales from the viewport corner, not its own foot. */
+.st-chart-mark {
+  transform-box: fill-box;
+  transform-origin: bottom;
+  animation: st-rise-bar var(--st-motion-slow) var(--st-motion-ease-entrance) both;
+}
+@keyframes st-rise-bar { from { transform: scaleY(0); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* Tabular figures so a counting number does not jitter its own width. */
+.st-count { font-variant-numeric: tabular-nums; }
+
+/* ======================================================================
+ * 5 · SELECTION — the moving indicator
+ *
+ * A thumb that slides between options carries the relationship between them.
+ * Two states that simply swap highlight do not.
+ * ==================================================================== */
+
+.st-segmented { position: relative; isolation: isolate; }
+.st-segmented__thumb {
+  position: absolute; z-index: -1;
+  top: 3px; bottom: 3px; left: 0;
+  border-radius: var(--st-radius-pill);
+  background: var(--st-background);
+  transition: transform var(--st-motion-base) var(--st-motion-ease),
+              width var(--st-motion-base) var(--st-motion-ease);
+}
+/* With a thumb present the item's own fill is redundant. */
+.st-segmented:has(.st-segmented__thumb) .st-segmented__item[aria-pressed="true"] { background: transparent; }
+
+.st-tabs { position: relative; }
+.st-tabs__ink {
+  position: absolute; bottom: -1px; left: 0;
+  height: 2px;
+  background: var(--st-foreground);
+  transition: transform var(--st-motion-base) var(--st-motion-ease),
+              width var(--st-motion-base) var(--st-motion-ease);
+}
+.st-tabs:has(.st-tabs__ink) .st-tabs__tab[aria-selected="true"] { border-bottom-color: transparent; }
+
+/* ======================================================================
+ * 6 · DISCLOSURE — height that animates
+ *
+ * interpolate-size lets `height: auto` be animated where supported; the
+ * grid-rows fallback does the same job everywhere else. Both are opt-in via
+ * a class, because animating every <details> on a page is its own kind of noise.
+ * ==================================================================== */
+
+@supports (interpolate-size: allow-keywords) {
+  .st-reveal-h { interpolate-size: allow-keywords; }
+  .st-reveal-h > :not(summary) { transition: height var(--st-motion-base) var(--st-motion-ease); }
+}
+.st-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--st-motion-base) var(--st-motion-ease);
+}
+.st-collapse[data-open="true"] { grid-template-rows: 1fr; }
+.st-collapse > * { overflow: hidden; }
+
+/* ======================================================================
+ * 7 · OVERLAYS — entrance, so a modal is placed rather than pasted
+ * ==================================================================== */
+
+.st-overlay { animation: st-enter-fade var(--st-motion-base) var(--st-motion-ease) both; }
+.st-modal   { animation: st-enter-scale var(--st-motion-base) var(--st-motion-ease-entrance) both; }
+.st-drawer  { animation: st-enter-right var(--st-motion-base) var(--st-motion-ease-entrance) both; }
+.st-popover,
+.st-menu,
+.st-command { animation: st-enter var(--st-motion-fast) var(--st-motion-ease-entrance) both; }
+.st-toast   { animation: st-enter-up var(--st-motion-base) var(--st-motion-ease-entrance) both; }
+@media (max-width: 560px) {
+  /* The drawer becomes a bottom sheet on a phone, so it must arrive upward. */
+  .st-drawer { animation-name: st-enter-up; }
+}
+
+/* ======================================================================
+ * 8 · SKELETON → CONTENT
+ *
+ * The swap is where a loading state usually betrays itself: the skeleton
+ * vanishes and the content snaps in, so the whole screen flinches. Fading the
+ * arrival makes the two read as one object resolving.
+ * ==================================================================== */
+
+.st-settled { animation: st-enter-fade var(--st-motion-base) var(--st-motion-ease) both; }
+
+/* ======================================================================
+ * 9 · FLOATING TAB BAR
+ *
+ * Taken from the reference: a detached pill with a circular accent action in
+ * the middle. It earns its shadow — it is genuinely detached from the page,
+ * which is the one case the elevation escape hatch exists for.
+ * ==================================================================== */
+
+.st-tabbar {
+  position: fixed; z-index: var(--st-z-sticky);
+  left: 50%; bottom: calc(var(--st-space-base) + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: var(--st-space-s);
+  padding: var(--st-space-xs);
+  background: var(--st-surface);
+  border-radius: var(--st-radius-pill);
+  box-shadow: var(--st-elevation-escape-hatch);
+  animation: st-enter-up var(--st-motion-reveal) var(--st-motion-ease-entrance) both;
+}
+.st-tabbar__item {
+  display: grid; place-items: center;
+  width: var(--st-control-height); height: var(--st-control-height);
+  border: 0; border-radius: var(--st-radius-circle);
+  background: transparent; color: var(--st-muted);
+  cursor: pointer;
+  transition: color var(--st-motion-base) var(--st-motion-ease),
+              background-color var(--st-motion-base) var(--st-motion-ease),
+              transform var(--st-motion-fast) var(--st-motion-ease);
+}
+.st-tabbar__item:active { transform: scale(var(--st-motion-press)); }
+.st-tabbar__item[aria-current] { color: var(--st-foreground); background: var(--st-background); }
+/* The one accent in the bar — the primary action, per the accent doctrine. */
+.st-tabbar__action {
+  width: var(--st-control-height-lg); height: var(--st-control-height-lg);
+  background: var(--st-accent); color: var(--st-accent-foreground);
+}
+.st-tabbar__action:hover { background: var(--st-accent-hover); }
+
+/* ======================================================================
+ * 10 · VIEW TRANSITIONS — cross-document where the browser supports it
+ * ==================================================================== */
+
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: st-enter-fade var(--st-motion-fast) var(--st-motion-ease) reverse both; }
+::view-transition-new(root) { animation: st-enter var(--st-motion-base) var(--st-motion-ease-entrance) both; }
+
+/* ======================================================================
+ * REDUCED MOTION
+ *
+ * Not a downgrade — a different, equally complete rendering. Everything
+ * arrives at its final state immediately and stays fully legible. Nothing
+ * here carries information that only motion conveys, which is exactly why
+ * turning it all off costs nothing.
+ * ==================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .st-enter, .st-stagger > *, .st-settled, .st-tabbar,
+  .st-chart-mark, .st-overlay, .st-modal, .st-drawer,
+  .st-popover, .st-menu, .st-command, .st-toast {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .st-btn:active, .st-choice:active, .st-card--interactive:active,
+  .st-tabbar__item:active { transform: none; }
+  .st-progress__bar, .st-ring__bar, .st-segmented__thumb, .st-tabs__ink { transition: none; }
+  @view-transition { navigation: none; }
+}

@@ -85,6 +85,7 @@
     <a class="st-navbar__link" href="#tenets">Principles</a>
     <a class="st-navbar__link" href="./components.html">Components</a>
     <a class="st-navbar__link" href="./screens.html">Screens</a>
+    <a class="st-navbar__link" href="#life">Motion</a>
     <a class="st-navbar__link" href="./loaders.html">Loaders</a>
     <a class="st-navbar__link" href="#adopt">Adopt</a>
   </nav>
@@ -102,7 +103,7 @@
 <!-- ═══════════════════════════════════════════════════════════════ HERO -->
 <section class="wide hero">
   <p class="st-eyebrow">The Kwapso design language</p>
-  <h1 class="hero__type" style="margin-top:var(--st-space-base)">Work,<br>structured.</h1>
+  <h1 class="hero__type st-enter" style="margin-top:var(--st-space-base)">Work,<br>structured.</h1>
   <div style="max-width:52ch;margin-top:var(--st-space-m)">
     <p style="font-size:var(--st-text-md);line-height:1.5">
       Every value measured off the live site — not invented, not approximated.
@@ -123,11 +124,11 @@
         <p class="st-eyebrow">What the site actually does</p>
         <p class="kicker" style="margin-top:var(--st-space-s)">Restraint, counted.</p>
       </div>
-      <div class="st-grid" style="gap:var(--st-space-m)">
-        <div><div class="specimen" style="font-size:3.2rem">0</div><p class="st-caption" style="margin-top:4px">box-shadows across 5,142px</p></div>
-        <div><div class="specimen" style="font-size:3.2rem">1</div><p class="st-caption" style="margin-top:4px">accent, per view</p></div>
-        <div><div class="specimen" style="font-size:3.2rem">3</div><p class="st-caption" style="margin-top:4px">curves in the system</p></div>
-        <div><div class="specimen" style="font-size:3.2rem">2</div><p class="st-caption" style="margin-top:4px">weights. no bold</p></div>
+      <div class="st-grid st-stagger" style="gap:var(--st-space-m)">
+        <div><div class="specimen" style="font-size:3.2rem" data-count="0">0</div><p class="st-caption" style="margin-top:4px">box-shadows across 5,142px</p></div>
+        <div><div class="specimen st-count" style="font-size:3.2rem" data-count="1">1</div><p class="st-caption" style="margin-top:4px">accent, per view</p></div>
+        <div><div class="specimen st-count" style="font-size:3.2rem" data-count="3">3</div><p class="st-caption" style="margin-top:4px">curves in the system</p></div>
+        <div><div class="specimen st-count" style="font-size:3.2rem" data-count="2">2</div><p class="st-caption" style="margin-top:4px">weights. no bold</p></div>
       </div>
     </div>
   </div>
@@ -501,6 +502,93 @@
 </section>
 
 <!-- ══════════════════════════════════════════════════════ COGNITIVE LOAD -->
+
+<!-- LIFE -->
+<section id="life" class="wide" style="padding-block:var(--st-space-2xl)">
+  <p class="st-eyebrow">Motion</p>
+  <p class="kicker" style="margin-top:var(--st-space-s);max-width:24ch">Alive, without decoration.</p>
+  <p class="st-lead" style="margin-top:var(--st-space-base)">
+    Gradients, glow, drift and bounce are the usual answer to &ldquo;make it feel alive&rdquo;, and all four
+    are forbidden here. So life comes from four other places &mdash; each under 400ms, each using one of
+    only two easings, and all of it gone entirely under <code>prefers-reduced-motion</code>.
+  </p>
+
+  <div class="st-grid st-grid--2" style="margin-top:var(--st-space-xl);gap:var(--st-space-l)">
+    <div>
+      <p class="spec">01 &mdash; arrival &amp; stagger</p>
+      <div class="demo">
+        <div class="st-cluster st-cluster--between" style="margin-bottom:var(--st-space-base)">
+          <span class="st-caption">A list arrives in sequence, 45ms apart</span>
+          <button class="st-btn st-btn--ghost st-btn--sm" id="replay">Replay</button>
+        </div>
+        <div class="st-stack st-stack--s st-stagger" id="stagger-demo">
+          <div class="st-row"><span class="st-dot st-dot--danger"></span><span style="flex:1">Quote to order</span><span class="st-caption st-numeric">21.25</span></div>
+          <div class="st-row"><span class="st-dot st-dot--warning"></span><span style="flex:1">Invoice approval</span><span class="st-caption st-numeric">12.50</span></div>
+          <div class="st-row"><span class="st-dot st-dot--success"></span><span style="flex:1">Onboarding</span><span class="st-caption st-numeric">8.00</span></div>
+          <div class="st-row"><span class="st-dot st-dot--muted"></span><span style="flex:1">Supplier intake</span><span class="st-caption st-numeric">4.75</span></div>
+        </div>
+        <p class="st-caption" style="margin-top:var(--st-space-s)">Capped at eight items &mdash; past that the last row arrives late enough to feel broken rather than choreographed.</p>
+      </div>
+    </div>
+
+    <div>
+      <p class="spec">02 &mdash; continuity: figures count, bars travel</p>
+      <div class="demo">
+        <div class="st-cluster st-cluster--between" style="margin-bottom:var(--st-space-base)">
+          <span class="st-caption">The eye follows a change it can watch happen</span>
+          <button class="st-btn st-btn--ghost st-btn--sm" id="reroll">New data</button>
+        </div>
+        <div class="st-grid" style="gap:var(--st-space-base)">
+          <div class="st-stat"><span class="st-stat__value st-count" id="m1">68</span><span class="st-stat__label">Operational health</span></div>
+          <div class="st-stat"><span class="st-stat__value st-count" id="m2">41.75</span><span class="st-stat__label">Hours / week manual</span></div>
+        </div>
+        <div class="st-meter" style="margin-top:var(--st-space-base)">
+          <div class="st-meter__head"><span>Automatable</span><span class="st-numeric st-count" id="m3">82%</span></div>
+          <div class="st-progress"><div class="st-progress__bar" id="bar" style="width:82%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="spec">03 &mdash; selection carries the relationship</p>
+      <div class="demo st-stack">
+        <span class="st-caption">The thumb travels between options, so the two read as one control</span>
+        <div class="st-segmented" id="seg" role="group" aria-label="View">
+          <span class="st-segmented__thumb" aria-hidden="true"></span>
+          <button class="st-segmented__item" aria-pressed="true">Board</button>
+          <button class="st-segmented__item" aria-pressed="false">Table</button>
+          <button class="st-segmented__item" aria-pressed="false">Calendar</button>
+        </div>
+        <div class="st-tabs" id="tabs" role="tablist" aria-label="Sections" style="margin-top:var(--st-space-base)">
+          <span class="st-tabs__ink" aria-hidden="true"></span>
+          <button class="st-tabs__tab" role="tab" aria-selected="true">Overview</button>
+          <button class="st-tabs__tab" role="tab" aria-selected="false">Processes</button>
+          <button class="st-tabs__tab" role="tab" aria-selected="false">Team</button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="spec">04 &mdash; response: the press, on the down stroke</p>
+      <div class="demo st-stack">
+        <span class="st-caption">Press and hold. Touch UI feels dead almost entirely because nothing answers the finger before the network does.</span>
+        <div class="st-cluster">
+          <button class="st-btn st-btn--accent">Press me</button>
+          <button class="st-btn st-btn--outline">And me</button>
+        </div>
+        <div class="st-card st-card--interactive">A whole card responds too.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="st-alert st-alert--info" style="margin-top:var(--st-space-m)">
+    <div><strong>What was deliberately not taken from the reference.</strong>
+      <p style="margin-top:var(--st-space-xs)">Gradients, glow, saturated multi-colour panels and bouncy
+      overshoot all read as &ldquo;alive&rdquo; at a glance, and every one of them contradicts a rule this
+      language is built on. The floating tab bar and the card rhythm came across; the decoration did not.</p></div>
+  </div>
+</section>
+
 <section id="cognitive" class="wide" style="padding-block:var(--st-space-2xl)">
   <p class="st-eyebrow">Cognitive load</p>
   <p class="kicker" style="margin-top:var(--st-space-s);max-width:24ch">Most systems ship taste. Taste loses to a deadline.</p>
@@ -662,6 +750,85 @@ document.querySelectorAll(".st-toolcall__head").forEach((h) => h.onclick = () =>
 })
 
 document.querySelectorAll(".st-chip__remove").forEach((b) => b.onclick = () => b.parentElement.remove())
+
+/* ─────────────────────────── motion demos ───────────────────────────
+   Everything here checks the motion preference at runtime: a media query in
+   a stylesheet cannot stop JavaScript from deciding to animate. */
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)")
+
+/* Count a figure to its value. Cubic ease-out, matched to --st-motion-ease-entrance
+   so a counting number and a growing bar beside it settle together. */
+function countTo(el, to, { decimals = 0, suffix = "", duration = 400 } = {}) {
+  // rAF is paused while the document is hidden, so animating there would strand
+  // the element on 0 — the wrong number. Correctness beats the animation.
+  if (REDUCED.matches || document.hidden) { el.textContent = to.toFixed(decimals) + suffix; return }
+  const from = parseFloat(el.textContent) || 0
+  const t0 = performance.now()
+  const tick = (now) => {
+    const t = Math.min(1, (now - t0) / duration)
+    const e = 1 - Math.pow(1 - t, 3)
+    el.textContent = (from + (to - from) * e).toFixed(decimals) + suffix
+    if (t < 1) requestAnimationFrame(tick)
+  }
+  requestAnimationFrame(tick)
+}
+
+/* Count only once the figure is actually on screen — a number that finished
+   counting while scrolled out of view has communicated nothing. */
+const io = new IntersectionObserver((entries) => {
+  for (const e of entries) {
+    if (!e.isIntersecting) continue
+    const el = e.target
+    countTo(el, parseFloat(el.dataset.count), { duration: 500 })
+    io.unobserve(el)
+  }
+}, { rootMargin: "0px 0px -10% 0px" })
+document.querySelectorAll("[data-count]").forEach((el) => {
+  // Only blank it if we can actually count; otherwise leave the true value.
+  if (!REDUCED.matches && !document.hidden) el.textContent = "0"
+  io.observe(el)
+})
+
+/* Replay the stagger by re-triggering the animation. Removing the class and
+   forcing a reflow is the only reliable way to restart a CSS animation. */
+const sd = document.getElementById("stagger-demo")
+document.getElementById("replay")?.addEventListener("click", () => {
+  sd.classList.remove("st-stagger"); void sd.offsetWidth; sd.classList.add("st-stagger")
+})
+
+/* New data: figures count and the bar travels to the new value. */
+document.getElementById("reroll")?.addEventListener("click", () => {
+  const health = 40 + Math.floor(Math.random() * 55)
+  const hours = 20 + Math.random() * 40
+  const auto = 30 + Math.floor(Math.random() * 65)
+  countTo(document.getElementById("m1"), health)
+  countTo(document.getElementById("m2"), hours, { decimals: 2 })
+  countTo(document.getElementById("m3"), auto, { suffix: "%" })
+  document.getElementById("bar").style.width = auto + "%"
+})
+
+/* Sliding indicators. Measured from the live DOM and re-measured on resize,
+   because a control that reflows otherwise leaves its thumb behind. */
+function indicator(host, itemSel, thumbSel, attr) {
+  if (!host) return
+  const thumb = host.querySelector(thumbSel)
+  const place = () => {
+    const on = host.querySelector(`${itemSel}[${attr}="true"]`)
+    if (!on || !thumb) return
+    thumb.style.width = on.offsetWidth + "px"
+    thumb.style.transform = `translateX(${on.offsetLeft}px)`
+  }
+  host.addEventListener("click", (ev) => {
+    const b = ev.target.closest(itemSel)
+    if (!b) return
+    host.querySelectorAll(itemSel).forEach((o) => o.setAttribute(attr, String(o === b)))
+    place()
+  })
+  place()
+  new ResizeObserver(place).observe(host)
+}
+indicator(document.getElementById("seg"), ".st-segmented__item", ".st-segmented__thumb", "aria-pressed")
+indicator(document.getElementById("tabs"), ".st-tabs__tab", ".st-tabs__ink", "aria-selected")
 </script>
 
 </body>

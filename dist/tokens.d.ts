@@ -161,10 +161,15 @@ declare const tokens: {
   }
   readonly motion: {
     readonly ease: "cubic-bezier(0.645, 0.045, 0.355, 1)"
+    readonly "ease-entrance": "cubic-bezier(0.16, 1, 0.3, 1)"
+    readonly stagger: "45ms"
+    readonly "stagger-max": "8"
+    readonly rise: "10px"
+    readonly press: "0.97"
     readonly fast: "120ms"
     readonly base: "200ms"
     readonly slow: "400ms"
-    readonly reveal: "800ms"
+    readonly reveal: "360ms"
     readonly "max-allowed": "400ms"
   }
   readonly layout: {

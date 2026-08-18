@@ -87,7 +87,7 @@
               <div><h1 class="st-page-header__title">Processes</h1><p class="st-page-header__meta">7 active · 3 blocked</p></div>
               <div class="st-cluster"><button class="st-btn st-btn--ghost st-btn--sm">Export</button><button class="st-btn st-btn--accent st-btn--sm">New process</button></div>
             </div>
-            <div class="st-grid" style="margin-bottom:var(--st-space-base)">
+            <div class="st-grid st-stagger" style="margin-bottom:var(--st-space-base)">
               <div class="st-card"><div class="st-stat"><span class="st-stat__value">68</span><span class="st-stat__label">Operational health</span><span class="st-stat__delta" data-dir="up">↑ 6</span></div></div>
               <div class="st-card"><div class="st-stat"><span class="st-stat__value">41.75</span><span class="st-stat__label">Hours / week manual</span><span class="st-stat__delta" data-dir="down">↓ 3.2</span></div></div>
               <div class="st-card"><div class="st-stat"><span class="st-stat__value">7</span><span class="st-stat__label">Active</span></div></div>
@@ -306,6 +306,44 @@
       </div>
     </section>
   </div>
+
+  <!-- ═════════════════════════════════════════════════ FLOATING TABBAR -->
+  <section class="case" id="tabbar">
+    <div class="st-cluster st-cluster--between">
+      <h2 style="font-size:var(--st-text-lg)">Floating tab bar</h2>
+      <span class="spec">.st-tabbar · &lt;TabBar&gt;</span>
+    </div>
+    <p class="st-caption" style="margin-block:var(--st-space-xs) var(--st-space-s)">
+      A detached pill with one circular accent action. It earns its shadow — it is genuinely
+      detached from the page, which is the single case the elevation escape hatch exists for.
+      The accent belongs to the primary action, so the bar spends the view's one accent well.
+    </p>
+    <div class="phone" style="position:relative">
+      <div class="phone__notch"><span class="phone__pill"></span></div>
+      <div data-density="compact" style="height:380px;overflow-y:auto;padding:var(--st-space-base)">
+        <h1 style="font-size:var(--st-text-md)">Today</h1>
+        <div class="st-stack st-stack--s st-stagger" style="margin-top:var(--st-space-s)">
+          <div class="st-card">Weekly progress<div class="st-progress" style="margin-top:var(--st-space-xs)"><div class="st-progress__bar" style="width:70%"></div></div></div>
+          <div class="st-card">Blocked processes<div class="st-progress" style="margin-top:var(--st-space-xs)"><div class="st-progress__bar" style="width:15%"></div></div></div>
+          <div class="st-card">Automations live<div class="st-progress" style="margin-top:var(--st-space-xs)"><div class="st-progress__bar" style="width:45%"></div></div></div>
+        </div>
+      </div>
+      <nav class="st-tabbar" aria-label="Primary" style="position:absolute;bottom:16px">
+        <button class="st-tabbar__item" aria-current="page" aria-label="Home">
+          <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 8l6-5 6 5v7a1 1 0 0 1-1 1h-3v-4H7v4H4a1 1 0 0 1-1-1z" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="st-tabbar__item" aria-label="Saved">
+          <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 15S3 11.5 3 7.5A3 3 0 0 1 9 6a3 3 0 0 1 6 1.5C15 11.5 9 15 9 15z" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="st-tabbar__item st-tabbar__action" aria-label="New process">
+          <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M4 10h12" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <button class="st-tabbar__item" aria-label="Messages">
+          <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 4h12v8H7l-4 3z" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        </button>
+      </nav>
+    </div>
+  </section>
 
   <!-- ═══════════════════════════════════════════════════ MARKETING -->
   <section class="case" id="marketing-shell">

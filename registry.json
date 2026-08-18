@@ -1,9 +1,8 @@
 {
   "$schema": "./registry.schema.json",
-  "$comment": "THE MANIFEST. Every item the design system promises to ship. scripts/check-coverage.mjs verifies each one resolves to a real CSS class and, where applicable, a real React export — so 'all components are made' is a checked fact rather than a claim. Sources: shadcn/ui, swift-struck-ui (92 items), and the surfaces kwapso.com and score.kwapso.com actually use.",
+  "$comment": "THE MANIFEST. Every item the design system promises to ship. scripts/check-coverage.mjs verifies each one resolves to a real CSS class and, where applicable, a real React export \u2014 so 'all components are made' is a checked fact rather than a claim. Sources: shadcn/ui, swift-struck-ui (92 items), and the surfaces kwapso.com and score.kwapso.com actually use.",
   "name": "structure",
-  "version": "2.0.0",
-
+  "version": "2.1.0",
   "layers": {
     "primitive": "Atoms. Built from tokens only.",
     "composite": "Built from primitives. Still generic.",
@@ -13,218 +12,1248 @@
     "screen": "Whole-screen scaffolds and templates.",
     "pattern": "Multi-screen flows and compositions."
   },
-
   "items": [
-    { "name": "box",             "layer": "primitive", "css": "st-box",        "react": "Box" },
-    { "name": "container",       "layer": "primitive", "css": "st-container",  "react": "Container" },
-    { "name": "section",         "layer": "primitive", "css": "st-section",    "react": "Section" },
-    { "name": "stack",           "layer": "primitive", "css": "st-stack",      "react": "Stack" },
-    { "name": "cluster",         "layer": "primitive", "css": "st-cluster",    "react": "Cluster" },
-    { "name": "grid",            "layer": "primitive", "css": "st-grid",       "react": "Grid" },
-    { "name": "split",           "layer": "primitive", "css": "st-split",      "react": "Split" },
-    { "name": "center",          "layer": "primitive", "css": "st-center",     "react": "Center" },
-    { "name": "spacer",          "layer": "primitive", "css": "st-spacer",     "react": "Spacer" },
-    { "name": "divider",         "layer": "primitive", "css": "st-divider",    "react": "Divider" },
-    { "name": "separator",       "layer": "primitive", "css": "st-divider",    "react": "Separator" },
-    { "name": "aspect-ratio",    "layer": "primitive", "css": "st-aspect",     "react": "AspectRatio" },
-    { "name": "scroll-area",     "layer": "primitive", "css": "st-scroll-x",   "react": "ScrollX" },
-    { "name": "resizable",       "layer": "primitive", "css": "st-resizable",  "react": "Resizable" },
-    { "name": "visibility",      "layer": "primitive", "css": "st-hide",       "react": "Visibility" },
-    { "name": "portal",          "layer": "primitive", "css": null,            "react": "Portal" },
-
-    { "name": "display",         "layer": "primitive", "css": "st-display",    "react": "Display" },
-    { "name": "heading",         "layer": "primitive", "css": "st-heading",    "react": "Heading" },
-    { "name": "text",            "layer": "primitive", "css": "st-text",       "react": "Text" },
-    { "name": "eyebrow",         "layer": "primitive", "css": "st-eyebrow",    "react": "Eyebrow" },
-    { "name": "lead",            "layer": "primitive", "css": "st-lead",       "react": "Lead" },
-    { "name": "caption",         "layer": "primitive", "css": "st-caption",    "react": "Caption" },
-    { "name": "clamp",           "layer": "primitive", "css": "st-clamp-2",    "react": "Clamp" },
-    { "name": "prose",           "layer": "primitive", "css": "st-prose",      "react": "Prose" },
-    { "name": "blockquote",      "layer": "primitive", "css": "st-quote",      "react": "Quote" },
-    { "name": "code",            "layer": "primitive", "css": "st-code",       "react": "Code" },
-    { "name": "kbd",             "layer": "primitive", "css": "st-kbd",        "react": "Kbd" },
-    { "name": "sr-only",         "layer": "primitive", "css": "st-sr-only",    "react": "SrOnly" },
-    { "name": "skip-link",       "layer": "primitive", "css": "st-skip-link",  "react": "SkipLink" },
-
-    { "name": "button",          "layer": "primitive", "css": "st-btn",        "react": "Button" },
-    { "name": "button-group",    "layer": "primitive", "css": "st-btn-group",  "react": "ButtonGroup" },
-    { "name": "icon-button",     "layer": "primitive", "css": "st-btn--icon",  "react": "Button" },
-    { "name": "split-button",    "layer": "composite", "css": "st-split-btn",  "react": "SplitButton" },
-    { "name": "fab",             "layer": "primitive", "css": "st-fab",        "react": "Fab" },
-    { "name": "link",            "layer": "primitive", "css": "st-link",       "react": "Link" },
-    { "name": "copy-button",     "layer": "composite", "css": "st-btn",        "react": "CopyButton" },
-
-    { "name": "field",           "layer": "composite", "css": "st-field",      "react": "Field" },
-    { "name": "label",           "layer": "primitive", "css": "st-field__label","react": "Label" },
-    { "name": "input",           "layer": "primitive", "css": "st-input",      "react": "Input" },
-    { "name": "textarea",        "layer": "primitive", "css": "st-input",      "react": "Textarea" },
-    { "name": "select",          "layer": "primitive", "css": "st-input",      "react": "Select" },
-    { "name": "combobox",        "layer": "composite", "css": "st-combobox",   "react": "Combobox" },
-    { "name": "choice",          "layer": "composite", "css": "st-choice",     "react": "Choice" },
-    { "name": "checkbox",        "layer": "primitive", "css": "st-checkbox",   "react": "Checkbox" },
-    { "name": "radio-group",     "layer": "composite", "css": "st-radio",      "react": "RadioGroup" },
-    { "name": "switch",          "layer": "primitive", "css": "st-switch",     "react": "Switch" },
-    { "name": "slider",          "layer": "primitive", "css": "st-slider",     "react": "Slider" },
-    { "name": "range-slider",    "layer": "composite", "css": "st-slider",     "react": "RangeSlider" },
-    { "name": "scale",           "layer": "composite", "css": "st-scale",      "react": "Scale" },
-    { "name": "rating",          "layer": "composite", "css": "st-rating",     "react": "Rating" },
-    { "name": "nps",             "layer": "composite", "css": "st-scale",      "react": "NPS" },
-    { "name": "search-input",    "layer": "composite", "css": "st-search",     "react": "SearchInput" },
-    { "name": "tag-input",       "layer": "composite", "css": "st-tag-input",  "react": "TagInput" },
-    { "name": "otp-input",       "layer": "composite", "css": "st-otp",        "react": "OtpInput" },
-    { "name": "date-picker",     "layer": "composite", "css": "st-calendar",   "react": "DatePicker" },
-    { "name": "date-range",      "layer": "composite", "css": "st-calendar",   "react": "DateRangePicker" },
-    { "name": "time-picker",     "layer": "composite", "css": "st-input",      "react": "TimePicker" },
-    { "name": "calendar",        "layer": "composite", "css": "st-calendar",   "react": "Calendar" },
-    { "name": "file-upload",     "layer": "composite", "css": "st-dropzone",   "react": "FileUpload" },
-    { "name": "signature",       "layer": "composite", "css": "st-signature",  "react": "Signature" },
-    { "name": "color-input",     "layer": "composite", "css": "st-color",      "react": "ColorInput" },
-    { "name": "form",            "layer": "composite", "css": "st-form",       "react": "Form" },
-    { "name": "fieldset",        "layer": "primitive", "css": "st-fieldset",   "react": "Fieldset" },
-
-    { "name": "card",            "layer": "primitive", "css": "st-card",       "react": "Card" },
-    { "name": "row",             "layer": "primitive", "css": "st-row",        "react": "Row" },
-    { "name": "panel",           "layer": "primitive", "css": "st-panel",      "react": "Panel" },
-    { "name": "well",            "layer": "primitive", "css": "st-well",       "react": "Well" },
-    { "name": "invert",          "layer": "primitive", "css": "st-invert",     "react": "Invert" },
-    { "name": "frame",           "layer": "composite", "css": "st-frame",      "react": "Frame" },
-
-    { "name": "badge",           "layer": "primitive", "css": "st-badge",      "react": "Badge" },
-    { "name": "chip",            "layer": "primitive", "css": "st-chip",       "react": "Chip" },
-    { "name": "tag",             "layer": "primitive", "css": "st-badge",      "react": "Tag" },
-    { "name": "status-dot",      "layer": "primitive", "css": "st-dot",        "react": "StatusDot" },
-    { "name": "avatar",          "layer": "primitive", "css": "st-avatar",     "react": "Avatar" },
-    { "name": "avatar-group",    "layer": "primitive", "css": "st-avatar-group","react": "AvatarGroup" },
-    { "name": "icon",            "layer": "primitive", "css": "st-icon",       "react": "Icon" },
-
-    { "name": "navbar",          "layer": "composite", "css": "st-navbar",     "react": "Navbar" },
-    { "name": "sidebar",         "layer": "composite", "css": "st-sidebar",    "react": "Sidebar" },
-    { "name": "tabs",            "layer": "composite", "css": "st-tabs",       "react": "Tabs" },
-    { "name": "segmented",       "layer": "composite", "css": "st-segmented",  "react": "Segmented" },
-    { "name": "breadcrumb",      "layer": "composite", "css": "st-breadcrumb", "react": "Breadcrumb" },
-    { "name": "pagination",      "layer": "composite", "css": "st-pagination", "react": "Pagination" },
-    { "name": "stepper",         "layer": "composite", "css": "st-stepper",    "react": "Stepper" },
-    { "name": "anchor-nav",      "layer": "composite", "css": "st-anchor-nav", "react": "AnchorNav" },
-    { "name": "menubar",         "layer": "composite", "css": "st-menubar",    "react": "Menubar" },
-    { "name": "command",         "layer": "composite", "css": "st-command",    "react": "CommandPalette" },
-    { "name": "bottom-nav",      "layer": "composite", "css": "st-bottom-nav", "react": "BottomNav" },
-
-    { "name": "dialog",          "layer": "composite", "css": "st-modal",      "react": "Modal" },
-    { "name": "alert-dialog",    "layer": "composite", "css": "st-modal",      "react": "ConfirmDialog" },
-    { "name": "drawer",          "layer": "composite", "css": "st-drawer",     "react": "Drawer" },
-    { "name": "sheet",           "layer": "composite", "css": "st-drawer",     "react": "Sheet" },
-    { "name": "popover",         "layer": "composite", "css": "st-popover",    "react": "Popover" },
-    { "name": "dropdown-menu",   "layer": "composite", "css": "st-menu",       "react": "Menu" },
-    { "name": "context-menu",    "layer": "composite", "css": "st-menu",       "react": "ContextMenu" },
-    { "name": "hover-card",      "layer": "composite", "css": "st-popover",    "react": "HoverCard" },
-    { "name": "tooltip",         "layer": "composite", "css": "st-tooltip",    "react": "Tooltip" },
-    { "name": "toast",           "layer": "composite", "css": "st-toast",      "react": "ToastProvider" },
-    { "name": "banner",          "layer": "composite", "css": "st-banner",     "react": "Banner" },
-    { "name": "alert",           "layer": "composite", "css": "st-alert",      "react": "Alert" },
-    { "name": "lightbox",        "layer": "composite", "css": "st-lightbox",   "react": "Lightbox" },
-
-    { "name": "accordion",       "layer": "composite", "css": "st-accordion",  "react": "Accordion" },
-    { "name": "collapsible",     "layer": "composite", "css": "st-accordion",  "react": "Reveal" },
-    { "name": "toggle",          "layer": "primitive", "css": "st-toggle",     "react": "Toggle" },
-    { "name": "toggle-group",    "layer": "composite", "css": "st-toggle-group","react": "ToggleGroup" },
-    { "name": "carousel",        "layer": "composite", "css": "st-carousel",   "react": "Carousel" },
-
-    { "name": "table",           "layer": "collection", "css": "st-table",     "react": "Table" },
-    { "name": "data-table",      "layer": "collection", "css": "st-table",     "react": "DataTable" },
-    { "name": "list",            "layer": "collection", "css": "st-list",      "react": "List" },
-    { "name": "card-grid",       "layer": "collection", "css": "st-grid",      "react": "CardGrid" },
-    { "name": "kanban",          "layer": "collection", "css": "st-kanban",    "react": "Kanban" },
-    { "name": "calendar-view",   "layer": "collection", "css": "st-calendar",  "react": "CalendarView" },
-    { "name": "detail-view",     "layer": "collection", "css": "st-detail",    "react": "DetailView" },
-    { "name": "description-list","layer": "collection", "css": "st-kv",        "react": "KeyValue" },
-    { "name": "stat",            "layer": "collection", "css": "st-stat",      "react": "Stat" },
-    { "name": "stat-grid",       "layer": "collection", "css": "st-grid",      "react": "StatGrid" },
-    { "name": "meter",           "layer": "collection", "css": "st-meter",     "react": "Meter" },
-    { "name": "gauge",           "layer": "collection", "css": "st-gauge",     "react": "Gauge" },
-    { "name": "progress",        "layer": "collection", "css": "st-progress",  "react": "Progress" },
-    { "name": "timeline",        "layer": "collection", "css": "st-timeline",  "react": "Timeline" },
-    { "name": "activity-feed",   "layer": "collection", "css": "st-timeline",  "react": "ActivityFeed" },
-    { "name": "checklist",       "layer": "collection", "css": "st-checklist", "react": "Checklist" },
-    { "name": "comments",        "layer": "collection", "css": "st-comments",  "react": "Comments" },
-    { "name": "tree",            "layer": "collection", "css": "st-tree",      "react": "Tree" },
-    { "name": "filter-bar",      "layer": "collection", "css": "st-filter-bar","react": "FilterBar" },
-    { "name": "chart",           "layer": "collection", "css": "st-chart",     "react": "Chart" },
-    { "name": "sparkline",       "layer": "collection", "css": "st-chart",     "react": "Sparkline" },
-    { "name": "heatmap",         "layer": "collection", "css": "st-heatmap",   "react": "Heatmap" },
-    { "name": "permission-matrix","layer": "collection","css": "st-table",     "react": "PermissionMatrix" },
-    { "name": "article-body",    "layer": "collection", "css": "st-prose",     "react": "ArticleBody" },
-
-    { "name": "chat",            "layer": "collection", "css": "st-chat",      "react": "Chat" },
-    { "name": "message",         "layer": "collection", "css": "st-msg",       "react": "Message" },
-    { "name": "message-list",    "layer": "collection", "css": "st-chat__log", "react": "MessageList" },
-    { "name": "composer",        "layer": "collection", "css": "st-composer",  "react": "Composer" },
-    { "name": "typing",          "layer": "loader",     "css": "st-typing",    "react": "Typing" },
-    { "name": "streaming-text",  "layer": "loader",     "css": "st-stream",    "react": "StreamingText" },
-    { "name": "tool-call",       "layer": "collection", "css": "st-toolcall",  "react": "ToolCall" },
-    { "name": "reasoning",       "layer": "collection", "css": "st-toolcall",  "react": "Reasoning" },
-    { "name": "citation",        "layer": "collection", "css": "st-citation",  "react": "Citation" },
-    { "name": "suggested-prompts","layer": "collection","css": "st-prompts",   "react": "SuggestedPrompts" },
-    { "name": "run-steps",       "layer": "collection", "css": "st-run-steps", "react": "RunSteps" },
-    { "name": "copilot-overlay", "layer": "collection", "css": "st-copilot",   "react": "CopilotOverlay" },
-
-    { "name": "spinner",         "layer": "loader", "css": "st-spinner",      "react": "Spinner" },
-    { "name": "skeleton",        "layer": "loader", "css": "st-skeleton",     "react": "Skeleton" },
-    { "name": "skeleton-text",   "layer": "loader", "css": "st-skeleton-text","react": "SkeletonText" },
-    { "name": "skeleton-card",   "layer": "loader", "css": "st-skeleton",     "react": "SkeletonCard" },
-    { "name": "skeleton-table",  "layer": "loader", "css": "st-skeleton",     "react": "SkeletonTable" },
-    { "name": "loading-bar",     "layer": "loader", "css": "st-loading-bar",  "react": "LoadingBar" },
-    { "name": "page-loader",     "layer": "loader", "css": "st-page-loader",  "react": "PageLoader" },
-    { "name": "inline-loader",   "layer": "loader", "css": "st-inline-loader","react": "InlineLoader" },
-    { "name": "button-loading",  "layer": "loader", "css": "st-btn",          "react": "Button" },
-    { "name": "progress-ring",   "layer": "loader", "css": "st-ring",         "react": "ProgressRing" },
-    { "name": "step-loader",     "layer": "loader", "css": "st-step-loader",  "react": "StepLoader" },
-    { "name": "shimmerless-pulse","layer": "loader","css": "st-skeleton",     "react": "Skeleton" },
-    { "name": "optimistic-row",  "layer": "loader", "css": "st-optimistic",   "react": "OptimisticRow" },
-    { "name": "lazy-image",      "layer": "loader", "css": "st-lazy-img",     "react": "LazyImage" },
-    { "name": "refresh-control", "layer": "loader", "css": "st-refresh",      "react": "RefreshControl" },
-
-    { "name": "empty-state",     "layer": "state", "css": "st-empty",       "react": "EmptyState" },
-    { "name": "first-run",       "layer": "state", "css": "st-empty",       "react": "FirstRun" },
-    { "name": "no-results",      "layer": "state", "css": "st-empty",       "react": "NoResults" },
-    { "name": "error-state",     "layer": "state", "css": "st-empty",       "react": "ErrorState" },
-    { "name": "not-found",       "layer": "state", "css": "st-status-page", "react": "NotFound" },
-    { "name": "server-error",    "layer": "state", "css": "st-status-page", "react": "ServerError" },
-    { "name": "forbidden",       "layer": "state", "css": "st-status-page", "react": "Forbidden" },
-    { "name": "maintenance",     "layer": "state", "css": "st-status-page", "react": "Maintenance" },
-    { "name": "offline-banner",  "layer": "state", "css": "st-banner",      "react": "OfflineBanner" },
-    { "name": "error-boundary",  "layer": "state", "css": "st-status-page", "react": "ErrorBoundary" },
-    { "name": "success-state",   "layer": "state", "css": "st-empty",       "react": "SuccessState" },
-
-    { "name": "app-shell",       "layer": "screen", "css": "st-shell",       "react": "AppShell" },
-    { "name": "marketing-shell", "layer": "screen", "css": "st-shell",       "react": "MarketingShell" },
-    { "name": "focus-shell",     "layer": "screen", "css": "st-focus-shell", "react": "FocusShell" },
-    { "name": "split-shell",     "layer": "screen", "css": "st-split-shell", "react": "SplitShell" },
-    { "name": "auth-screen",     "layer": "screen", "css": "st-auth",        "react": "AuthScreen" },
-    { "name": "dashboard-screen","layer": "screen", "css": "st-shell",       "react": "DashboardScreen" },
-    { "name": "settings-screen", "layer": "screen", "css": "st-settings",    "react": "SettingsScreen" },
-    { "name": "detail-screen",   "layer": "screen", "css": "st-detail",      "react": "DetailScreen" },
-    { "name": "wizard-screen",   "layer": "screen", "css": "st-wizard",      "react": "WizardScreen" },
-    { "name": "onboarding",      "layer": "screen", "css": "st-wizard",      "react": "Onboarding" },
-    { "name": "checkout-screen", "layer": "screen", "css": "st-checkout",    "react": "CheckoutScreen" },
-    { "name": "pricing-screen",  "layer": "screen", "css": "st-price",       "react": "PricingScreen" },
-    { "name": "chat-screen",     "layer": "screen", "css": "st-chat",        "react": "ChatScreen" },
-    { "name": "inbox-screen",    "layer": "screen", "css": "st-split-shell", "react": "InboxScreen" },
-    { "name": "profile-screen",  "layer": "screen", "css": "st-detail",      "react": "ProfileScreen" },
-
-    { "name": "hero",            "layer": "pattern", "css": "st-hero",         "react": "Hero" },
-    { "name": "section-header",  "layer": "pattern", "css": "st-section-header","react": "SectionHeader" },
-    { "name": "feature-row",     "layer": "pattern", "css": "st-feature-row",  "react": "FeatureRow" },
-    { "name": "logo-wall",       "layer": "pattern", "css": "st-logo-wall",    "react": "LogoWall" },
-    { "name": "testimonial",     "layer": "pattern", "css": "st-quote",        "react": "Testimonial" },
-    { "name": "pricing-table",   "layer": "pattern", "css": "st-price",        "react": "PricingTable" },
-    { "name": "faq",             "layer": "pattern", "css": "st-accordion",    "react": "Faq" },
-    { "name": "cta-band",        "layer": "pattern", "css": "st-cta-band",     "react": "CtaBand" },
-    { "name": "footer",          "layer": "pattern", "css": "st-footer",       "react": "Footer" },
-    { "name": "page-header",     "layer": "pattern", "css": "st-page-header",  "react": "PageHeader" },
-    { "name": "toolbar",         "layer": "pattern", "css": "st-toolbar",      "react": "Toolbar" },
-    { "name": "import-wizard",   "layer": "pattern", "css": "st-wizard",       "react": "ImportWizard" },
-    { "name": "ticket-thread",   "layer": "pattern", "css": "st-comments",     "react": "TicketThread" },
-    { "name": "blog-card",       "layer": "pattern", "css": "st-card",         "react": "BlogCard" },
-    { "name": "newsletter",      "layer": "pattern", "css": "st-form",         "react": "Newsletter" }
+    {
+      "name": "box",
+      "layer": "primitive",
+      "css": "st-box",
+      "react": "Box"
+    },
+    {
+      "name": "container",
+      "layer": "primitive",
+      "css": "st-container",
+      "react": "Container"
+    },
+    {
+      "name": "section",
+      "layer": "primitive",
+      "css": "st-section",
+      "react": "Section"
+    },
+    {
+      "name": "stack",
+      "layer": "primitive",
+      "css": "st-stack",
+      "react": "Stack"
+    },
+    {
+      "name": "cluster",
+      "layer": "primitive",
+      "css": "st-cluster",
+      "react": "Cluster"
+    },
+    {
+      "name": "grid",
+      "layer": "primitive",
+      "css": "st-grid",
+      "react": "Grid"
+    },
+    {
+      "name": "split",
+      "layer": "primitive",
+      "css": "st-split",
+      "react": "Split"
+    },
+    {
+      "name": "center",
+      "layer": "primitive",
+      "css": "st-center",
+      "react": "Center"
+    },
+    {
+      "name": "spacer",
+      "layer": "primitive",
+      "css": "st-spacer",
+      "react": "Spacer"
+    },
+    {
+      "name": "divider",
+      "layer": "primitive",
+      "css": "st-divider",
+      "react": "Divider"
+    },
+    {
+      "name": "separator",
+      "layer": "primitive",
+      "css": "st-divider",
+      "react": "Separator"
+    },
+    {
+      "name": "aspect-ratio",
+      "layer": "primitive",
+      "css": "st-aspect",
+      "react": "AspectRatio"
+    },
+    {
+      "name": "scroll-area",
+      "layer": "primitive",
+      "css": "st-scroll-x",
+      "react": "ScrollX"
+    },
+    {
+      "name": "resizable",
+      "layer": "primitive",
+      "css": "st-resizable",
+      "react": "Resizable"
+    },
+    {
+      "name": "visibility",
+      "layer": "primitive",
+      "css": "st-hide",
+      "react": "Visibility"
+    },
+    {
+      "name": "portal",
+      "layer": "primitive",
+      "css": null,
+      "react": "Portal"
+    },
+    {
+      "name": "display",
+      "layer": "primitive",
+      "css": "st-display",
+      "react": "Display"
+    },
+    {
+      "name": "heading",
+      "layer": "primitive",
+      "css": "st-heading",
+      "react": "Heading"
+    },
+    {
+      "name": "text",
+      "layer": "primitive",
+      "css": "st-text",
+      "react": "Text"
+    },
+    {
+      "name": "eyebrow",
+      "layer": "primitive",
+      "css": "st-eyebrow",
+      "react": "Eyebrow"
+    },
+    {
+      "name": "lead",
+      "layer": "primitive",
+      "css": "st-lead",
+      "react": "Lead"
+    },
+    {
+      "name": "caption",
+      "layer": "primitive",
+      "css": "st-caption",
+      "react": "Caption"
+    },
+    {
+      "name": "clamp",
+      "layer": "primitive",
+      "css": "st-clamp-2",
+      "react": "Clamp"
+    },
+    {
+      "name": "prose",
+      "layer": "primitive",
+      "css": "st-prose",
+      "react": "Prose"
+    },
+    {
+      "name": "blockquote",
+      "layer": "primitive",
+      "css": "st-quote",
+      "react": "Quote"
+    },
+    {
+      "name": "code",
+      "layer": "primitive",
+      "css": "st-code",
+      "react": "Code"
+    },
+    {
+      "name": "kbd",
+      "layer": "primitive",
+      "css": "st-kbd",
+      "react": "Kbd"
+    },
+    {
+      "name": "sr-only",
+      "layer": "primitive",
+      "css": "st-sr-only",
+      "react": "SrOnly"
+    },
+    {
+      "name": "skip-link",
+      "layer": "primitive",
+      "css": "st-skip-link",
+      "react": "SkipLink"
+    },
+    {
+      "name": "button",
+      "layer": "primitive",
+      "css": "st-btn",
+      "react": "Button"
+    },
+    {
+      "name": "button-group",
+      "layer": "primitive",
+      "css": "st-btn-group",
+      "react": "ButtonGroup"
+    },
+    {
+      "name": "icon-button",
+      "layer": "primitive",
+      "css": "st-btn--icon",
+      "react": "Button"
+    },
+    {
+      "name": "split-button",
+      "layer": "composite",
+      "css": "st-split-btn",
+      "react": "SplitButton"
+    },
+    {
+      "name": "fab",
+      "layer": "primitive",
+      "css": "st-fab",
+      "react": "Fab"
+    },
+    {
+      "name": "link",
+      "layer": "primitive",
+      "css": "st-link",
+      "react": "Link"
+    },
+    {
+      "name": "copy-button",
+      "layer": "composite",
+      "css": "st-btn",
+      "react": "CopyButton"
+    },
+    {
+      "name": "field",
+      "layer": "composite",
+      "css": "st-field",
+      "react": "Field"
+    },
+    {
+      "name": "label",
+      "layer": "primitive",
+      "css": "st-field__label",
+      "react": "Label"
+    },
+    {
+      "name": "input",
+      "layer": "primitive",
+      "css": "st-input",
+      "react": "Input"
+    },
+    {
+      "name": "textarea",
+      "layer": "primitive",
+      "css": "st-input",
+      "react": "Textarea"
+    },
+    {
+      "name": "select",
+      "layer": "primitive",
+      "css": "st-input",
+      "react": "Select"
+    },
+    {
+      "name": "combobox",
+      "layer": "composite",
+      "css": "st-combobox",
+      "react": "Combobox"
+    },
+    {
+      "name": "choice",
+      "layer": "composite",
+      "css": "st-choice",
+      "react": "Choice"
+    },
+    {
+      "name": "checkbox",
+      "layer": "primitive",
+      "css": "st-checkbox",
+      "react": "Checkbox"
+    },
+    {
+      "name": "radio-group",
+      "layer": "composite",
+      "css": "st-radio",
+      "react": "RadioGroup"
+    },
+    {
+      "name": "switch",
+      "layer": "primitive",
+      "css": "st-switch",
+      "react": "Switch"
+    },
+    {
+      "name": "slider",
+      "layer": "primitive",
+      "css": "st-slider",
+      "react": "Slider"
+    },
+    {
+      "name": "range-slider",
+      "layer": "composite",
+      "css": "st-slider",
+      "react": "RangeSlider"
+    },
+    {
+      "name": "scale",
+      "layer": "composite",
+      "css": "st-scale",
+      "react": "Scale"
+    },
+    {
+      "name": "rating",
+      "layer": "composite",
+      "css": "st-rating",
+      "react": "Rating"
+    },
+    {
+      "name": "nps",
+      "layer": "composite",
+      "css": "st-scale",
+      "react": "NPS"
+    },
+    {
+      "name": "search-input",
+      "layer": "composite",
+      "css": "st-search",
+      "react": "SearchInput"
+    },
+    {
+      "name": "tag-input",
+      "layer": "composite",
+      "css": "st-tag-input",
+      "react": "TagInput"
+    },
+    {
+      "name": "otp-input",
+      "layer": "composite",
+      "css": "st-otp",
+      "react": "OtpInput"
+    },
+    {
+      "name": "date-picker",
+      "layer": "composite",
+      "css": "st-calendar",
+      "react": "DatePicker"
+    },
+    {
+      "name": "date-range",
+      "layer": "composite",
+      "css": "st-calendar",
+      "react": "DateRangePicker"
+    },
+    {
+      "name": "time-picker",
+      "layer": "composite",
+      "css": "st-input",
+      "react": "TimePicker"
+    },
+    {
+      "name": "calendar",
+      "layer": "composite",
+      "css": "st-calendar",
+      "react": "Calendar"
+    },
+    {
+      "name": "file-upload",
+      "layer": "composite",
+      "css": "st-dropzone",
+      "react": "FileUpload"
+    },
+    {
+      "name": "signature",
+      "layer": "composite",
+      "css": "st-signature",
+      "react": "Signature"
+    },
+    {
+      "name": "color-input",
+      "layer": "composite",
+      "css": "st-color",
+      "react": "ColorInput"
+    },
+    {
+      "name": "form",
+      "layer": "composite",
+      "css": "st-form",
+      "react": "Form"
+    },
+    {
+      "name": "fieldset",
+      "layer": "primitive",
+      "css": "st-fieldset",
+      "react": "Fieldset"
+    },
+    {
+      "name": "card",
+      "layer": "primitive",
+      "css": "st-card",
+      "react": "Card"
+    },
+    {
+      "name": "row",
+      "layer": "primitive",
+      "css": "st-row",
+      "react": "Row"
+    },
+    {
+      "name": "panel",
+      "layer": "primitive",
+      "css": "st-panel",
+      "react": "Panel"
+    },
+    {
+      "name": "well",
+      "layer": "primitive",
+      "css": "st-well",
+      "react": "Well"
+    },
+    {
+      "name": "invert",
+      "layer": "primitive",
+      "css": "st-invert",
+      "react": "Invert"
+    },
+    {
+      "name": "frame",
+      "layer": "composite",
+      "css": "st-frame",
+      "react": "Frame"
+    },
+    {
+      "name": "badge",
+      "layer": "primitive",
+      "css": "st-badge",
+      "react": "Badge"
+    },
+    {
+      "name": "chip",
+      "layer": "primitive",
+      "css": "st-chip",
+      "react": "Chip"
+    },
+    {
+      "name": "tag",
+      "layer": "primitive",
+      "css": "st-badge",
+      "react": "Tag"
+    },
+    {
+      "name": "status-dot",
+      "layer": "primitive",
+      "css": "st-dot",
+      "react": "StatusDot"
+    },
+    {
+      "name": "avatar",
+      "layer": "primitive",
+      "css": "st-avatar",
+      "react": "Avatar"
+    },
+    {
+      "name": "avatar-group",
+      "layer": "primitive",
+      "css": "st-avatar-group",
+      "react": "AvatarGroup"
+    },
+    {
+      "name": "icon",
+      "layer": "primitive",
+      "css": "st-icon",
+      "react": "Icon"
+    },
+    {
+      "name": "navbar",
+      "layer": "composite",
+      "css": "st-navbar",
+      "react": "Navbar"
+    },
+    {
+      "name": "sidebar",
+      "layer": "composite",
+      "css": "st-sidebar",
+      "react": "Sidebar"
+    },
+    {
+      "name": "tabs",
+      "layer": "composite",
+      "css": "st-tabs",
+      "react": "Tabs"
+    },
+    {
+      "name": "segmented",
+      "layer": "composite",
+      "css": "st-segmented",
+      "react": "Segmented"
+    },
+    {
+      "name": "breadcrumb",
+      "layer": "composite",
+      "css": "st-breadcrumb",
+      "react": "Breadcrumb"
+    },
+    {
+      "name": "pagination",
+      "layer": "composite",
+      "css": "st-pagination",
+      "react": "Pagination"
+    },
+    {
+      "name": "stepper",
+      "layer": "composite",
+      "css": "st-stepper",
+      "react": "Stepper"
+    },
+    {
+      "name": "anchor-nav",
+      "layer": "composite",
+      "css": "st-anchor-nav",
+      "react": "AnchorNav"
+    },
+    {
+      "name": "menubar",
+      "layer": "composite",
+      "css": "st-menubar",
+      "react": "Menubar"
+    },
+    {
+      "name": "command",
+      "layer": "composite",
+      "css": "st-command",
+      "react": "CommandPalette"
+    },
+    {
+      "name": "bottom-nav",
+      "layer": "composite",
+      "css": "st-bottom-nav",
+      "react": "BottomNav"
+    },
+    {
+      "name": "dialog",
+      "layer": "composite",
+      "css": "st-modal",
+      "react": "Modal"
+    },
+    {
+      "name": "alert-dialog",
+      "layer": "composite",
+      "css": "st-modal",
+      "react": "ConfirmDialog"
+    },
+    {
+      "name": "drawer",
+      "layer": "composite",
+      "css": "st-drawer",
+      "react": "Drawer"
+    },
+    {
+      "name": "sheet",
+      "layer": "composite",
+      "css": "st-drawer",
+      "react": "Sheet"
+    },
+    {
+      "name": "popover",
+      "layer": "composite",
+      "css": "st-popover",
+      "react": "Popover"
+    },
+    {
+      "name": "dropdown-menu",
+      "layer": "composite",
+      "css": "st-menu",
+      "react": "Menu"
+    },
+    {
+      "name": "context-menu",
+      "layer": "composite",
+      "css": "st-menu",
+      "react": "ContextMenu"
+    },
+    {
+      "name": "hover-card",
+      "layer": "composite",
+      "css": "st-popover",
+      "react": "HoverCard"
+    },
+    {
+      "name": "tooltip",
+      "layer": "composite",
+      "css": "st-tooltip",
+      "react": "Tooltip"
+    },
+    {
+      "name": "toast",
+      "layer": "composite",
+      "css": "st-toast",
+      "react": "ToastProvider"
+    },
+    {
+      "name": "banner",
+      "layer": "composite",
+      "css": "st-banner",
+      "react": "Banner"
+    },
+    {
+      "name": "alert",
+      "layer": "composite",
+      "css": "st-alert",
+      "react": "Alert"
+    },
+    {
+      "name": "lightbox",
+      "layer": "composite",
+      "css": "st-lightbox",
+      "react": "Lightbox"
+    },
+    {
+      "name": "accordion",
+      "layer": "composite",
+      "css": "st-accordion",
+      "react": "Accordion"
+    },
+    {
+      "name": "collapsible",
+      "layer": "composite",
+      "css": "st-accordion",
+      "react": "Reveal"
+    },
+    {
+      "name": "toggle",
+      "layer": "primitive",
+      "css": "st-toggle",
+      "react": "Toggle"
+    },
+    {
+      "name": "toggle-group",
+      "layer": "composite",
+      "css": "st-toggle-group",
+      "react": "ToggleGroup"
+    },
+    {
+      "name": "carousel",
+      "layer": "composite",
+      "css": "st-carousel",
+      "react": "Carousel"
+    },
+    {
+      "name": "table",
+      "layer": "collection",
+      "css": "st-table",
+      "react": "Table"
+    },
+    {
+      "name": "data-table",
+      "layer": "collection",
+      "css": "st-table",
+      "react": "DataTable"
+    },
+    {
+      "name": "list",
+      "layer": "collection",
+      "css": "st-list",
+      "react": "List"
+    },
+    {
+      "name": "card-grid",
+      "layer": "collection",
+      "css": "st-grid",
+      "react": "CardGrid"
+    },
+    {
+      "name": "kanban",
+      "layer": "collection",
+      "css": "st-kanban",
+      "react": "Kanban"
+    },
+    {
+      "name": "calendar-view",
+      "layer": "collection",
+      "css": "st-calendar",
+      "react": "CalendarView"
+    },
+    {
+      "name": "detail-view",
+      "layer": "collection",
+      "css": "st-detail",
+      "react": "DetailView"
+    },
+    {
+      "name": "description-list",
+      "layer": "collection",
+      "css": "st-kv",
+      "react": "KeyValue"
+    },
+    {
+      "name": "stat",
+      "layer": "collection",
+      "css": "st-stat",
+      "react": "Stat"
+    },
+    {
+      "name": "stat-grid",
+      "layer": "collection",
+      "css": "st-grid",
+      "react": "StatGrid"
+    },
+    {
+      "name": "meter",
+      "layer": "collection",
+      "css": "st-meter",
+      "react": "Meter"
+    },
+    {
+      "name": "gauge",
+      "layer": "collection",
+      "css": "st-gauge",
+      "react": "Gauge"
+    },
+    {
+      "name": "progress",
+      "layer": "collection",
+      "css": "st-progress",
+      "react": "Progress"
+    },
+    {
+      "name": "timeline",
+      "layer": "collection",
+      "css": "st-timeline",
+      "react": "Timeline"
+    },
+    {
+      "name": "activity-feed",
+      "layer": "collection",
+      "css": "st-timeline",
+      "react": "ActivityFeed"
+    },
+    {
+      "name": "checklist",
+      "layer": "collection",
+      "css": "st-checklist",
+      "react": "Checklist"
+    },
+    {
+      "name": "comments",
+      "layer": "collection",
+      "css": "st-comments",
+      "react": "Comments"
+    },
+    {
+      "name": "tree",
+      "layer": "collection",
+      "css": "st-tree",
+      "react": "Tree"
+    },
+    {
+      "name": "filter-bar",
+      "layer": "collection",
+      "css": "st-filter-bar",
+      "react": "FilterBar"
+    },
+    {
+      "name": "chart",
+      "layer": "collection",
+      "css": "st-chart",
+      "react": "Chart"
+    },
+    {
+      "name": "sparkline",
+      "layer": "collection",
+      "css": "st-chart",
+      "react": "Sparkline"
+    },
+    {
+      "name": "heatmap",
+      "layer": "collection",
+      "css": "st-heatmap",
+      "react": "Heatmap"
+    },
+    {
+      "name": "permission-matrix",
+      "layer": "collection",
+      "css": "st-table",
+      "react": "PermissionMatrix"
+    },
+    {
+      "name": "article-body",
+      "layer": "collection",
+      "css": "st-prose",
+      "react": "ArticleBody"
+    },
+    {
+      "name": "chat",
+      "layer": "collection",
+      "css": "st-chat",
+      "react": "Chat"
+    },
+    {
+      "name": "message",
+      "layer": "collection",
+      "css": "st-msg",
+      "react": "Message"
+    },
+    {
+      "name": "message-list",
+      "layer": "collection",
+      "css": "st-chat__log",
+      "react": "MessageList"
+    },
+    {
+      "name": "composer",
+      "layer": "collection",
+      "css": "st-composer",
+      "react": "Composer"
+    },
+    {
+      "name": "typing",
+      "layer": "loader",
+      "css": "st-typing",
+      "react": "Typing"
+    },
+    {
+      "name": "streaming-text",
+      "layer": "loader",
+      "css": "st-stream",
+      "react": "StreamingText"
+    },
+    {
+      "name": "tool-call",
+      "layer": "collection",
+      "css": "st-toolcall",
+      "react": "ToolCall"
+    },
+    {
+      "name": "reasoning",
+      "layer": "collection",
+      "css": "st-toolcall",
+      "react": "Reasoning"
+    },
+    {
+      "name": "citation",
+      "layer": "collection",
+      "css": "st-citation",
+      "react": "Citation"
+    },
+    {
+      "name": "suggested-prompts",
+      "layer": "collection",
+      "css": "st-prompts",
+      "react": "SuggestedPrompts"
+    },
+    {
+      "name": "run-steps",
+      "layer": "collection",
+      "css": "st-run-steps",
+      "react": "RunSteps"
+    },
+    {
+      "name": "copilot-overlay",
+      "layer": "collection",
+      "css": "st-copilot",
+      "react": "CopilotOverlay"
+    },
+    {
+      "name": "spinner",
+      "layer": "loader",
+      "css": "st-spinner",
+      "react": "Spinner"
+    },
+    {
+      "name": "skeleton",
+      "layer": "loader",
+      "css": "st-skeleton",
+      "react": "Skeleton"
+    },
+    {
+      "name": "skeleton-text",
+      "layer": "loader",
+      "css": "st-skeleton-text",
+      "react": "SkeletonText"
+    },
+    {
+      "name": "skeleton-card",
+      "layer": "loader",
+      "css": "st-skeleton",
+      "react": "SkeletonCard"
+    },
+    {
+      "name": "skeleton-table",
+      "layer": "loader",
+      "css": "st-skeleton",
+      "react": "SkeletonTable"
+    },
+    {
+      "name": "loading-bar",
+      "layer": "loader",
+      "css": "st-loading-bar",
+      "react": "LoadingBar"
+    },
+    {
+      "name": "page-loader",
+      "layer": "loader",
+      "css": "st-page-loader",
+      "react": "PageLoader"
+    },
+    {
+      "name": "inline-loader",
+      "layer": "loader",
+      "css": "st-inline-loader",
+      "react": "InlineLoader"
+    },
+    {
+      "name": "button-loading",
+      "layer": "loader",
+      "css": "st-btn",
+      "react": "Button"
+    },
+    {
+      "name": "progress-ring",
+      "layer": "loader",
+      "css": "st-ring",
+      "react": "ProgressRing"
+    },
+    {
+      "name": "step-loader",
+      "layer": "loader",
+      "css": "st-step-loader",
+      "react": "StepLoader"
+    },
+    {
+      "name": "shimmerless-pulse",
+      "layer": "loader",
+      "css": "st-skeleton",
+      "react": "Skeleton"
+    },
+    {
+      "name": "optimistic-row",
+      "layer": "loader",
+      "css": "st-optimistic",
+      "react": "OptimisticRow"
+    },
+    {
+      "name": "lazy-image",
+      "layer": "loader",
+      "css": "st-lazy-img",
+      "react": "LazyImage"
+    },
+    {
+      "name": "refresh-control",
+      "layer": "loader",
+      "css": "st-refresh",
+      "react": "RefreshControl"
+    },
+    {
+      "name": "empty-state",
+      "layer": "state",
+      "css": "st-empty",
+      "react": "EmptyState"
+    },
+    {
+      "name": "first-run",
+      "layer": "state",
+      "css": "st-empty",
+      "react": "FirstRun"
+    },
+    {
+      "name": "no-results",
+      "layer": "state",
+      "css": "st-empty",
+      "react": "NoResults"
+    },
+    {
+      "name": "error-state",
+      "layer": "state",
+      "css": "st-empty",
+      "react": "ErrorState"
+    },
+    {
+      "name": "not-found",
+      "layer": "state",
+      "css": "st-status-page",
+      "react": "NotFound"
+    },
+    {
+      "name": "server-error",
+      "layer": "state",
+      "css": "st-status-page",
+      "react": "ServerError"
+    },
+    {
+      "name": "forbidden",
+      "layer": "state",
+      "css": "st-status-page",
+      "react": "Forbidden"
+    },
+    {
+      "name": "maintenance",
+      "layer": "state",
+      "css": "st-status-page",
+      "react": "Maintenance"
+    },
+    {
+      "name": "offline-banner",
+      "layer": "state",
+      "css": "st-banner",
+      "react": "OfflineBanner"
+    },
+    {
+      "name": "error-boundary",
+      "layer": "state",
+      "css": "st-status-page",
+      "react": "ErrorBoundary"
+    },
+    {
+      "name": "success-state",
+      "layer": "state",
+      "css": "st-empty",
+      "react": "SuccessState"
+    },
+    {
+      "name": "app-shell",
+      "layer": "screen",
+      "css": "st-shell",
+      "react": "AppShell"
+    },
+    {
+      "name": "marketing-shell",
+      "layer": "screen",
+      "css": "st-shell",
+      "react": "MarketingShell"
+    },
+    {
+      "name": "focus-shell",
+      "layer": "screen",
+      "css": "st-focus-shell",
+      "react": "FocusShell"
+    },
+    {
+      "name": "split-shell",
+      "layer": "screen",
+      "css": "st-split-shell",
+      "react": "SplitShell"
+    },
+    {
+      "name": "auth-screen",
+      "layer": "screen",
+      "css": "st-auth",
+      "react": "AuthScreen"
+    },
+    {
+      "name": "dashboard-screen",
+      "layer": "screen",
+      "css": "st-shell",
+      "react": "DashboardScreen"
+    },
+    {
+      "name": "settings-screen",
+      "layer": "screen",
+      "css": "st-settings",
+      "react": "SettingsScreen"
+    },
+    {
+      "name": "detail-screen",
+      "layer": "screen",
+      "css": "st-detail",
+      "react": "DetailScreen"
+    },
+    {
+      "name": "wizard-screen",
+      "layer": "screen",
+      "css": "st-wizard",
+      "react": "WizardScreen"
+    },
+    {
+      "name": "onboarding",
+      "layer": "screen",
+      "css": "st-wizard",
+      "react": "Onboarding"
+    },
+    {
+      "name": "checkout-screen",
+      "layer": "screen",
+      "css": "st-checkout",
+      "react": "CheckoutScreen"
+    },
+    {
+      "name": "pricing-screen",
+      "layer": "screen",
+      "css": "st-price",
+      "react": "PricingScreen"
+    },
+    {
+      "name": "chat-screen",
+      "layer": "screen",
+      "css": "st-chat",
+      "react": "ChatScreen"
+    },
+    {
+      "name": "inbox-screen",
+      "layer": "screen",
+      "css": "st-split-shell",
+      "react": "InboxScreen"
+    },
+    {
+      "name": "profile-screen",
+      "layer": "screen",
+      "css": "st-detail",
+      "react": "ProfileScreen"
+    },
+    {
+      "name": "hero",
+      "layer": "pattern",
+      "css": "st-hero",
+      "react": "Hero"
+    },
+    {
+      "name": "section-header",
+      "layer": "pattern",
+      "css": "st-section-header",
+      "react": "SectionHeader"
+    },
+    {
+      "name": "feature-row",
+      "layer": "pattern",
+      "css": "st-feature-row",
+      "react": "FeatureRow"
+    },
+    {
+      "name": "logo-wall",
+      "layer": "pattern",
+      "css": "st-logo-wall",
+      "react": "LogoWall"
+    },
+    {
+      "name": "testimonial",
+      "layer": "pattern",
+      "css": "st-quote",
+      "react": "Testimonial"
+    },
+    {
+      "name": "pricing-table",
+      "layer": "pattern",
+      "css": "st-price",
+      "react": "PricingTable"
+    },
+    {
+      "name": "faq",
+      "layer": "pattern",
+      "css": "st-accordion",
+      "react": "Faq"
+    },
+    {
+      "name": "cta-band",
+      "layer": "pattern",
+      "css": "st-cta-band",
+      "react": "CtaBand"
+    },
+    {
+      "name": "footer",
+      "layer": "pattern",
+      "css": "st-footer",
+      "react": "Footer"
+    },
+    {
+      "name": "page-header",
+      "layer": "pattern",
+      "css": "st-page-header",
+      "react": "PageHeader"
+    },
+    {
+      "name": "toolbar",
+      "layer": "pattern",
+      "css": "st-toolbar",
+      "react": "Toolbar"
+    },
+    {
+      "name": "import-wizard",
+      "layer": "pattern",
+      "css": "st-wizard",
+      "react": "ImportWizard"
+    },
+    {
+      "name": "ticket-thread",
+      "layer": "pattern",
+      "css": "st-comments",
+      "react": "TicketThread"
+    },
+    {
+      "name": "blog-card",
+      "layer": "pattern",
+      "css": "st-card",
+      "react": "BlogCard"
+    },
+    {
+      "name": "newsletter",
+      "layer": "pattern",
+      "css": "st-form",
+      "react": "Newsletter"
+    },
+    {
+      "name": "enter",
+      "layer": "primitive",
+      "css": "st-enter",
+      "react": "Enter"
+    },
+    {
+      "name": "stagger",
+      "layer": "primitive",
+      "css": "st-stagger",
+      "react": "Stagger"
+    },
+    {
+      "name": "count-up",
+      "layer": "primitive",
+      "css": "st-count",
+      "react": "CountUp"
+    },
+    {
+      "name": "collapse",
+      "layer": "composite",
+      "css": "st-collapse",
+      "react": "Collapse"
+    },
+    {
+      "name": "settled",
+      "layer": "loader",
+      "css": "st-settled",
+      "react": "Settled"
+    },
+    {
+      "name": "segmented-animated",
+      "layer": "composite",
+      "css": "st-segmented__thumb",
+      "react": "SegmentedAnimated"
+    },
+    {
+      "name": "tabs-animated",
+      "layer": "composite",
+      "css": "st-tabs__ink",
+      "react": "TabsAnimated"
+    },
+    {
+      "name": "tabbar",
+      "layer": "composite",
+      "css": "st-tabbar",
+      "react": "TabBar"
+    },
+    {
+      "name": "use-in-view",
+      "layer": "primitive",
+      "css": null,
+      "react": "useInView"
+    },
+    {
+      "name": "use-reduced-motion",
+      "layer": "primitive",
+      "css": null,
+      "react": "useReducedMotion"
+    }
   ]
 }

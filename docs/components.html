@@ -270,13 +270,22 @@ for (const [layer, items] of Object.entries(groups)) {
         <span class="spec">${it.css ? "." + it.css : "—"} · &lt;${it.react ?? "—"}&gt;</span>
       </div>
       ${key && demos[key]
-        ? `<div class="demo">${demos[key]}</div>${key !== it.name ? `<p class="spec" style="margin-top:4px">Shares its implementation with <a href="#c-${key}">${key}</a>.</p>` : ""}`
+        ? `<div class="demo st-enter-on-view">${demos[key]}</div>${key !== it.name ? `<p class="spec" style="margin-top:4px">Shares its implementation with <a href="#c-${key}">${key}</a>.</p>` : ""}`
         : `<div class="demo st-caption">Rendered on the <a href="${elsewhere[it.layer] ?? "./screens.html"}">screens page</a>.</div>`}
     </section>`
   }
 }
 document.getElementById("toc").innerHTML = toc
 document.getElementById("gallery").innerHTML = html
+
+/* Demos arrive as they scroll in. Once each — a card that re-animates every
+   time it passes is a distraction rather than life. */
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const io = new IntersectionObserver((es) => {
+    for (const e of es) if (e.isIntersecting) { e.target.classList.add("st-enter"); io.unobserve(e.target) }
+  }, { rootMargin: "0px 0px -8% 0px" })
+  document.querySelectorAll(".st-enter-on-view").forEach((el) => io.observe(el))
+}
 
 /* ---- August 2026 calendar for the date demos ---- */
 const cal = document.getElementById("cal")

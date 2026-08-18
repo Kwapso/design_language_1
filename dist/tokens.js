@@ -161,10 +161,15 @@ export const tokens = {
   },
   "motion": {
     "ease": "cubic-bezier(0.645, 0.045, 0.355, 1)",
+    "ease-entrance": "cubic-bezier(0.16, 1, 0.3, 1)",
+    "stagger": "45ms",
+    "stagger-max": "8",
+    "rise": "10px",
+    "press": "0.97",
     "fast": "120ms",
     "base": "200ms",
     "slow": "400ms",
-    "reveal": "800ms",
+    "reveal": "360ms",
     "max-allowed": "400ms"
   },
   "layout": {
