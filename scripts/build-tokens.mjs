@@ -75,6 +75,7 @@ for (const [k, v] of real(tokens.radius)) css += `  --st-radius-${k}: ${v};\n`
 for (const [k, v] of real(tokens.border)) css += `  --st-border-${k}: ${v};\n`
 css += `  --st-elevation-flat: ${tokens.elevation.flat};\n`
 css += `  --st-elevation-escape-hatch: ${valueOf(tokens.elevation["escape-hatch"])};\n`
+css += `  --st-scrim: ${valueOf(tokens.elevation.scrim)};\n`
 
 css += `\n  /* ---- motion ---- */\n`
 for (const [k, v] of real(tokens.motion)) css += `  --st-motion-${k}: ${v};\n`
@@ -266,6 +267,9 @@ const bundle =
     readFileSync(join(dist, "tokens.css"), "utf8"),
     readFileSync(join(root, "css/base.css"), "utf8"),
     readFileSync(join(root, "css/components.css"), "utf8"),
+    readFileSync(join(root, "css/extended.css"), "utf8"),
+    readFileSync(join(root, "css/loaders.css"), "utf8"),
+    readFileSync(join(root, "css/screens.css"), "utf8"),
   ].join("\n\n")
 
 writeFileSync(join(dist, "structure.bundle.css"), bundle)
@@ -277,6 +281,7 @@ writeFileSync(join(dist, "structure.bundle.css"), bundle)
 mkdirSync(join(root, "docs/assets"), { recursive: true })
 writeFileSync(join(root, "docs/assets/structure.css"), bundle)
 writeFileSync(join(root, "docs/assets/tokens.js"), readFileSync(join(dist, "tokens.js"), "utf8"))
+writeFileSync(join(root, "docs/assets/registry.json"), readFileSync(join(root, "registry.json"), "utf8"))
 
 /* ------------------------------------------------------------- report */
 

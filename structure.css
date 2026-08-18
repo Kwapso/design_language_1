@@ -21,3 +21,6 @@
 @import "./dist/tokens.css";
 @import "./css/base.css";
 @import "./css/components.css";
+@import "./css/extended.css";
+@import "./css/loaders.css";
+@import "./css/screens.css";

@@ -102,6 +102,7 @@
   --st-border-accent: 2px;
   --st-elevation-flat: none;
   --st-elevation-escape-hatch: 0 4px 16px rgba(25, 24, 23, 0.08);
+  --st-scrim: rgba(25, 24, 23, 0.55);
 
   /* ---- motion ---- */
   --st-motion-ease: cubic-bezier(0.645, 0.045, 0.355, 1);

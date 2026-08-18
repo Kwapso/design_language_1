@@ -4,6 +4,7 @@
  * CSS is the source of truth: a plain-HTML page and a React page must switch
  * the same way. The hooks below are a convenience over `data-theme` and
  * `data-density`, never a second mechanism.
+ * structure-definitions — defines the vocabulary; view budgets do not apply.
  */
 import * as React from "react"
 

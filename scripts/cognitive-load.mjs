@@ -108,7 +108,7 @@ const findings = []
 const add = (file, line, rule, msg) => findings.push({ file, line, rule, msg })
 
 /** Continuous state indicators. Not transitions — exempt from the ceiling. */
-const CONTINUOUS = /spin|pulse|typing|caret|reveal|skeleton|shimmer/i
+const CONTINUOUS = /spin|pulse|typing|caret|reveal|skeleton|shimmer|slide|loading-bar/i
 
 const RULES = [
   {
@@ -142,7 +142,7 @@ const RULES = [
     run(src, file, { isDefinition }) {
       // Capture the VALUE and test it. A lookahead after `\s*` backtracks to a
       // zero-width match and silently passes everything.
-      for (const m of src.matchAll(/box-shadow\s*:\s*([^;{}]+)/g)) {
+      for (const m of src.matchAll(/box-shadow\s*:\s*([^;{}"'`]+)/g)) {
         const value = m[1].trim()
         if (/^none$/i.test(value) || value.includes("--st-elevation")) continue
         // An inset hairline is a border drawn with a shadow, not elevation.
@@ -199,9 +199,8 @@ const RULES = [
       const print = printRanges(src)
       for (const m of src.matchAll(/#[0-9a-fA-F]{3,8}\b|\brgba?\([\d\s.,%/]+\)/g)) {
         if (print.some(([a, b]) => m.index >= a && m.index < b)) continue
-        const block = blockAt(src, m.index)
-        // Scrims are intentionally literal: a translucent ink wash has no token.
-        if (/st-overlay/.test(block)) continue
+        // No class-name exemptions: the scrim is --st-scrim now, so every
+        // literal colour left in the stylesheets is a genuine finding.
         add(file, lineOf(src, m.index), this.id, `Literal colour ${m[0]} — use a token`)
       }
     },

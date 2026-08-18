@@ -1,6 +1,8 @@
-/* Structure — surfaces, data display, and feedback. */
+/* Structure — surfaces, data display, and feedback. * structure-definitions — defines the vocabulary; view budgets do not apply.
+ */
 import * as React from "react"
 import { cx } from "./layout"
+import { EmptyState } from "./states"
 
 /* ------------------------------------------------------------------ card */
 
@@ -92,16 +94,8 @@ export function Meter({ label, value, max = 100, display }: {
   )
 }
 
-export const Skeleton = ({ className, style, ...rest }: React.ComponentPropsWithoutRef<"div">) => (
-  <div className={cx("st-skeleton", className)} style={style} aria-hidden="true" {...rest} />
-)
-
-export const Spinner = ({ label = "Loading" }: { label?: string }) => (
-  <span className="st-cluster">
-    <span className="st-spinner" aria-hidden="true" />
-    <span className="st-sr-only">{label}</span>
-  </span>
-)
+/* Skeleton and Spinner live in ./loaders — the whole waiting vocabulary is
+ * one file, so choosing between its members is a single decision. */
 
 /* ----------------------------------------------------------------- alert */
 
@@ -167,19 +161,7 @@ export function Table<T extends Record<string, unknown>>({ columns, rows, captio
   )
 }
 
-export function EmptyState({ title, children, action }: {
-  title: string
-  children?: React.ReactNode
-  action?: React.ReactNode
-}) {
-  return (
-    <div className="st-empty">
-      <p className="st-empty__title">{title}</p>
-      {children && <p>{children}</p>}
-      {action}
-    </div>
-  )
-}
+/* EmptyState and the rest of the empty/error family live in ./states. */
 
 export function KeyValue({ items }: { items: Array<{ key: string; value: React.ReactNode }> }) {
   return (

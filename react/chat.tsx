@@ -11,6 +11,7 @@
  *    single accent on every message, leaving nothing to mark the next action.
  *  - Machine detail — tool calls, reasoning — is collapsed by default. It is
  *    available in one click and absent until then.
+ * structure-definitions — defines the vocabulary; view budgets do not apply.
  */
 import * as React from "react"
 import { cx } from "./layout"

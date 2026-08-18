@@ -1,4 +1,5 @@
-/* Structure — buttons, form controls, and marks. */
+/* Structure — buttons, form controls, and marks. * structure-definitions — defines the vocabulary; view budgets do not apply.
+ */
 import * as React from "react"
 import { cx } from "./layout"
 

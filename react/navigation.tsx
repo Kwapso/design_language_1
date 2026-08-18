@@ -1,4 +1,5 @@
-/* Structure — navigation and disclosure. */
+/* Structure — navigation and disclosure. * structure-definitions — defines the vocabulary; view budgets do not apply.
+ */
 import * as React from "react"
 import { cx } from "./layout"
 

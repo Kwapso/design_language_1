@@ -2,6 +2,7 @@
  *
  * Every component here renders the class names defined in css/components.css.
  * There is no styling logic in React: one implementation, two front doors.
+ * structure-definitions — defines the vocabulary; view budgets do not apply.
  */
 import * as React from "react"
 

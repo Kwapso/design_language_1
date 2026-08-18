@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Screens — Structure</title>
+<meta name="description" content="Whole-screen scaffolds: app shell, auth, settings, wizard, checkout, inbox, status pages.">
+<link rel="stylesheet" href="./assets/fonts.css">
+<link rel="stylesheet" href="./assets/structure.css">
+<!-- structure-ignore accent-budget: each screen below owns its own accent; the
+     page shows several screens at once, which a product never does. -->
+<!-- structure-ignore type-scale: a catalogue of screens spans the whole scale. -->
+<style>
+  .wide { width: min(1400px, 100% - 80px); margin-inline: auto; }
+  @media (max-width: 700px) { .wide { width: calc(100% - 40px); } }
+  .spec { font-family: var(--st-font-mono); font-size: var(--st-text-xs); color: var(--st-muted); }
+  .kicker { font-family: var(--st-font-display); font-weight: 300; font-size: clamp(2rem, 5vw, 3.4rem); line-height: .95; }
+  .frame { border: 1px solid var(--st-border-control); border-radius: var(--st-radius-surface); overflow: hidden; background: var(--st-background); }
+  .frame__bar { display: flex; align-items: center; gap: 6px; padding: 10px var(--st-space-base); background: var(--st-surface); border-bottom: 1px solid var(--st-divider); }
+  .frame__dot { width: 9px; height: 9px; border-radius: 50%; background: var(--st-border-control); }
+  /* Each screen is shown at real proportions inside a scroll-clipped frame,
+     rather than shrunk — a scaled-down screen hides exactly the density
+     problems this page exists to show. */
+  .stage { height: 520px; overflow: hidden; position: relative; }
+  .stage > * { height: 100%; }
+  .phone { width: 300px; border: 1px solid var(--st-border-control); border-radius: 28px; overflow: hidden; margin-inline: auto; }
+  .phone__notch { height: 26px; display: grid; place-items: center; background: var(--st-surface); }
+  .phone__pill { width: 70px; height: 5px; border-radius: 3px; background: var(--st-border-control); }
+  .case { margin-top: var(--st-space-xl); scroll-margin-top: 80px; }
+</style>
+</head>
+<body>
+<a href="#main" class="st-skip-link">Skip to content</a>
+
+<header class="st-navbar" style="position:sticky;top:0;z-index:100">
+  <strong style="letter-spacing:var(--st-tracking-wide)"><a href="./" style="text-decoration:none">Structure</a></strong>
+  <nav class="st-navbar__links" aria-label="Main">
+    <a class="st-navbar__link" href="./">Overview</a>
+    <a class="st-navbar__link" href="./components.html">Components</a>
+    <a class="st-navbar__link" href="./screens.html" aria-current="page">Screens</a>
+    <a class="st-navbar__link" href="./loaders.html">Loaders &amp; states</a>
+  </nav>
+  <button class="st-btn st-btn--ghost st-btn--sm" id="theme" aria-label="Switch theme">Theme</button>
+</header>
+
+<main id="main" class="wide" style="padding-block:var(--st-space-xl)">
+  <p class="st-eyebrow">Screens</p>
+  <h1 class="kicker" style="margin-top:var(--st-space-s);max-width:24ch">Components don't build software. Scaffolds do.</h1>
+  <p class="st-lead" style="margin-top:var(--st-space-base)">
+    Every product re-invents the same dozen layouts, slightly differently each time — and that is
+    where a design system actually leaks. Each scaffold below owns the page: viewport height, and
+    the part everyone gets wrong, <strong>which single element scrolls</strong>.
+  </p>
+
+  <!-- ═══════════════════════════════════════════════════════ APP SHELL -->
+  <section class="case" id="app-shell">
+    <div class="st-cluster st-cluster--between">
+      <h2 style="font-size:var(--st-text-lg)">App shell</h2>
+      <span class="spec">.st-shell · &lt;AppShell&gt;</span>
+    </div>
+    <p class="st-caption" style="margin-block:var(--st-space-xs) var(--st-space-s)">
+      Rail + head + one scrolling main. A CSS grid, because a grid can pin the rails and let exactly
+      one cell scroll. Try scrolling inside it — the page behind does not move.
+    </p>
+    <div class="frame">
+      <div class="frame__bar"><span class="frame__dot"></span><span class="frame__dot"></span><span class="frame__dot"></span><span class="spec" style="margin-left:8px">app.kwapso.com/processes</span></div>
+      <div class="stage">
+        <div class="st-shell" data-density="compact">
+          <aside class="st-shell__rail">
+            <nav class="st-sidebar" style="width:200px;background:transparent">
+              <p class="st-eyebrow" style="padding:0 var(--st-space-s)">Operations</p>
+              <a class="st-sidebar__link" aria-current="page" href="#app-shell">Processes</a>
+              <a class="st-sidebar__link" href="#app-shell">Automations</a>
+              <a class="st-sidebar__link" href="#app-shell">Dashboards</a>
+              <a class="st-sidebar__link" href="#app-shell">Team</a>
+            </nav>
+          </aside>
+          <header class="st-shell__head">
+            <div class="st-navbar" style="position:static;border:0">
+              <strong>kwapso</strong>
+              <div class="st-search" style="max-width:280px"><input class="st-input" type="search" placeholder="Search processes"></div>
+              <div class="st-cluster"><span class="st-avatar">AK</span></div>
+            </div>
+          </header>
+          <main class="st-shell__main">
+            <div class="st-page-header">
+              <div><h1 class="st-page-header__title">Processes</h1><p class="st-page-header__meta">7 active · 3 blocked</p></div>
+              <div class="st-cluster"><button class="st-btn st-btn--ghost st-btn--sm">Export</button><button class="st-btn st-btn--accent st-btn--sm">New process</button></div>
+            </div>
+            <div class="st-grid" style="margin-bottom:var(--st-space-base)">
+              <div class="st-card"><div class="st-stat"><span class="st-stat__value">68</span><span class="st-stat__label">Operational health</span><span class="st-stat__delta" data-dir="up">↑ 6</span></div></div>
+              <div class="st-card"><div class="st-stat"><span class="st-stat__value">41.75</span><span class="st-stat__label">Hours / week manual</span><span class="st-stat__delta" data-dir="down">↓ 3.2</span></div></div>
+              <div class="st-card"><div class="st-stat"><span class="st-stat__value">7</span><span class="st-stat__label">Active</span></div></div>
+            </div>
+            <div class="st-table-wrap st-scroll-x">
+              <table class="st-table"><thead><tr><th scope="col">Process</th><th scope="col">Owner</th><th scope="col">Status</th><th scope="col" data-numeric>Hrs / wk</th></tr></thead><tbody id="shell-rows"></tbody></table>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════ SPLIT / INBOX -->
+  <section class="case" id="split-shell">
+    <div class="st-cluster st-cluster--between">
+      <h2 style="font-size:var(--st-text-lg)">Split shell — inbox, records, master/detail</h2>
+      <span class="spec">.st-split-shell · &lt;SplitShell&gt;</span>
+    </div>
+    <p class="st-caption" style="margin-block:var(--st-space-xs) var(--st-space-s)">
+      Two panes that scroll independently; the page never does. On a phone one pane shows at a time.
+    </p>
+    <div class="frame">
+      <div class="frame__bar"><span class="frame__dot"></span><span class="frame__dot"></span><span class="frame__dot"></span><span class="spec" style="margin-left:8px">app.kwapso.com/inbox</span></div>
+      <div class="stage">
+        <div class="st-split-shell" data-density="compact">
+          <div>
+            <div class="st-toolbar st-toolbar--sticky" style="padding-inline:var(--st-space-base)">
+              <div class="st-search" style="flex:1"><input class="st-input" type="search" placeholder="Search"></div>
+            </div>
+            <div class="st-list" id="inbox-list" style="padding-inline:var(--st-space-base)"></div>
+          </div>
+          <div style="padding:var(--st-space-base)">
+            <div class="st-page-header">
+              <div><h1 class="st-page-header__title" style="font-size:var(--st-text-md)">Quote to order</h1><p class="st-page-header__meta">Sales · 21.25 hrs / week</p></div>
+              <div class="st-cluster"><button class="st-btn st-btn--ghost st-btn--sm">Assign</button></div>
+            </div>
+            <dl class="st-kv"><dt>Owner</dt><dd>Sales</dd><dt>Frequency</dt><dd>Daily</dd><dt>Automatable</dt><dd>82%</dd><dt>Status</dt><dd><span class="st-cluster" style="gap:var(--st-space-xs)"><span class="st-dot st-dot--danger"></span>Blocked</span></dd></dl>
+            <h3 style="font-size:var(--st-text-sm);margin-top:var(--st-space-base)">Activity</h3>
+            <ol class="st-timeline" style="list-style:none;padding:0;margin-top:var(--st-space-s)">
+              <li class="st-timeline__item"><span class="st-timeline__marker"></span><div><div>Marked as blocked</div><div class="st-caption">2 hours ago · Marta</div></div></li>
+              <li class="st-timeline__item"><span class="st-timeline__marker"></span><div><div>Costing added</div><div class="st-caption">Yesterday · Alaap</div></div></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════ AUTH -->
+  <section class="case" id="auth-screen">
+    <div class="st-cluster st-cluster--between">
+      <h2 style="font-size:var(--st-text-lg)">Auth</h2>
+      <span class="spec">.st-auth · &lt;AuthScreen&gt;</span>
+    </div>
+    <p class="st-caption" style="margin-block:var(--st-space-xs) var(--st-space-s)">
+      The brand half is decorative, so it is the half that disappears on a phone — never the form.
+    </p>
+    <div class="frame">
+      <div class="stage">
+        <div class="st-auth">
+          <div class="st-auth__panel">
+            <div class="st-auth__form">
+              <h1 style="font-size:var(--st-text-xl)">Sign in</h1>
+              <form class="st-form" style="margin-top:var(--st-space-m)">
+                <div class="st-field"><label class="st-field__label" for="ae">Work email</label><input class="st-input" id="ae" type="email" placeholder="you@company.com"></div>
+                <div class="st-field"><label class="st-field__label" for="ap">Password</label><input class="st-input" id="ap" type="password" value="••••••••••"></div>
+                <label class="st-checkbox"><input type="checkbox" checked><span class="st-checkbox__box"></span><span>Keep me signed in</span></label>
+                <button class="st-btn st-btn--accent st-btn--block" type="button">Sign in</button>
+              </form>
+              <p class="st-caption" style="margin-top:var(--st-space-base)">No account? <a class="st-link" href="#auth-screen">Request access</a></p>
+            </div>
+          </div>
+          <aside class="st-auth__aside st-invert">
+            <p class="st-eyebrow">kwapso</p>
+            <p class="st-display st-display--xs" style="font-size:2.4rem">Work, structured.</p>
+            <p class="st-caption">More than 280 users, 15 industries.</p>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════ WIZARD -->
+  <section class="case" id="wizard-screen">
+    <div class="st-cluster st-cluster--between">
+      <h2 style="font-size:var(--st-text-lg)">Wizard — one decision per screen</h2>
+      <span class="spec">.st-wizard · &lt;WizardScreen&gt;</span>
+    </div>
+    <p class="st-caption" style="margin-block:var(--st-space-xs) var(--st-space-s)">
+      The scorecard's shape, generalised. Thirty questions work because they arrive one at a time;
+      the same thirty in one scroll get abandoned. No navigation — removing the exits is the point.
+    </p>
+    <div class="frame">
+      <div class="stage">
+        <div class="st-wizard">
+          <div class="st-wizard__head">
+            <div class="st-cluster st-cluster--between"><span class="st-caption">Step 12 of 30</span><span class="st-caption">Processes</span></div>
+            <div class="st-progress" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" aria-label="Progress" style="margin-top:var(--st-space-s)"><div class="st-progress__bar" style="width:40%"></div></div>
+          </div>
+          <div class="st-wizard__body">
+            <div class="st-wizard__inner">
+              <h1 class="st-display st-display--xs" style="font-size:1.9rem;line-height:1.15">When someone new joins, is there a written process to follow?</h1>
+              <div class="st-stack st-stack--s" style="margin-top:var(--st-space-m)">
+                <label class="st-choice"><input type="radio" name="w"><span><span class="st-choice__title">Never</span></span></label>
+                <label class="st-choice"><input type="radio" name="w"><span><span class="st-choice__title">Sometimes</span></span></label>
+                <label class="st-choice" data-selected="true"><input type="radio" name="w" checked><span><span class="st-choice__title">Usually</span><span class="st-choice__desc">Most roles have one</span></span></label>
+                <label class="st-choice"><input type="radio" name="w"><span><span class="st-choice__title">Always</span></span></label>
+              </div>
+            </div>
+          </div>
+          <div class="st-wizard__foot">
+            <button class="st-btn st-btn--ghost">Back</button>
+            <button class="st-btn st-btn--accent">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ SETTINGS -->
+  <section class="case" id="settings-screen">
+    <div class="st-cluster st-cluster--between">
+      <h2 style="font-size:var(--st-text-lg)">Settings — with a quarantined danger zone</h2>
+      <span class="spec">.st-settings · &lt;SettingsScreen&gt;</span>
+    </div>
+    <p class="st-caption" style="margin-block:var(--st-space-xs) var(--st-space-s)">
+      Destructive actions are visually quarantined, so “delete everything” can never sit one row
+      below “change your display name”.
+    </p>
+    <div class="frame">
+      <div class="stage" style="overflow-y:auto">
+        <div style="padding:var(--st-space-m)" data-density="compact">
+          <div class="st-settings">
+            <nav class="st-sidebar" aria-label="Settings">
+              <a class="st-sidebar__link" aria-current="page" href="#settings-screen">General</a>
+              <a class="st-sidebar__link" href="#settings-screen">Members</a>
+              <a class="st-sidebar__link" href="#settings-screen">Billing</a>
+              <a class="st-sidebar__link" href="#settings-screen">Integrations</a>
+            </nav>
+            <div>
+              <section style="margin-bottom:var(--st-space-l)">
+                <h2 class="st-eyebrow" style="margin-bottom:var(--st-space-s)">General</h2>
+                <div class="st-settings__group">
+                  <div class="st-settings__row"><div><div class="st-settings__row-title">Workspace name</div><div class="st-settings__row-desc">Shown on invoices and exports.</div></div><div><input class="st-input" value="Kwapso GmbH" aria-label="Workspace name" style="width:220px"></div></div>
+                  <div class="st-settings__row"><div><div class="st-settings__row-title">Weekly digest</div><div class="st-settings__row-desc">A Monday summary of blocked processes.</div></div><div><label class="st-switch"><input type="checkbox" role="switch" checked><span class="st-switch__control"></span><span class="st-sr-only">Weekly digest</span></label></div></div>
+                  <div class="st-settings__row"><div><div class="st-settings__row-title">Default density</div><div class="st-settings__row-desc">Comfortable for reading, compact for working.</div></div><div><div class="st-segmented"><button class="st-segmented__item" aria-pressed="false">Comfortable</button><button class="st-segmented__item" aria-pressed="true">Compact</button></div></div></div>
+                </div>
+              </section>
+              <section class="st-danger-zone">
+                <h2 class="st-eyebrow" style="color:var(--st-danger)">Danger zone</h2>
+                <div class="st-settings__row" style="border:0;padding-bottom:0">
+                  <div><div class="st-settings__row-title">Delete workspace</div><div class="st-settings__row-desc">Every process, map and export goes with it.</div></div>
+                  <button class="st-btn st-btn--danger st-btn--sm">Delete</button>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ CHECKOUT + MOBILE -->
+  <div class="st-grid st-grid--2" style="gap:var(--st-space-l);margin-top:var(--st-space-xl)">
+    <section id="checkout-screen">
+      <div class="st-cluster st-cluster--between">
+        <h2 style="font-size:var(--st-text-lg)">Checkout</h2>
+        <span class="spec">.st-checkout</span>
+      </div>
+      <p class="st-caption" style="margin-block:var(--st-space-xs) var(--st-space-s)">Summary sticks beside the form, and moves <em>above</em> it on mobile — the total is what people confirm.</p>
+      <div class="frame"><div class="stage" style="height:420px;overflow-y:auto"><div style="padding:var(--st-space-base)">
+        <div class="st-checkout" style="grid-template-columns:1fr">
+          <aside class="st-checkout__summary" style="position:static">
+            <div class="st-card">
+              <h3 class="st-card__title">Work, structured — Program</h3>
+              <dl class="st-kv" style="margin-top:var(--st-space-s)"><dt>Monthly</dt><dd class="st-numeric">€2,400.00</dd><dt>VAT (20%)</dt><dd class="st-numeric">€480.00</dd></dl>
+              <div class="st-card__footer st-cluster st-cluster--between"><strong>Total</strong><strong class="st-numeric">€2,880.00</strong></div>
+            </div>
+          </aside>
+          <form class="st-form" style="margin-top:var(--st-space-base)">
+            <div class="st-field"><label class="st-field__label" for="ce">Billing email</label><input class="st-input" id="ce" type="email" placeholder="finance@company.com"></div>
+            <div class="st-field"><label class="st-field__label" for="cv">VAT number</label><input class="st-input" id="cv" placeholder="ATU12345678"></div>
+            <button class="st-btn st-btn--accent st-btn--block" type="button">Confirm and pay</button>
+            <p class="st-caption">You can cancel any time before the next cycle.</p>
+          </form>
+        </div>
+      </div></div></div>
+    </section>
+
+    <section id="focus-shell">
+      <div class="st-cluster st-cluster--between">
+        <h2 style="font-size:var(--st-text-lg)">Mobile — bottom nav &amp; focus</h2>
+        <span class="spec">.st-bottom-nav</span>
+      </div>
+      <p class="st-caption" style="margin-block:var(--st-space-xs) var(--st-space-s)">A 240px sidebar on a 375px screen is not a layout. The rail becomes a bottom bar, respecting the home-indicator inset.</p>
+      <div class="phone" style="margin-top:var(--st-space-base)">
+        <div class="phone__notch"><span class="phone__pill"></span></div>
+        <div data-density="compact" style="display:flex;flex-direction:column;height:400px">
+          <div style="flex:1;overflow-y:auto;padding:var(--st-space-base)">
+            <h1 style="font-size:var(--st-text-md)">Processes</h1>
+            <div class="st-stack st-stack--s" style="margin-top:var(--st-space-s)">
+              <div class="st-row"><span class="st-dot st-dot--danger"></span><span style="flex:1">Quote to order</span><span class="st-caption st-numeric">21.25</span></div>
+              <div class="st-row"><span class="st-dot st-dot--warning"></span><span style="flex:1">Invoice approval</span><span class="st-caption st-numeric">12.50</span></div>
+              <div class="st-row"><span class="st-dot st-dot--success"></span><span style="flex:1">Onboarding</span><span class="st-caption st-numeric">8.00</span></div>
+              <div class="st-row"><span class="st-dot st-dot--muted"></span><span style="flex:1">Supplier intake</span><span class="st-caption st-numeric">4.75</span></div>
+            </div>
+          </div>
+          <nav class="st-bottom-nav">
+            <a class="st-bottom-nav__item" aria-current="page" href="#focus-shell">Home</a>
+            <a class="st-bottom-nav__item" href="#focus-shell">Processes</a>
+            <a class="st-bottom-nav__item" href="#focus-shell">Team</a>
+            <a class="st-bottom-nav__item" href="#focus-shell">More</a>
+          </nav>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ MARKETING -->
+  <section class="case" id="marketing-shell">
+    <div class="st-cluster st-cluster--between">
+      <h2 style="font-size:var(--st-text-lg)">Marketing page — comfortable density</h2>
+      <span class="spec">.st-shell--marketing · &lt;MarketingShell&gt;</span>
+    </div>
+    <div class="frame" style="margin-top:var(--st-space-s)">
+      <div class="frame__bar"><span class="frame__dot"></span><span class="frame__dot"></span><span class="frame__dot"></span><span class="spec" style="margin-left:8px">kwapso.com/services</span></div>
+      <div class="stage" style="overflow-y:auto">
+        <div style="padding:var(--st-space-m)">
+          <p class="st-eyebrow">Process audit &amp; design</p>
+          <h1 class="st-display st-display--sm" style="margin-top:var(--st-space-s)">From chaos to full overview.</h1>
+          <p class="st-lead" style="margin-top:var(--st-space-base)">We map how work actually moves through your business, price the bottlenecks, and hand you a roadmap in priority order.</p>
+          <div class="st-cluster" style="margin-top:var(--st-space-base)">
+            <button class="st-btn st-btn--accent">Book a process check</button>
+            <button class="st-btn st-btn--ghost">See a case study</button>
+          </div>
+          <div class="st-grid" style="margin-top:var(--st-space-l)">
+            <div class="st-row"><span class="st-badge">01</span><span>Full operational process map</span></div>
+            <div class="st-row"><span class="st-badge">02</span><span>Bottleneck cost calculation</span></div>
+            <div class="st-row"><span class="st-badge">03</span><span>Prioritised action roadmap</span></div>
+          </div>
+          <div class="st-cta-band" style="margin-top:var(--st-space-l)">
+            <p class="st-display st-display--xs">Make scale possible.</p>
+            <p class="st-lead" style="text-align:center">A partner who builds it with you.</p>
+            <button class="st-btn st-btn--outline">Talk to us</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════ STATUS PAGES -->
+  <section class="case" id="status-pages">
+    <div class="st-cluster st-cluster--between">
+      <h2 style="font-size:var(--st-text-lg)">Status pages</h2>
+      <span class="spec">.st-status-page · &lt;NotFound&gt; &lt;ServerError&gt; &lt;Forbidden&gt;</span>
+    </div>
+    <p class="st-caption" style="margin-block:var(--st-space-xs) var(--st-space-s)">
+      The screens nobody designs and everybody sees. Each one says what happened and then offers the
+      way out — a dead end with an apology is not a state, it is a trap.
+    </p>
+    <div class="st-grid st-grid--fixed-3">
+      <div class="frame"><div style="height:300px;overflow:hidden"><div class="st-status-page" style="min-height:300px"><div class="st-status-page__inner">
+        <p class="st-status-page__code">404</p><h1 class="st-status-page__title">That page doesn't exist</h1>
+        <p class="st-status-page__body">The link may be out of date, or the page may have moved.</p>
+        <div class="st-status-page__actions"><button class="st-btn st-btn--accent">Back to safety</button></div></div></div></div></div>
+      <div class="frame"><div style="height:300px;overflow:hidden"><div class="st-status-page" style="min-height:300px"><div class="st-status-page__inner">
+        <p class="st-status-page__code">500</p><h1 class="st-status-page__title">Something broke on our side</h1>
+        <p class="st-status-page__body">This is not your fault. We have been notified.<br><code class="st-code">req_8f3c21</code></p>
+        <div class="st-status-page__actions"><button class="st-btn st-btn--accent">Reload</button></div></div></div></div></div>
+      <div class="frame"><div style="height:300px;overflow:hidden"><div class="st-status-page" style="min-height:300px"><div class="st-status-page__inner">
+        <p class="st-status-page__code">403</p><h1 class="st-status-page__title">You don't have access</h1>
+        <p class="st-status-page__body">Ask an administrator on your team to grant you access.</p>
+        <div class="st-status-page__actions"><button class="st-btn st-btn--accent">Back to safety</button></div></div></div></div></div>
+    </div>
+  </section>
+</main>
+
+<footer class="wide" style="padding-block:var(--st-space-m)">
+  <hr class="st-divider">
+  <p class="st-caption" style="margin-top:var(--st-space-base)">Structure — the Kwapso design language.</p>
+</footer>
+
+<script type="module">
+/* Enough rows that the shell's main region genuinely scrolls — the whole
+   point of the demo is that the page behind it does not. */
+const rows = [
+  ["Quote to order","Sales","danger","Blocked","21.25"], ["Invoice approval","Finance","warning","In review","12.50"],
+  ["Onboarding","People","success","Live","8.00"], ["Supplier intake","Ops","muted","Draft","4.75"],
+  ["Expense claims","Finance","success","Live","6.20"], ["Contract renewal","Legal","warning","In review","3.40"],
+  ["Stock reconciliation","Ops","danger","Blocked","9.10"], ["Payroll prep","People","success","Live","5.50"],
+]
+document.getElementById("shell-rows").innerHTML = rows.map(([p,o,t,s,h]) =>
+  `<tr><td>${p}</td><td>${o}</td><td><span class="st-cluster" style="gap:var(--st-space-xs)"><span class="st-dot st-dot--${t}"></span>${s}</span></td><td data-numeric>${h}</td></tr>`).join("")
+
+document.getElementById("inbox-list").innerHTML = rows.map(([p,o,t,s], i) =>
+  `<div style="padding:var(--st-space-s) 0;${i===0?"font-weight:var(--st-weight-medium)":""}">
+     <div class="st-cluster" style="gap:var(--st-space-xs)"><span class="st-dot st-dot--${t}"></span><span>${p}</span></div>
+     <div class="st-caption">${o} · ${s}</div></div>`).join("")
+
+const order = ["light","dark","system"]; let ti = 0
+document.getElementById("theme").onclick = (e) => {
+  ti = (ti + 1) % 3; const t = order[ti]
+  if (t === "system") document.documentElement.removeAttribute("data-theme")
+  else document.documentElement.setAttribute("data-theme", t)
+  e.currentTarget.textContent = t
+}
+document.querySelectorAll(".st-choice input").forEach(i => i.onchange = () => {
+  document.querySelectorAll(`.st-choice:has(input[name="${i.name}"])`).forEach(c => c.removeAttribute("data-selected"))
+  i.closest(".st-choice").setAttribute("data-selected", "true")
+})
+</script>
+</body>
+</html>

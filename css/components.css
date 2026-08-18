@@ -529,7 +529,7 @@
 
 .st-overlay {
   position: fixed; inset: 0; z-index: var(--st-z-overlay);
-  background: rgb(25 24 23 / 0.4);
+  background: var(--st-scrim);
   animation: st-fade var(--st-motion-base) var(--st-motion-ease);
 }
 @keyframes st-fade { from { opacity: 0; } to { opacity: 1; } }

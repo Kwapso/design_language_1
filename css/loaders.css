@@ -1,0 +1,221 @@
+/* Structure — the waiting vocabulary.
+ * structure-definitions — this file DEFINES the vocabulary; view budgets do not apply.
+ *
+ * A design system is judged on its loading states more than its buttons,
+ * because loading is when the user is least patient and most likely to leave.
+ *
+ * THE RULE THAT PICKS THE LOADER — match the shape of the wait, not the taste
+ * of the designer:
+ *
+ *   < 300ms   nothing at all. A flash of spinner is worse than a pause.
+ *   0.3–1s    inline: the control itself shows it is busy.
+ *   1–5s      skeleton in the shape of the content that is coming.
+ *   > 5s      determinate progress, with a number, and something to read.
+ *   unknown   indeterminate bar at the top; never block the whole screen.
+ *
+ * WHY SKELETONS DO NOT SHIMMER HERE. The sweeping-gradient shimmer everyone
+ * ships is a gradient (forbidden), it moves for decoration rather than
+ * information, and it draws the eye to the emptiest part of the screen. A
+ * calm opacity pulse says the same thing and says it quietly.
+ */
+
+/* ======================================================================
+ * SPINNER — the smallest indicator. Never alone on a page.
+ * ==================================================================== */
+
+.st-spinner {
+  display: inline-block;
+  width: 1em; height: 1em;
+  border: 2px solid var(--st-border-control);
+  border-top-color: var(--st-foreground);
+  border-radius: var(--st-radius-circle);
+  animation: st-spin 600ms linear infinite;
+}
+.st-spinner--sm { width: .75em; height: .75em; border-width: 1.5px; }
+.st-spinner--lg { width: 2em; height: 2em; border-width: 2.5px; }
+.st-spinner--accent { border-top-color: var(--st-accent); }
+/* No --invert variant is needed: .st-invert re-scopes --st-border-control and
+ * --st-foreground, so a spinner inside an inverted band is already correct. */
+
+@keyframes st-spin { to { transform: rotate(360deg); } }
+
+/* ======================================================================
+ * SKELETON — a silhouette of the content that is coming.
+ * ==================================================================== */
+
+.st-skeleton {
+  background: var(--st-surface);
+  border-radius: var(--st-radius-surface);
+  animation: st-pulse 1600ms ease-in-out infinite;
+}
+@keyframes st-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+
+/* Staggering by a fraction of the cycle stops a wall of skeletons pulsing in
+ * lockstep, which reads as a broken screen rather than a loading one. */
+.st-skeleton:nth-child(2) { animation-delay: 120ms; }
+.st-skeleton:nth-child(3) { animation-delay: 240ms; }
+.st-skeleton:nth-child(4) { animation-delay: 360ms; }
+.st-skeleton:nth-child(5) { animation-delay: 480ms; }
+
+.st-skeleton--text   { height: 1em; border-radius: calc(var(--st-radius-surface) / 2); }
+.st-skeleton--title  { height: 1.6em; width: 45%; }
+.st-skeleton--circle { border-radius: var(--st-radius-circle); aspect-ratio: 1; }
+.st-skeleton--pill   { border-radius: var(--st-radius-pill); height: var(--st-control-height); }
+.st-skeleton--block  { min-height: 120px; }
+
+/* Text runs end on a short line, like real prose does. Without this the block
+ * reads as a grey rectangle rather than as a paragraph. */
+.st-skeleton-text { display: flex; flex-direction: column; gap: .55em; }
+.st-skeleton-text > span {
+  display: block; height: 1em;
+  background: var(--st-surface);
+  border-radius: calc(var(--st-radius-surface) / 2);
+  animation: st-pulse 1600ms ease-in-out infinite;
+}
+.st-skeleton-text > span:nth-child(2) { animation-delay: 120ms; }
+.st-skeleton-text > span:nth-child(3) { animation-delay: 240ms; }
+.st-skeleton-text > span:last-child { width: 62%; }
+
+/* ======================================================================
+ * LOADING BAR — indeterminate, page-top. Never blocks.
+ * ==================================================================== */
+
+.st-loading-bar {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: var(--st-z-toast);
+  height: 2px;
+  background: transparent;
+  overflow: hidden;
+}
+.st-loading-bar::after {
+  content: "";
+  position: absolute; inset: 0;
+  width: 40%;
+  background: var(--st-accent);
+  animation: st-slide 1200ms var(--st-motion-ease) infinite;
+}
+.st-loading-bar--inline { position: relative; height: 2px; }
+@keyframes st-slide {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(350%); }
+}
+
+/* ======================================================================
+ * PAGE LOADER — first paint only. After that, skeletons.
+ * ==================================================================== */
+
+.st-page-loader {
+  display: grid; place-items: center;
+  gap: var(--st-space-base);
+  min-height: 60svh;
+  text-align: center;
+}
+.st-page-loader__mark {
+  font-family: var(--st-font-display);
+  font-weight: var(--st-weight-light);
+  font-size: var(--st-text-2xl);
+  line-height: 1;
+  animation: st-pulse 1600ms ease-in-out infinite;
+}
+
+/* ======================================================================
+ * INLINE LOADER — busy, in place, without losing the layout.
+ * ==================================================================== */
+
+.st-inline-loader {
+  display: inline-flex; align-items: center; gap: var(--st-space-s);
+  font-size: var(--st-text-xs);
+  color: var(--st-muted);
+}
+
+/* A region that is refreshing: readable, dimmed, non-interactive. Content
+ * stays visible on purpose — replacing loaded data with a spinner throws away
+ * something the user was already reading. */
+.st-busy { position: relative; opacity: .55; pointer-events: none; transition: opacity var(--st-motion-base) var(--st-motion-ease); }
+.st-busy[aria-busy="false"] { opacity: 1; pointer-events: auto; }
+
+/* ======================================================================
+ * PROGRESS RING — determinate, compact. Pair with a number.
+ * ==================================================================== */
+
+.st-ring { display: inline-grid; place-items: center; position: relative; }
+.st-ring svg { transform: rotate(-90deg); }
+.st-ring__track { stroke: var(--st-border); }
+.st-ring__bar {
+  stroke: var(--st-accent);
+  stroke-linecap: round;
+  transition: stroke-dashoffset var(--st-motion-slow) var(--st-motion-ease);
+}
+.st-ring__label {
+  position: absolute;
+  font-size: var(--st-text-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ======================================================================
+ * STEP LOADER — a long job with named stages. The honest one: it tells the
+ * user what is happening rather than asking them to trust a bar.
+ * ==================================================================== */
+
+.st-step-loader { display: flex; flex-direction: column; gap: var(--st-space-s); }
+.st-step-loader__item {
+  display: flex; align-items: center; gap: var(--st-space-s);
+  font-size: var(--st-text-sm);
+  color: var(--st-muted);
+}
+.st-step-loader__item[data-state="active"] { color: var(--st-foreground); }
+.st-step-loader__item[data-state="done"] { color: var(--st-muted); }
+.st-step-loader__mark {
+  display: grid; place-items: center;
+  width: 20px; height: 20px; flex: none;
+  border-radius: var(--st-radius-circle);
+  background: var(--st-surface);
+  font-size: var(--st-text-2xs);
+}
+.st-step-loader__item[data-state="done"] .st-step-loader__mark { background: var(--st-success); color: var(--st-background); }
+.st-step-loader__item[data-state="error"] .st-step-loader__mark { background: var(--st-danger); color: var(--st-background); }
+
+/* ======================================================================
+ * OPTIMISTIC — the row exists but the server has not confirmed it.
+ * ==================================================================== */
+
+.st-optimistic { opacity: .6; }
+.st-optimistic[data-failed="true"] {
+  opacity: 1;
+  border-left: 3px solid var(--st-danger);
+  padding-left: var(--st-space-s);
+}
+
+/* ======================================================================
+ * LAZY IMAGE — reserves its own space, so nothing below it jumps.
+ * ==================================================================== */
+
+.st-lazy-img { position: relative; overflow: hidden; background: var(--st-surface); border-radius: var(--st-radius-surface); }
+.st-lazy-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity var(--st-motion-slow) var(--st-motion-ease); }
+.st-lazy-img img[data-loaded="true"] { opacity: 1; }
+.st-lazy-img::before { content: ""; position: absolute; inset: 0; animation: st-pulse 1600ms ease-in-out infinite; background: var(--st-surface); }
+.st-lazy-img[data-loaded="true"]::before { display: none; }
+
+/* ======================================================================
+ * REFRESH — pull-to-refresh / manual refresh affordance.
+ * ==================================================================== */
+
+.st-refresh { display: flex; justify-content: center; padding: var(--st-space-s); color: var(--st-muted); font-size: var(--st-text-xs); }
+
+/* ======================================================================
+ * REDUCED MOTION — every indicator degrades to a static, still-legible form.
+ * A user who cannot tolerate motion must still be able to tell it is loading.
+ * ==================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .st-spinner {
+    animation: none;
+    border-top-color: var(--st-accent);
+    /* Keep the gap in the ring visible so it still reads as an indicator. */
+  }
+  .st-skeleton,
+  .st-skeleton-text > span,
+  .st-page-loader__mark,
+  .st-lazy-img::before { animation: none; opacity: .75; }
+  .st-loading-bar::after { animation: none; width: 100%; opacity: .5; }
+}

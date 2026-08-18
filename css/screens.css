@@ -1,0 +1,243 @@
+/* Structure — screens.
+ * structure-definitions — this file DEFINES the vocabulary; view budgets do not apply.
+ *
+ * Components are not enough to build software. Every product re-invents the
+ * same dozen scaffolds — an app shell, a sign-in page, a settings layout, a
+ * wizard, a 404 — and re-invents them slightly differently each time, which is
+ * where a design system actually leaks.
+ *
+ * These are whole-screen layouts. They own the page: viewport height, scroll
+ * ownership, and where the one scrollable region is. That last point matters
+ * most — nested scrollbars are the single most common app-shell bug, and they
+ * happen because nobody decided which element scrolls.
+ */
+
+/* ======================================================================
+ * APP SHELL — sidebar + topbar + one scrolling main.
+ *
+ * Grid, not flex: a grid can pin the rails and let exactly one cell scroll.
+ * `min-height: 0` on the scroller is load-bearing — a grid child defaults to
+ * min-content, so without it the main region refuses to shrink and the whole
+ * page scrolls instead of the panel.
+ * ==================================================================== */
+
+.st-shell {
+  display: grid;
+  grid-template-areas: "rail head" "rail main";
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  height: 100svh;
+  overflow: hidden;
+}
+.st-shell__rail { grid-area: rail; overflow-y: auto; border-right: var(--st-border-hairline) solid var(--st-divider); }
+.st-shell__head { grid-area: head; border-bottom: var(--st-border-hairline) solid var(--st-divider); }
+.st-shell__main {
+  grid-area: main;
+  min-height: 0;          /* the line that makes the panel scroll, not the page */
+  overflow-y: auto;
+  padding: var(--st-space-m);
+}
+
+/* On a phone the rail becomes a bottom bar; a 240px sidebar on a 375px screen
+ * is not a layout, it is a mistake. */
+@media (max-width: 860px) {
+  .st-shell {
+    grid-template-areas: "head" "main" "rail";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+  }
+  .st-shell__rail { border-right: 0; border-top: var(--st-border-hairline) solid var(--st-divider); overflow-x: auto; }
+  .st-shell__main { padding: var(--st-space-base); }
+}
+
+/* Marketing shell: header, flowing document, footer. The page scrolls. */
+.st-shell--marketing {
+  display: block;
+  height: auto;
+  overflow: visible;
+}
+
+/* Split shell — list beside detail. Inbox, records, anything master/detail.
+ * Each pane scrolls independently; the page never does. */
+.st-split-shell {
+  display: grid;
+  grid-template-columns: minmax(280px, 380px) 1fr;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+.st-split-shell > * { min-height: 0; overflow-y: auto; }
+.st-split-shell > :first-child { border-right: var(--st-border-hairline) solid var(--st-divider); }
+@media (max-width: 860px) {
+  /* One pane at a time on a phone. The app toggles data-pane. */
+  .st-split-shell { grid-template-columns: 1fr; }
+  .st-split-shell[data-pane="detail"] > :first-child,
+  .st-split-shell[data-pane="list"] > :last-child { display: none; }
+}
+
+/* Focus shell — one task, no navigation. Checkout, onboarding, a wizard.
+ * Deliberately has no nav: removing the exits is the point. */
+.st-focus-shell {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100svh;
+}
+.st-focus-shell__body { display: grid; place-items: center; padding: var(--st-space-m); }
+.st-focus-shell__inner { width: 100%; max-width: 560px; }
+
+.st-split { display: grid; grid-template-columns: 1fr 1fr; gap: var(--st-space-l); }
+@media (max-width: 860px) { .st-split { grid-template-columns: 1fr; } }
+
+/* ======================================================================
+ * AUTH — sign in, sign up, reset, verify.
+ * ==================================================================== */
+
+.st-auth {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100svh;
+}
+.st-auth__panel { display: grid; place-items: center; padding: var(--st-space-m); }
+.st-auth__form { width: 100%; max-width: 380px; }
+/* The aside carries the brand statement. It is decorative, so it is the half
+ * that disappears on a phone — never the form. */
+.st-auth__aside {
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: var(--st-space-xl);
+}
+@media (max-width: 860px) {
+  .st-auth { grid-template-columns: 1fr; }
+  .st-auth__aside { display: none; }
+}
+
+/* ======================================================================
+ * STATUS PAGE — 404, 500, 403, maintenance, offline.
+ *
+ * These are the screens nobody designs and everybody sees. The display face
+ * carries the code; the useful part is the way out, which is why the layout
+ * reserves a place for actions rather than leaving the user at a dead end.
+ * ==================================================================== */
+
+.st-status-page {
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  padding: var(--st-space-m);
+  text-align: center;
+}
+.st-status-page__inner { max-width: 46ch; }
+.st-status-page__code {
+  font-family: var(--st-font-display);
+  font-weight: var(--st-weight-light);
+  font-size: clamp(4rem, 16vw, 10rem);
+  line-height: .85;
+  opacity: .22;
+}
+.st-status-page__title { font-size: var(--st-text-xl); line-height: 1.2; margin-top: var(--st-space-base); }
+.st-status-page__body { margin-top: var(--st-space-s); color: var(--st-muted); }
+.st-status-page__actions { display: flex; flex-wrap: wrap; gap: var(--st-space-s); justify-content: center; margin-top: var(--st-space-m); }
+
+/* ======================================================================
+ * SETTINGS — a nav rail beside sections of grouped rows.
+ * ==================================================================== */
+
+.st-settings { display: grid; grid-template-columns: 220px 1fr; gap: var(--st-space-l); align-items: start; }
+@media (max-width: 860px) { .st-settings { grid-template-columns: 1fr; } }
+
+.st-settings__group { border-top: var(--st-border-hairline) solid var(--st-divider); }
+.st-settings__row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--st-space-m);
+  padding-block: var(--st-space-base);
+  border-bottom: var(--st-border-hairline) solid var(--st-divider);
+}
+.st-settings__row > :first-child { min-width: 0; }
+.st-settings__row-title { font-weight: var(--st-weight-medium); }
+.st-settings__row-desc { font-size: var(--st-text-xs); color: var(--st-muted); margin-top: 2px; }
+@media (max-width: 560px) {
+  .st-settings__row { flex-direction: column; align-items: stretch; gap: var(--st-space-s); }
+}
+
+/* Destructive settings are visually quarantined, so "delete everything" can
+ * never sit one row below "change your display name". */
+.st-danger-zone {
+  margin-top: var(--st-space-l);
+  padding: var(--st-space-base);
+  border: var(--st-border-hairline) solid var(--st-danger);
+  border-radius: var(--st-radius-surface);
+}
+
+/* ======================================================================
+ * WIZARD — one decision per screen. The scorecard's shape, generalised.
+ * ==================================================================== */
+
+.st-wizard { display: grid; grid-template-rows: auto 1fr auto; min-height: 100svh; }
+.st-wizard__head { padding: var(--st-space-base) var(--st-space-m); border-bottom: var(--st-border-hairline) solid var(--st-divider); }
+.st-wizard__body { display: grid; place-items: center; padding: var(--st-space-m); }
+.st-wizard__inner { width: 100%; max-width: 620px; }
+.st-wizard__foot {
+  display: flex; justify-content: space-between; gap: var(--st-space-s);
+  padding: var(--st-space-base) var(--st-space-m);
+  border-top: var(--st-border-hairline) solid var(--st-divider);
+  /* Sticky, so Next is always reachable without scrolling to find it. */
+  position: sticky; bottom: 0;
+  background: var(--st-background);
+}
+
+/* ======================================================================
+ * CHECKOUT — summary that stays put beside the form.
+ * ==================================================================== */
+
+.st-checkout { display: grid; grid-template-columns: 1fr 380px; gap: var(--st-space-l); align-items: start; }
+.st-checkout__summary { position: sticky; top: var(--st-space-base); }
+@media (max-width: 900px) {
+  .st-checkout { grid-template-columns: 1fr; }
+  /* Summary first on mobile: the total is what the user wants to confirm. */
+  .st-checkout__summary { position: static; order: -1; }
+}
+
+/* ======================================================================
+ * PAGE FURNITURE — headers and toolbars every app screen needs.
+ * ==================================================================== */
+
+.st-page-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: var(--st-space-base); flex-wrap: wrap;
+  padding-bottom: var(--st-space-base);
+  border-bottom: var(--st-border-hairline) solid var(--st-divider);
+  margin-bottom: var(--st-space-base);
+}
+.st-page-header__title { font-size: var(--st-text-xl); line-height: 1.2; }
+.st-page-header__meta { font-size: var(--st-text-xs); color: var(--st-muted); margin-top: 2px; }
+
+.st-toolbar {
+  display: flex; align-items: center; gap: var(--st-space-s); flex-wrap: wrap;
+  padding: var(--st-space-s) 0;
+}
+.st-toolbar--sticky {
+  position: sticky; top: 0; z-index: var(--st-z-sticky);
+  background: var(--st-background);
+  border-bottom: var(--st-border-hairline) solid var(--st-divider);
+}
+
+.st-footer { padding-block: var(--st-space-l); border-top: var(--st-border-hairline) solid var(--st-divider); }
+.st-footer__cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--st-space-m); }
+
+/* Mobile bottom navigation. Respects the home-indicator inset. */
+.st-bottom-nav {
+  display: flex; justify-content: space-around;
+  padding: var(--st-space-xs) 0 calc(var(--st-space-xs) + env(safe-area-inset-bottom));
+  background: var(--st-background);
+  border-top: var(--st-border-hairline) solid var(--st-divider);
+}
+.st-bottom-nav__item {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  flex: 1;
+  min-height: var(--st-control-min-touch);
+  padding: var(--st-space-xs);
+  font-size: var(--st-text-2xs);
+  color: var(--st-muted);
+  background: none; border: 0; text-decoration: none;
+  cursor: pointer;
+}
+.st-bottom-nav__item[aria-current] { color: var(--st-foreground); }

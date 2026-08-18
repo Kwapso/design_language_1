@@ -22,7 +22,8 @@
     "COGNITIVE-LOAD.md",
     "ADOPTION.md",
     "bin",
-    "scripts"
+    "scripts",
+    "registry.json"
   ],
   "exports": {
     ".": {
@@ -44,8 +45,9 @@
     "check:contrast": "node scripts/check-contrast.mjs",
     "check:cognitive": "node scripts/cognitive-load.mjs --self",
     "check:types": "tsc --noEmit",
-    "check": "npm run build && npm run check:contrast && npm run check:cognitive && npm run check:types",
-    "docs": "npx --yes serve docs"
+    "check": "npm run build && npm run check:coverage && npm run check:contrast && npm run check:cognitive && npm run check:types",
+    "docs": "npx --yes serve docs",
+    "check:coverage": "node scripts/check-coverage.mjs"
   },
   "keywords": [
     "design-system",
@@ -71,9 +73,11 @@
     }
   },
   "devDependencies": {
-    "typescript": "^5.6.0",
+    "@types/node": "^22.0.0",
     "@types/react": "^18.3.0",
-    "@types/node": "^22.0.0"
+    "@types/react-dom": "^18.3.7",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.6.0"
   },
   "bin": {
     "structure-lint": "./bin/structure-lint.mjs"

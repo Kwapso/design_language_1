@@ -107,6 +107,7 @@
   --st-border-accent: 2px;
   --st-elevation-flat: none;
   --st-elevation-escape-hatch: 0 4px 16px rgba(25, 24, 23, 0.08);
+  --st-scrim: rgba(25, 24, 23, 0.55);
 
   /* ---- motion ---- */
   --st-motion-ease: cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -1194,7 +1195,7 @@ button:focus-visible,
 
 .st-overlay {
   position: fixed; inset: 0; z-index: var(--st-z-overlay);
-  background: rgb(25 24 23 / 0.4);
+  background: var(--st-scrim);
   animation: st-fade var(--st-motion-base) var(--st-motion-ease);
 }
 @keyframes st-fade { from { opacity: 0; } to { opacity: 1; } }
@@ -1454,3 +1455,870 @@ button:focus-visible,
 
 .st-reveal { animation: st-reveal var(--st-motion-reveal) var(--st-motion-ease) both; }
 @keyframes st-reveal { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+
+/* Structure — extended components.
+ * structure-definitions — this file DEFINES the vocabulary; view budgets do not apply.
+ *
+ * The rest of the inventory: everything shadcn/ui and swift-struck-ui ship
+ * that components.css did not already cover, plus the states and patterns a
+ * real product needs. Same rules — tokens only, flat, one accent.
+ */
+
+/* ======================================================================
+ * LAYOUT ADDITIONS
+ * ==================================================================== */
+
+.st-box { display: block; }
+.st-center { display: grid; place-items: center; }
+.st-aspect { position: relative; overflow: hidden; border-radius: var(--st-radius-surface); }
+.st-aspect > * { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+.st-resizable { display: grid; grid-template-columns: 1fr auto 1fr; }
+.st-resizable__handle {
+  width: 9px; cursor: col-resize;
+  background: transparent;
+  border-inline: var(--st-border-hairline) solid var(--st-divider);
+}
+.st-resizable__handle:hover { background: var(--st-surface); }
+
+.st-hide { display: none !important; }
+@media (max-width: 860px) { .st-hide-mobile { display: none !important; } }
+@media (min-width: 861px) { .st-hide-desktop { display: none !important; } }
+
+/* ======================================================================
+ * TYPOGRAPHY ADDITIONS
+ * ==================================================================== */
+
+.st-heading { font-weight: var(--st-weight-medium); letter-spacing: var(--st-tracking-wide); line-height: 1.2; }
+.st-text { font-size: var(--st-text-sm); line-height: var(--st-leading-sm); }
+.st-quote {
+  padding-left: var(--st-space-base);
+  border-left: var(--st-border-accent) solid var(--st-accent);
+  font-family: var(--st-font-display);
+  font-size: var(--st-text-md);
+  font-weight: var(--st-weight-light);
+}
+.st-code {
+  font-family: var(--st-font-mono); font-size: .9em;
+  padding: .1em .35em; background: var(--st-surface);
+  border-radius: calc(var(--st-radius-surface) / 2);
+}
+.st-kbd {
+  font-family: var(--st-font-mono); font-size: var(--st-text-xs);
+  padding: .15em .45em;
+  background: var(--st-surface);
+  border: var(--st-border-hairline) solid var(--st-border-control);
+  border-radius: calc(var(--st-radius-surface) / 2);
+}
+.st-link {
+  color: inherit; text-decoration: underline;
+  text-decoration-color: var(--st-border-control);
+  text-underline-offset: .2em;
+}
+.st-link:hover { text-decoration-color: currentColor; }
+
+/* Long-form editorial. The one place the measure is enforced, because a
+ * 120-character line is unreadable however good the type is. */
+.st-prose { max-width: 68ch; }
+.st-prose > * + * { margin-top: var(--st-space-base); }
+.st-prose h2 { font-size: var(--st-text-xl); line-height: 1.2; margin-top: var(--st-space-l); }
+.st-prose h3 { font-size: var(--st-text-lg); line-height: 1.3; margin-top: var(--st-space-m); }
+.st-prose img { border-radius: var(--st-radius-surface); }
+
+/* ======================================================================
+ * SURFACES ADDITIONS
+ * ==================================================================== */
+
+.st-panel { padding: var(--st-space-m); background: var(--st-background); border: var(--st-border-hairline) solid var(--st-border); border-radius: var(--st-radius-surface); }
+.st-well { padding: var(--st-space-base); background: var(--st-surface); border-radius: var(--st-radius-surface); }
+
+/* Device / browser frame — for showing a product inside a page. */
+.st-frame { border: var(--st-border-hairline) solid var(--st-border-control); border-radius: var(--st-radius-surface); overflow: hidden; background: var(--st-background); }
+.st-frame__bar { display: flex; align-items: center; gap: 6px; padding: 10px var(--st-space-base); background: var(--st-surface); border-bottom: var(--st-border-hairline) solid var(--st-divider); }
+.st-frame__dot { width: 9px; height: 9px; border-radius: var(--st-radius-circle); background: var(--st-border-control); }
+.st-frame__body { padding: var(--st-space-m); }
+
+.st-icon { width: 1em; height: 1em; flex: none; }
+
+/* ======================================================================
+ * FORM CONTROLS — the ones components.css did not cover
+ * ==================================================================== */
+
+/* Checkbox & radio, drawn rather than native, so they can carry the ink
+ * language. The input stays in the DOM and keeps all its keyboard behaviour. */
+.st-checkbox, .st-radio {
+  display: inline-flex; align-items: flex-start; gap: var(--st-space-s);
+  min-height: var(--st-control-min-touch);
+  cursor: pointer;
+}
+.st-checkbox input, .st-radio input { position: absolute; opacity: 0; width: 0; height: 0; }
+.st-checkbox__box, .st-radio__box {
+  display: grid; place-items: center;
+  width: 18px; height: 18px; flex: none;
+  margin-top: 2px;
+  border: var(--st-border-hairline) solid var(--st-border-control);
+  border-radius: calc(var(--st-radius-surface) / 2);
+  transition: background-color var(--st-motion-fast) var(--st-motion-ease),
+              border-color var(--st-motion-fast) var(--st-motion-ease);
+}
+.st-radio__box { border-radius: var(--st-radius-circle); }
+.st-checkbox input:checked + .st-checkbox__box,
+.st-radio input:checked + .st-radio__box { background: var(--st-accent); border-color: var(--st-accent); }
+.st-checkbox__box::after {
+  content: ""; width: 9px; height: 5px;
+  border-left: 2px solid var(--st-accent-foreground);
+  border-bottom: 2px solid var(--st-accent-foreground);
+  transform: rotate(-45deg) translate(1px, -1px);
+  opacity: 0;
+}
+.st-checkbox input:checked + .st-checkbox__box::after { opacity: 1; }
+.st-radio__box::after { content: ""; width: 7px; height: 7px; border-radius: var(--st-radius-circle); background: var(--st-accent-foreground); opacity: 0; }
+.st-radio input:checked + .st-radio__box::after { opacity: 1; }
+.st-checkbox input:focus-visible + .st-checkbox__box,
+.st-radio input:focus-visible + .st-radio__box { outline: 2px solid var(--st-ring); outline-offset: 2px; }
+.st-checkbox input:indeterminate + .st-checkbox__box { background: var(--st-accent); border-color: var(--st-accent); }
+.st-checkbox input:indeterminate + .st-checkbox__box::after {
+  opacity: 1; width: 9px; height: 0; border-bottom: 2px solid var(--st-accent-foreground);
+  border-left: 0; transform: none;
+}
+
+.st-slider { -webkit-appearance: none; appearance: none; width: 100%; height: 22px; background: transparent; padding: 0; border: 0; }
+.st-slider::-webkit-slider-runnable-track { height: 4px; background: var(--st-border); border-radius: var(--st-radius-pill); }
+.st-slider::-moz-range-track { height: 4px; background: var(--st-border); border-radius: var(--st-radius-pill); }
+.st-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 18px; height: 18px; margin-top: -7px;
+  background: var(--st-accent);
+  border: var(--st-border-hairline) solid var(--st-foreground);
+  border-radius: var(--st-radius-circle);
+  cursor: pointer;
+}
+.st-slider::-moz-range-thumb {
+  width: 18px; height: 18px;
+  background: var(--st-accent);
+  border: var(--st-border-hairline) solid var(--st-foreground);
+  border-radius: var(--st-radius-circle);
+  cursor: pointer;
+}
+.st-slider:focus-visible { outline: 2px solid var(--st-ring); outline-offset: 4px; border-radius: var(--st-radius-pill); }
+
+.st-rating { display: inline-flex; gap: 2px; }
+.st-rating__star {
+  background: none; border: 0; padding: 2px; cursor: pointer;
+  color: var(--st-border-control);
+  min-height: var(--st-control-min-touch); min-width: var(--st-control-min-touch);
+  display: grid; place-items: center;
+}
+.st-rating__star[data-on="true"] { color: var(--st-accent); }
+
+.st-tag-input {
+  display: flex; flex-wrap: wrap; gap: var(--st-space-xs);
+  min-height: var(--st-control-height);
+  padding: var(--st-space-xs);
+  background: var(--st-background);
+  border: var(--st-border-hairline) solid var(--st-border-control);
+  border-radius: var(--st-radius-surface);
+}
+.st-tag-input:focus-within { border-color: var(--st-foreground); }
+/* structure-ignore touch-target: the inner field is 28px, but <TagInput> renders
+ * the 44px container as a <label>, so the whole control is the tap target and
+ * clicking any part of it focuses this input. Inflating the field itself would
+ * only make the box taller without enlarging what is actually clickable. */
+.st-tag-input input { flex: 1; min-width: 8ch; min-height: 28px; align-self: stretch; border: 0; outline: none; background: transparent; padding: 0 var(--st-space-xs); }
+
+/* One-time code. Monospaced and evenly spaced so a 6-digit code is scannable. */
+.st-otp { display: flex; gap: var(--st-space-s); }
+.st-otp input {
+  width: 44px; height: 52px; padding: 0;
+  font-family: var(--st-font-mono); font-size: var(--st-text-lg); text-align: center;
+  border: var(--st-border-hairline) solid var(--st-border-control);
+  border-radius: var(--st-radius-surface);
+  background: var(--st-background);
+}
+.st-otp input:focus-visible { outline: 2px solid var(--st-ring); outline-offset: 2px; border-color: var(--st-foreground); }
+
+.st-dropzone {
+  display: grid; place-items: center; gap: var(--st-space-s);
+  padding: var(--st-space-l) var(--st-space-base);
+  text-align: center;
+  border: 1px dashed var(--st-border-control);
+  border-radius: var(--st-radius-surface);
+  background: var(--st-surface);
+  cursor: pointer;
+  transition: border-color var(--st-motion-base) var(--st-motion-ease), background-color var(--st-motion-base) var(--st-motion-ease);
+}
+.st-dropzone[data-over="true"] { border-color: var(--st-accent); border-style: solid; }
+
+.st-signature { border: var(--st-border-hairline) solid var(--st-border-control); border-radius: var(--st-radius-surface); background: var(--st-background); touch-action: none; display: block; width: 100%; }
+
+.st-color { display: inline-flex; align-items: center; gap: var(--st-space-s); }
+.st-color__swatch { width: var(--st-control-height-sm); height: var(--st-control-height-sm); border-radius: var(--st-radius-surface); border: var(--st-border-hairline) solid var(--st-border-control); }
+
+.st-combobox { position: relative; }
+.st-combobox__list {
+  position: absolute; z-index: var(--st-z-overlay);
+  top: calc(100% + 4px); left: 0; right: 0;
+  max-height: 260px; overflow-y: auto;
+  padding: var(--st-space-xs);
+  background: var(--st-background);
+  border: var(--st-border-hairline) solid var(--st-border);
+  border-radius: var(--st-radius-surface);
+  box-shadow: var(--st-elevation-escape-hatch);
+}
+.st-combobox__option {
+  display: flex; align-items: center; gap: var(--st-space-s);
+  min-height: var(--st-control-height-sm);
+  padding: var(--st-space-xs) var(--st-space-s);
+  border-radius: var(--st-radius-surface);
+  cursor: pointer;
+}
+.st-combobox__option[aria-selected="true"], .st-combobox__option:hover { background: var(--st-surface); }
+
+.st-form { display: flex; flex-direction: column; gap: var(--st-space-base); }
+.st-fieldset { border: var(--st-border-hairline) solid var(--st-border); border-radius: var(--st-radius-surface); padding: var(--st-space-base); margin: 0; }
+
+/* ======================================================================
+ * CALENDAR — used by date picker, range picker, and calendar view
+ * ==================================================================== */
+
+.st-calendar { display: inline-block; padding: var(--st-space-s); background: var(--st-background); border-radius: var(--st-radius-surface); }
+.st-calendar__head { display: flex; align-items: center; justify-content: space-between; gap: var(--st-space-s); margin-bottom: var(--st-space-s); }
+.st-calendar__grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.st-calendar__dow { font-size: var(--st-text-2xs); color: var(--st-muted); text-align: center; padding: var(--st-space-xs) 0; }
+.st-calendar__day {
+  display: grid; place-items: center;
+  min-height: 36px; min-width: 36px;
+  font-size: var(--st-text-xs);
+  background: none; border: 0; cursor: pointer;
+  border-radius: var(--st-radius-surface);
+  font-variant-numeric: tabular-nums;
+}
+.st-calendar__day:hover { background: var(--st-surface); }
+.st-calendar__day[data-outside="true"] { color: var(--st-muted); opacity: .5; }
+.st-calendar__day[data-today="true"] { border: var(--st-border-hairline) solid var(--st-border-control); }
+.st-calendar__day[aria-selected="true"] { background: var(--st-accent); color: var(--st-accent-foreground); }
+.st-calendar__day[data-in-range="true"] { background: var(--st-surface); border-radius: 0; }
+
+/* ======================================================================
+ * DISCLOSURE & TOGGLES
+ * ==================================================================== */
+
+.st-accordion { border-top: var(--st-border-hairline) solid var(--st-divider); }
+.st-accordion > details { border-bottom: var(--st-border-hairline) solid var(--st-divider); }
+
+.st-toggle {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--st-space-xs);
+  min-height: var(--st-control-height-sm); min-width: var(--st-control-height-sm);
+  padding-inline: var(--st-space-s);
+  background: transparent; border: var(--st-border-hairline) solid transparent;
+  border-radius: var(--st-radius-surface);
+  font-size: var(--st-text-xs); cursor: pointer;
+}
+.st-toggle:hover { background: var(--st-surface); }
+.st-toggle[aria-pressed="true"] { background: var(--st-surface); border-color: var(--st-border-control); }
+
+.st-toggle-group { display: inline-flex; gap: 2px; padding: 2px; background: var(--st-surface); border-radius: var(--st-radius-surface); }
+.st-toggle-group .st-toggle[aria-pressed="true"] { background: var(--st-background); }
+
+.st-carousel { position: relative; }
+.st-carousel__track {
+  display: flex; gap: var(--st-space-base);
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+}
+.st-carousel__slide { flex: 0 0 auto; scroll-snap-align: start; }
+.st-carousel__dots { display: flex; gap: var(--st-space-xs); justify-content: center; margin-top: var(--st-space-s); }
+.st-carousel__dot { width: 6px; height: 6px; padding: 0; min-height: 0; min-width: 0; border: 0; border-radius: var(--st-radius-circle); background: var(--st-border-control); cursor: pointer; }
+.st-carousel__dot[aria-current="true"] { background: var(--st-foreground); }
+
+/* ======================================================================
+ * NAVIGATION ADDITIONS
+ * ==================================================================== */
+
+.st-anchor-nav { display: flex; flex-direction: column; gap: var(--st-space-xs); }
+.st-anchor-nav a { font-size: var(--st-text-xs); color: var(--st-muted); text-decoration: none; padding: var(--st-space-xs) 0; }
+.st-anchor-nav a[aria-current] { color: var(--st-foreground); }
+
+.st-menubar { display: flex; gap: var(--st-space-xs); border-bottom: var(--st-border-hairline) solid var(--st-divider); }
+.st-menubar__item { padding: var(--st-space-xs) var(--st-space-s); background: none; border: 0; font-size: var(--st-text-sm); cursor: pointer; border-radius: var(--st-radius-surface); }
+.st-menubar__item:hover, .st-menubar__item[aria-expanded="true"] { background: var(--st-surface); }
+
+/* Command palette — the keyboard front door. */
+.st-command {
+  width: min(560px, calc(100vw - var(--st-space-m)));
+  max-height: 60svh;
+  display: flex; flex-direction: column;
+  background: var(--st-background);
+  border: var(--st-border-hairline) solid var(--st-border);
+  border-radius: var(--st-radius-surface);
+  box-shadow: var(--st-elevation-escape-hatch);
+  overflow: hidden;
+}
+.st-command__input { border: 0; border-bottom: var(--st-border-hairline) solid var(--st-divider); border-radius: 0; }
+.st-command__list { overflow-y: auto; padding: var(--st-space-xs); }
+.st-command__group-label { font-size: var(--st-text-2xs); color: var(--st-muted); letter-spacing: var(--st-tracking-wider); text-transform: uppercase; padding: var(--st-space-s) var(--st-space-s) var(--st-space-xs); }
+.st-command__item {
+  display: flex; align-items: center; gap: var(--st-space-s);
+  width: 100%; min-height: var(--st-control-height-sm);
+  padding: var(--st-space-xs) var(--st-space-s);
+  background: none; border: 0; text-align: left; cursor: pointer;
+  border-radius: var(--st-radius-surface);
+  font-size: var(--st-text-sm);
+}
+.st-command__item[aria-selected="true"] { background: var(--st-surface); }
+
+/* ======================================================================
+ * DATA ADDITIONS
+ * ==================================================================== */
+
+.st-list { display: flex; flex-direction: column; }
+.st-list > * + * { border-top: var(--st-border-hairline) solid var(--st-divider); }
+
+.st-filter-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--st-space-s); padding-block: var(--st-space-s); }
+
+/* A designated scroller: it scrolls inside itself and never widens its parent.
+ * min-width:0 is what actually enforces that when the board is a grid child. */
+.st-kanban { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(260px, 1fr); gap: var(--st-space-base); overflow-x: auto; overscroll-behavior-x: contain; align-items: start; min-width: 0; }
+.st-kanban__col { display: flex; flex-direction: column; gap: var(--st-space-s); padding: var(--st-space-s); background: var(--st-surface); border-radius: var(--st-radius-surface); min-height: 120px; }
+.st-kanban__head { display: flex; align-items: center; justify-content: space-between; gap: var(--st-space-s); font-size: var(--st-text-xs); font-weight: var(--st-weight-medium); letter-spacing: var(--st-tracking-wide); }
+.st-kanban__card { padding: var(--st-space-s); background: var(--st-background); border-radius: var(--st-radius-surface); font-size: var(--st-text-sm); cursor: grab; }
+
+.st-tree { font-size: var(--st-text-sm); }
+.st-tree ul { list-style: none; margin: 0; padding-left: var(--st-space-base); border-left: var(--st-border-hairline) solid var(--st-divider); }
+.st-tree__item { display: flex; align-items: center; gap: var(--st-space-xs); min-height: var(--st-control-height-sm); padding: 2px var(--st-space-xs); border-radius: var(--st-radius-surface); cursor: pointer; }
+.st-tree__item:hover { background: var(--st-surface); }
+.st-tree__item[aria-selected="true"] { background: var(--st-surface); font-weight: var(--st-weight-medium); }
+
+.st-detail { display: grid; grid-template-columns: 1fr 320px; gap: var(--st-space-l); align-items: start; }
+@media (max-width: 900px) { .st-detail { grid-template-columns: 1fr; } }
+
+.st-checklist { display: flex; flex-direction: column; gap: var(--st-space-xs); }
+.st-checklist__item { display: flex; align-items: flex-start; gap: var(--st-space-s); padding: var(--st-space-xs) 0; }
+.st-checklist__item[data-done="true"] { color: var(--st-muted); text-decoration: line-through; }
+
+.st-comments { display: flex; flex-direction: column; gap: var(--st-space-base); }
+.st-comment { display: grid; grid-template-columns: auto 1fr; gap: var(--st-space-s); }
+.st-comment__body { font-size: var(--st-text-sm); }
+.st-comment__meta { font-size: var(--st-text-2xs); color: var(--st-muted); }
+
+.st-gauge { display: inline-grid; place-items: center; position: relative; }
+.st-gauge__value { position: absolute; font-family: var(--st-font-display); font-size: var(--st-text-xl); font-variant-numeric: tabular-nums; }
+
+.st-chart { width: 100%; }
+.st-chart svg { width: 100%; height: auto; overflow: visible; }
+.st-chart__grid { stroke: var(--st-divider); stroke-width: 1; }
+.st-chart__axis { fill: var(--st-muted); font-size: 10px; }
+
+.st-heatmap { display: grid; gap: 3px; grid-template-columns: repeat(auto-fill, minmax(12px, 1fr)); }
+.st-heatmap__cell { aspect-ratio: 1; border-radius: 2px; background: var(--st-surface); }
+
+.st-run-steps { display: flex; flex-direction: column; gap: var(--st-space-xs); font-size: var(--st-text-xs); }
+.st-run-steps__item { display: flex; align-items: center; gap: var(--st-space-s); padding: var(--st-space-xs) var(--st-space-s); background: var(--st-surface); border-radius: var(--st-radius-surface); }
+
+.st-copilot {
+  position: fixed; right: var(--st-space-base); bottom: var(--st-space-base);
+  z-index: var(--st-z-modal);
+  width: min(380px, calc(100vw - var(--st-space-m)));
+  max-height: min(600px, 80svh);
+  display: flex; flex-direction: column;
+  background: var(--st-background);
+  border: var(--st-border-hairline) solid var(--st-border);
+  border-radius: var(--st-radius-surface);
+  box-shadow: var(--st-elevation-escape-hatch);
+  overflow: hidden;
+}
+
+/* ======================================================================
+ * BANNER — full-width message, part of the page
+ * ==================================================================== */
+
+.st-banner {
+  display: flex; align-items: center; gap: var(--st-space-s);
+  padding: var(--st-space-s) var(--st-space-base);
+  font-size: var(--st-text-xs);
+  background: var(--st-surface);
+  border-bottom: var(--st-border-hairline) solid var(--st-divider);
+}
+.st-banner--danger { background: var(--st-danger); color: var(--st-background); border-bottom-color: transparent; }
+.st-banner--accent { background: var(--st-accent); color: var(--st-accent-foreground); border-bottom-color: transparent; }
+
+.st-lightbox {
+  position: fixed; inset: 0; z-index: var(--st-z-modal);
+  display: grid; place-items: center;
+  padding: var(--st-space-m);
+  background: var(--st-scrim);
+}
+.st-lightbox img { max-width: 100%; max-height: 90svh; object-fit: contain; }
+
+.st-split-btn { display: inline-flex; }
+.st-split-btn > .st-btn:first-child { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.st-split-btn > .st-btn:last-child { border-top-left-radius: 0; border-bottom-left-radius: 0; min-width: var(--st-control-height); padding-inline: 0; margin-left: 1px; }
+
+
+/* Structure — the waiting vocabulary.
+ * structure-definitions — this file DEFINES the vocabulary; view budgets do not apply.
+ *
+ * A design system is judged on its loading states more than its buttons,
+ * because loading is when the user is least patient and most likely to leave.
+ *
+ * THE RULE THAT PICKS THE LOADER — match the shape of the wait, not the taste
+ * of the designer:
+ *
+ *   < 300ms   nothing at all. A flash of spinner is worse than a pause.
+ *   0.3–1s    inline: the control itself shows it is busy.
+ *   1–5s      skeleton in the shape of the content that is coming.
+ *   > 5s      determinate progress, with a number, and something to read.
+ *   unknown   indeterminate bar at the top; never block the whole screen.
+ *
+ * WHY SKELETONS DO NOT SHIMMER HERE. The sweeping-gradient shimmer everyone
+ * ships is a gradient (forbidden), it moves for decoration rather than
+ * information, and it draws the eye to the emptiest part of the screen. A
+ * calm opacity pulse says the same thing and says it quietly.
+ */
+
+/* ======================================================================
+ * SPINNER — the smallest indicator. Never alone on a page.
+ * ==================================================================== */
+
+.st-spinner {
+  display: inline-block;
+  width: 1em; height: 1em;
+  border: 2px solid var(--st-border-control);
+  border-top-color: var(--st-foreground);
+  border-radius: var(--st-radius-circle);
+  animation: st-spin 600ms linear infinite;
+}
+.st-spinner--sm { width: .75em; height: .75em; border-width: 1.5px; }
+.st-spinner--lg { width: 2em; height: 2em; border-width: 2.5px; }
+.st-spinner--accent { border-top-color: var(--st-accent); }
+/* No --invert variant is needed: .st-invert re-scopes --st-border-control and
+ * --st-foreground, so a spinner inside an inverted band is already correct. */
+
+@keyframes st-spin { to { transform: rotate(360deg); } }
+
+/* ======================================================================
+ * SKELETON — a silhouette of the content that is coming.
+ * ==================================================================== */
+
+.st-skeleton {
+  background: var(--st-surface);
+  border-radius: var(--st-radius-surface);
+  animation: st-pulse 1600ms ease-in-out infinite;
+}
+@keyframes st-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+
+/* Staggering by a fraction of the cycle stops a wall of skeletons pulsing in
+ * lockstep, which reads as a broken screen rather than a loading one. */
+.st-skeleton:nth-child(2) { animation-delay: 120ms; }
+.st-skeleton:nth-child(3) { animation-delay: 240ms; }
+.st-skeleton:nth-child(4) { animation-delay: 360ms; }
+.st-skeleton:nth-child(5) { animation-delay: 480ms; }
+
+.st-skeleton--text   { height: 1em; border-radius: calc(var(--st-radius-surface) / 2); }
+.st-skeleton--title  { height: 1.6em; width: 45%; }
+.st-skeleton--circle { border-radius: var(--st-radius-circle); aspect-ratio: 1; }
+.st-skeleton--pill   { border-radius: var(--st-radius-pill); height: var(--st-control-height); }
+.st-skeleton--block  { min-height: 120px; }
+
+/* Text runs end on a short line, like real prose does. Without this the block
+ * reads as a grey rectangle rather than as a paragraph. */
+.st-skeleton-text { display: flex; flex-direction: column; gap: .55em; }
+.st-skeleton-text > span {
+  display: block; height: 1em;
+  background: var(--st-surface);
+  border-radius: calc(var(--st-radius-surface) / 2);
+  animation: st-pulse 1600ms ease-in-out infinite;
+}
+.st-skeleton-text > span:nth-child(2) { animation-delay: 120ms; }
+.st-skeleton-text > span:nth-child(3) { animation-delay: 240ms; }
+.st-skeleton-text > span:last-child { width: 62%; }
+
+/* ======================================================================
+ * LOADING BAR — indeterminate, page-top. Never blocks.
+ * ==================================================================== */
+
+.st-loading-bar {
+  position: fixed; inset: 0 0 auto 0;
+  z-index: var(--st-z-toast);
+  height: 2px;
+  background: transparent;
+  overflow: hidden;
+}
+.st-loading-bar::after {
+  content: "";
+  position: absolute; inset: 0;
+  width: 40%;
+  background: var(--st-accent);
+  animation: st-slide 1200ms var(--st-motion-ease) infinite;
+}
+.st-loading-bar--inline { position: relative; height: 2px; }
+@keyframes st-slide {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(350%); }
+}
+
+/* ======================================================================
+ * PAGE LOADER — first paint only. After that, skeletons.
+ * ==================================================================== */
+
+.st-page-loader {
+  display: grid; place-items: center;
+  gap: var(--st-space-base);
+  min-height: 60svh;
+  text-align: center;
+}
+.st-page-loader__mark {
+  font-family: var(--st-font-display);
+  font-weight: var(--st-weight-light);
+  font-size: var(--st-text-2xl);
+  line-height: 1;
+  animation: st-pulse 1600ms ease-in-out infinite;
+}
+
+/* ======================================================================
+ * INLINE LOADER — busy, in place, without losing the layout.
+ * ==================================================================== */
+
+.st-inline-loader {
+  display: inline-flex; align-items: center; gap: var(--st-space-s);
+  font-size: var(--st-text-xs);
+  color: var(--st-muted);
+}
+
+/* A region that is refreshing: readable, dimmed, non-interactive. Content
+ * stays visible on purpose — replacing loaded data with a spinner throws away
+ * something the user was already reading. */
+.st-busy { position: relative; opacity: .55; pointer-events: none; transition: opacity var(--st-motion-base) var(--st-motion-ease); }
+.st-busy[aria-busy="false"] { opacity: 1; pointer-events: auto; }
+
+/* ======================================================================
+ * PROGRESS RING — determinate, compact. Pair with a number.
+ * ==================================================================== */
+
+.st-ring { display: inline-grid; place-items: center; position: relative; }
+.st-ring svg { transform: rotate(-90deg); }
+.st-ring__track { stroke: var(--st-border); }
+.st-ring__bar {
+  stroke: var(--st-accent);
+  stroke-linecap: round;
+  transition: stroke-dashoffset var(--st-motion-slow) var(--st-motion-ease);
+}
+.st-ring__label {
+  position: absolute;
+  font-size: var(--st-text-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ======================================================================
+ * STEP LOADER — a long job with named stages. The honest one: it tells the
+ * user what is happening rather than asking them to trust a bar.
+ * ==================================================================== */
+
+.st-step-loader { display: flex; flex-direction: column; gap: var(--st-space-s); }
+.st-step-loader__item {
+  display: flex; align-items: center; gap: var(--st-space-s);
+  font-size: var(--st-text-sm);
+  color: var(--st-muted);
+}
+.st-step-loader__item[data-state="active"] { color: var(--st-foreground); }
+.st-step-loader__item[data-state="done"] { color: var(--st-muted); }
+.st-step-loader__mark {
+  display: grid; place-items: center;
+  width: 20px; height: 20px; flex: none;
+  border-radius: var(--st-radius-circle);
+  background: var(--st-surface);
+  font-size: var(--st-text-2xs);
+}
+.st-step-loader__item[data-state="done"] .st-step-loader__mark { background: var(--st-success); color: var(--st-background); }
+.st-step-loader__item[data-state="error"] .st-step-loader__mark { background: var(--st-danger); color: var(--st-background); }
+
+/* ======================================================================
+ * OPTIMISTIC — the row exists but the server has not confirmed it.
+ * ==================================================================== */
+
+.st-optimistic { opacity: .6; }
+.st-optimistic[data-failed="true"] {
+  opacity: 1;
+  border-left: 3px solid var(--st-danger);
+  padding-left: var(--st-space-s);
+}
+
+/* ======================================================================
+ * LAZY IMAGE — reserves its own space, so nothing below it jumps.
+ * ==================================================================== */
+
+.st-lazy-img { position: relative; overflow: hidden; background: var(--st-surface); border-radius: var(--st-radius-surface); }
+.st-lazy-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity var(--st-motion-slow) var(--st-motion-ease); }
+.st-lazy-img img[data-loaded="true"] { opacity: 1; }
+.st-lazy-img::before { content: ""; position: absolute; inset: 0; animation: st-pulse 1600ms ease-in-out infinite; background: var(--st-surface); }
+.st-lazy-img[data-loaded="true"]::before { display: none; }
+
+/* ======================================================================
+ * REFRESH — pull-to-refresh / manual refresh affordance.
+ * ==================================================================== */
+
+.st-refresh { display: flex; justify-content: center; padding: var(--st-space-s); color: var(--st-muted); font-size: var(--st-text-xs); }
+
+/* ======================================================================
+ * REDUCED MOTION — every indicator degrades to a static, still-legible form.
+ * A user who cannot tolerate motion must still be able to tell it is loading.
+ * ==================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .st-spinner {
+    animation: none;
+    border-top-color: var(--st-accent);
+    /* Keep the gap in the ring visible so it still reads as an indicator. */
+  }
+  .st-skeleton,
+  .st-skeleton-text > span,
+  .st-page-loader__mark,
+  .st-lazy-img::before { animation: none; opacity: .75; }
+  .st-loading-bar::after { animation: none; width: 100%; opacity: .5; }
+}
+
+
+/* Structure — screens.
+ * structure-definitions — this file DEFINES the vocabulary; view budgets do not apply.
+ *
+ * Components are not enough to build software. Every product re-invents the
+ * same dozen scaffolds — an app shell, a sign-in page, a settings layout, a
+ * wizard, a 404 — and re-invents them slightly differently each time, which is
+ * where a design system actually leaks.
+ *
+ * These are whole-screen layouts. They own the page: viewport height, scroll
+ * ownership, and where the one scrollable region is. That last point matters
+ * most — nested scrollbars are the single most common app-shell bug, and they
+ * happen because nobody decided which element scrolls.
+ */
+
+/* ======================================================================
+ * APP SHELL — sidebar + topbar + one scrolling main.
+ *
+ * Grid, not flex: a grid can pin the rails and let exactly one cell scroll.
+ * `min-height: 0` on the scroller is load-bearing — a grid child defaults to
+ * min-content, so without it the main region refuses to shrink and the whole
+ * page scrolls instead of the panel.
+ * ==================================================================== */
+
+.st-shell {
+  display: grid;
+  grid-template-areas: "rail head" "rail main";
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  height: 100svh;
+  overflow: hidden;
+}
+.st-shell__rail { grid-area: rail; overflow-y: auto; border-right: var(--st-border-hairline) solid var(--st-divider); }
+.st-shell__head { grid-area: head; border-bottom: var(--st-border-hairline) solid var(--st-divider); }
+.st-shell__main {
+  grid-area: main;
+  min-height: 0;          /* the line that makes the panel scroll, not the page */
+  overflow-y: auto;
+  padding: var(--st-space-m);
+}
+
+/* On a phone the rail becomes a bottom bar; a 240px sidebar on a 375px screen
+ * is not a layout, it is a mistake. */
+@media (max-width: 860px) {
+  .st-shell {
+    grid-template-areas: "head" "main" "rail";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+  }
+  .st-shell__rail { border-right: 0; border-top: var(--st-border-hairline) solid var(--st-divider); overflow-x: auto; }
+  .st-shell__main { padding: var(--st-space-base); }
+}
+
+/* Marketing shell: header, flowing document, footer. The page scrolls. */
+.st-shell--marketing {
+  display: block;
+  height: auto;
+  overflow: visible;
+}
+
+/* Split shell — list beside detail. Inbox, records, anything master/detail.
+ * Each pane scrolls independently; the page never does. */
+.st-split-shell {
+  display: grid;
+  grid-template-columns: minmax(280px, 380px) 1fr;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+.st-split-shell > * { min-height: 0; overflow-y: auto; }
+.st-split-shell > :first-child { border-right: var(--st-border-hairline) solid var(--st-divider); }
+@media (max-width: 860px) {
+  /* One pane at a time on a phone. The app toggles data-pane. */
+  .st-split-shell { grid-template-columns: 1fr; }
+  .st-split-shell[data-pane="detail"] > :first-child,
+  .st-split-shell[data-pane="list"] > :last-child { display: none; }
+}
+
+/* Focus shell — one task, no navigation. Checkout, onboarding, a wizard.
+ * Deliberately has no nav: removing the exits is the point. */
+.st-focus-shell {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100svh;
+}
+.st-focus-shell__body { display: grid; place-items: center; padding: var(--st-space-m); }
+.st-focus-shell__inner { width: 100%; max-width: 560px; }
+
+.st-split { display: grid; grid-template-columns: 1fr 1fr; gap: var(--st-space-l); }
+@media (max-width: 860px) { .st-split { grid-template-columns: 1fr; } }
+
+/* ======================================================================
+ * AUTH — sign in, sign up, reset, verify.
+ * ==================================================================== */
+
+.st-auth {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100svh;
+}
+.st-auth__panel { display: grid; place-items: center; padding: var(--st-space-m); }
+.st-auth__form { width: 100%; max-width: 380px; }
+/* The aside carries the brand statement. It is decorative, so it is the half
+ * that disappears on a phone — never the form. */
+.st-auth__aside {
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: var(--st-space-xl);
+}
+@media (max-width: 860px) {
+  .st-auth { grid-template-columns: 1fr; }
+  .st-auth__aside { display: none; }
+}
+
+/* ======================================================================
+ * STATUS PAGE — 404, 500, 403, maintenance, offline.
+ *
+ * These are the screens nobody designs and everybody sees. The display face
+ * carries the code; the useful part is the way out, which is why the layout
+ * reserves a place for actions rather than leaving the user at a dead end.
+ * ==================================================================== */
+
+.st-status-page {
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  padding: var(--st-space-m);
+  text-align: center;
+}
+.st-status-page__inner { max-width: 46ch; }
+.st-status-page__code {
+  font-family: var(--st-font-display);
+  font-weight: var(--st-weight-light);
+  font-size: clamp(4rem, 16vw, 10rem);
+  line-height: .85;
+  opacity: .22;
+}
+.st-status-page__title { font-size: var(--st-text-xl); line-height: 1.2; margin-top: var(--st-space-base); }
+.st-status-page__body { margin-top: var(--st-space-s); color: var(--st-muted); }
+.st-status-page__actions { display: flex; flex-wrap: wrap; gap: var(--st-space-s); justify-content: center; margin-top: var(--st-space-m); }
+
+/* ======================================================================
+ * SETTINGS — a nav rail beside sections of grouped rows.
+ * ==================================================================== */
+
+.st-settings { display: grid; grid-template-columns: 220px 1fr; gap: var(--st-space-l); align-items: start; }
+@media (max-width: 860px) { .st-settings { grid-template-columns: 1fr; } }
+
+.st-settings__group { border-top: var(--st-border-hairline) solid var(--st-divider); }
+.st-settings__row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--st-space-m);
+  padding-block: var(--st-space-base);
+  border-bottom: var(--st-border-hairline) solid var(--st-divider);
+}
+.st-settings__row > :first-child { min-width: 0; }
+.st-settings__row-title { font-weight: var(--st-weight-medium); }
+.st-settings__row-desc { font-size: var(--st-text-xs); color: var(--st-muted); margin-top: 2px; }
+@media (max-width: 560px) {
+  .st-settings__row { flex-direction: column; align-items: stretch; gap: var(--st-space-s); }
+}
+
+/* Destructive settings are visually quarantined, so "delete everything" can
+ * never sit one row below "change your display name". */
+.st-danger-zone {
+  margin-top: var(--st-space-l);
+  padding: var(--st-space-base);
+  border: var(--st-border-hairline) solid var(--st-danger);
+  border-radius: var(--st-radius-surface);
+}
+
+/* ======================================================================
+ * WIZARD — one decision per screen. The scorecard's shape, generalised.
+ * ==================================================================== */
+
+.st-wizard { display: grid; grid-template-rows: auto 1fr auto; min-height: 100svh; }
+.st-wizard__head { padding: var(--st-space-base) var(--st-space-m); border-bottom: var(--st-border-hairline) solid var(--st-divider); }
+.st-wizard__body { display: grid; place-items: center; padding: var(--st-space-m); }
+.st-wizard__inner { width: 100%; max-width: 620px; }
+.st-wizard__foot {
+  display: flex; justify-content: space-between; gap: var(--st-space-s);
+  padding: var(--st-space-base) var(--st-space-m);
+  border-top: var(--st-border-hairline) solid var(--st-divider);
+  /* Sticky, so Next is always reachable without scrolling to find it. */
+  position: sticky; bottom: 0;
+  background: var(--st-background);
+}
+
+/* ======================================================================
+ * CHECKOUT — summary that stays put beside the form.
+ * ==================================================================== */
+
+.st-checkout { display: grid; grid-template-columns: 1fr 380px; gap: var(--st-space-l); align-items: start; }
+.st-checkout__summary { position: sticky; top: var(--st-space-base); }
+@media (max-width: 900px) {
+  .st-checkout { grid-template-columns: 1fr; }
+  /* Summary first on mobile: the total is what the user wants to confirm. */
+  .st-checkout__summary { position: static; order: -1; }
+}
+
+/* ======================================================================
+ * PAGE FURNITURE — headers and toolbars every app screen needs.
+ * ==================================================================== */
+
+.st-page-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: var(--st-space-base); flex-wrap: wrap;
+  padding-bottom: var(--st-space-base);
+  border-bottom: var(--st-border-hairline) solid var(--st-divider);
+  margin-bottom: var(--st-space-base);
+}
+.st-page-header__title { font-size: var(--st-text-xl); line-height: 1.2; }
+.st-page-header__meta { font-size: var(--st-text-xs); color: var(--st-muted); margin-top: 2px; }
+
+.st-toolbar {
+  display: flex; align-items: center; gap: var(--st-space-s); flex-wrap: wrap;
+  padding: var(--st-space-s) 0;
+}
+.st-toolbar--sticky {
+  position: sticky; top: 0; z-index: var(--st-z-sticky);
+  background: var(--st-background);
+  border-bottom: var(--st-border-hairline) solid var(--st-divider);
+}
+
+.st-footer { padding-block: var(--st-space-l); border-top: var(--st-border-hairline) solid var(--st-divider); }
+.st-footer__cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--st-space-m); }
+
+/* Mobile bottom navigation. Respects the home-indicator inset. */
+.st-bottom-nav {
+  display: flex; justify-content: space-around;
+  padding: var(--st-space-xs) 0 calc(var(--st-space-xs) + env(safe-area-inset-bottom));
+  background: var(--st-background);
+  border-top: var(--st-border-hairline) solid var(--st-divider);
+}
+.st-bottom-nav__item {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  flex: 1;
+  min-height: var(--st-control-min-touch);
+  padding: var(--st-space-xs);
+  font-size: var(--st-text-2xs);
+  color: var(--st-muted);
+  background: none; border: 0; text-decoration: none;
+  cursor: pointer;
+}
+.st-bottom-nav__item[aria-current] { color: var(--st-foreground); }

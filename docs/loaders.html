@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loaders &amp; states — Structure</title>
+<meta name="description" content="Every way the system expresses waiting, emptiness and failure.">
+<link rel="stylesheet" href="./assets/fonts.css">
+<link rel="stylesheet" href="./assets/structure.css">
+<!-- structure-ignore accent-budget: a catalogue of states shows several accents at once. -->
+<!-- structure-ignore type-scale: a catalogue spans the whole scale. -->
+<style>
+  .wide { width: min(1400px, 100% - 80px); margin-inline: auto; }
+  @media (max-width: 700px) { .wide { width: calc(100% - 40px); } }
+  .spec { font-family: var(--st-font-mono); font-size: var(--st-text-xs); color: var(--st-muted); }
+  .kicker { font-family: var(--st-font-display); font-weight: 300; font-size: clamp(2rem, 5vw, 3.4rem); line-height: .95; }
+  .demo { padding: var(--st-space-m); border: 1px solid var(--st-border); border-radius: var(--st-radius-surface); background: var(--st-background); }
+  .item { scroll-margin-top: 80px; margin-top: var(--st-space-l); }
+  .rulebook td:first-child { font-family: var(--st-font-mono); white-space: nowrap; }
+</style>
+</head>
+<body>
+<a href="#main" class="st-skip-link">Skip to content</a>
+
+<header class="st-navbar" style="position:sticky;top:0;z-index:100">
+  <strong style="letter-spacing:var(--st-tracking-wide)"><a href="./" style="text-decoration:none">Structure</a></strong>
+  <nav class="st-navbar__links" aria-label="Main">
+    <a class="st-navbar__link" href="./">Overview</a>
+    <a class="st-navbar__link" href="./components.html">Components</a>
+    <a class="st-navbar__link" href="./screens.html">Screens</a>
+    <a class="st-navbar__link" href="./loaders.html" aria-current="page">Loaders &amp; states</a>
+  </nav>
+  <button class="st-btn st-btn--ghost st-btn--sm" id="theme" aria-label="Switch theme">Theme</button>
+</header>
+
+<main id="main" class="wide" style="padding-block:var(--st-space-xl)">
+  <p class="st-eyebrow">Loaders &amp; states</p>
+  <h1 class="kicker" style="margin-top:var(--st-space-s);max-width:26ch">A system is judged on its loading states, not its buttons.</h1>
+  <p class="st-lead" style="margin-top:var(--st-space-base)">
+    Loading is when the user is least patient and most likely to leave. Empty and broken are the
+    screens nobody designs and everybody sees.
+  </p>
+
+  <!-- ═══════════════════════════════════════════════════════ THE RULE -->
+  <section class="item" id="rule">
+    <h2 style="font-size:var(--st-text-lg)">Which loader, and when</h2>
+    <p class="st-caption" style="margin-block:var(--st-space-xs) var(--st-space-s)">
+      Match the shape of the wait, not the taste of the designer.
+    </p>
+    <div class="st-table-wrap st-scroll-x">
+      <table class="st-table rulebook">
+        <thead><tr><th scope="col">Duration</th><th scope="col">Use</th><th scope="col">Why</th></tr></thead>
+        <tbody>
+          <tr><td>&lt; 300ms</td><td>Nothing at all</td><td>A spinner that flashes for 80ms reads as a glitch and makes a fast app feel broken.</td></tr>
+          <tr><td>0.3 – 1s</td><td>Inline — the control shows it is busy</td><td>The user is still looking at the thing they clicked.</td></tr>
+          <tr><td>1 – 5s</td><td>Skeleton shaped like the content</td><td>Holds the layout so nothing jumps when data lands.</td></tr>
+          <tr><td>&gt; 5s</td><td>Determinate progress, with a number</td><td>Past five seconds people need to know it is finite.</td></tr>
+          <tr><td>Unknown</td><td>Indeterminate bar at the top</td><td>Never block the screen for a wait you cannot measure.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="st-alert st-alert--info" style="margin-top:var(--st-space-base)">
+      <div><strong>Why the skeletons here do not shimmer.</strong>
+        <p style="margin-top:var(--st-space-xs)">The sweeping-gradient shimmer everyone ships is a gradient
+        (forbidden by this language), it moves for decoration rather than information, and it draws the
+        eye to the emptiest part of the screen. A calm opacity pulse says the same thing, quietly.</p></div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ LIVE DEMO -->
+  <section class="item" id="live">
+    <div class="st-cluster st-cluster--between">
+      <h2 style="font-size:var(--st-text-lg)">See the difference</h2>
+      <span class="spec">&lt;Delayed&gt; · &lt;SkeletonTable&gt; · &lt;Busy&gt;</span>
+    </div>
+    <p class="st-caption" style="margin-block:var(--st-space-xs) var(--st-space-s)">
+      Run the same fetch three ways. The skeleton is the only one where nothing moves when the data arrives.
+    </p>
+    <div class="demo">
+      <div class="st-cluster" style="margin-bottom:var(--st-space-base)">
+        <button class="st-btn st-btn--accent st-btn--sm" data-load="skeleton">Load with skeleton</button>
+        <button class="st-btn st-btn--outline st-btn--sm" data-load="spinner">Load with spinner</button>
+        <button class="st-btn st-btn--ghost st-btn--sm" data-load="refresh">Refresh in place</button>
+      </div>
+      <div id="stage" style="min-height:230px"></div>
+    </div>
+  </section>
+
+  <!-- ═════════════════════════════════════════════════════ THE SET -->
+  <section class="item" id="set">
+    <h2 style="font-size:var(--st-text-lg)">The set</h2>
+    <div class="st-grid st-grid--2" style="margin-top:var(--st-space-base);gap:var(--st-space-l)">
+
+      <div><p class="spec">spinner — three sizes, never alone on a page</p>
+        <div class="demo st-cluster" style="gap:var(--st-space-m)">
+          <span class="st-spinner st-spinner--sm"></span><span class="st-spinner"></span>
+          <span class="st-spinner st-spinner--lg"></span><span class="st-spinner st-spinner--accent"></span>
+        </div></div>
+
+      <div><p class="spec">inline-loader — busy, in place</p>
+        <div class="demo"><span class="st-inline-loader"><span class="st-spinner st-spinner--sm"></span>Recalculating bottleneck cost…</span></div></div>
+
+      <div><p class="spec">skeleton-text — the last line is short, like real prose</p>
+        <div class="demo"><div class="st-skeleton-text"><span></span><span></span><span></span></div></div></div>
+
+      <div><p class="spec">skeleton — text, title, circle, pill, block</p>
+        <div class="demo st-stack st-stack--s">
+          <div class="st-cluster"><div class="st-skeleton st-skeleton--circle" style="width:36px"></div><div class="st-skeleton st-skeleton--title" style="flex:1"></div></div>
+          <div class="st-skeleton st-skeleton--pill" style="width:140px"></div>
+        </div></div>
+
+      <div><p class="spec">loading-bar — indeterminate, never blocking</p>
+        <div class="demo"><div class="st-loading-bar st-loading-bar--inline" role="progressbar" aria-label="Loading"></div></div></div>
+
+      <div><p class="spec">progress-ring — determinate, pair with a number</p>
+        <div class="demo st-cluster" style="gap:var(--st-space-m)">
+          <span class="st-ring"><svg width="48" height="48"><circle class="st-ring__track" cx="24" cy="24" r="22" fill="none" stroke-width="4"/><circle class="st-ring__bar" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-dasharray="138" stroke-dashoffset="44" transform="rotate(-90 24 24)"/></svg><span class="st-ring__label">68%</span></span>
+          <span class="st-gauge"><svg width="120" height="70" viewBox="0 0 140 80"><path d="M6 70 A 64 64 0 0 1 134 70" fill="none" stroke="var(--st-border)" stroke-width="8"/><path d="M6 70 A 64 64 0 0 1 134 70" fill="none" stroke="var(--st-accent)" stroke-width="8" stroke-linecap="round" stroke-dasharray="201" stroke-dashoffset="64"/></svg><span class="st-gauge__value">68</span></span>
+        </div></div>
+
+      <div><p class="spec">step-loader — the honest one: it names the stage</p>
+        <div class="demo"><ol class="st-step-loader" style="list-style:none;padding:0;margin:0">
+          <li class="st-step-loader__item" data-state="done"><span class="st-step-loader__mark">✓</span><span>Read 1,204 rows</span></li>
+          <li class="st-step-loader__item" data-state="active"><span class="st-step-loader__mark"><span class="st-spinner st-spinner--sm"></span></span><span>Validating columns</span></li>
+          <li class="st-step-loader__item" data-state="todo"><span class="st-step-loader__mark"></span><span>Import</span></li>
+          <li class="st-step-loader__item" data-state="error"><span class="st-step-loader__mark">!</span><span>Notify owners</span></li>
+        </ol></div></div>
+
+      <div><p class="spec">page-loader — first paint only</p>
+        <div class="demo"><div class="st-page-loader" style="min-height:120px"><span class="st-page-loader__mark">kwapso</span></div></div></div>
+
+      <div><p class="spec">optimistic-row — pending, and failed</p>
+        <div class="demo st-stack st-stack--s">
+          <div class="st-row st-optimistic"><span style="flex:1">Supplier intake</span><span class="st-caption">Saving…</span></div>
+          <div data-failed="true" class="st-optimistic"><div class="st-row"><span style="flex:1">Contract renewal</span></div>
+            <span class="st-cluster" style="gap:var(--st-space-s);margin-top:var(--st-space-xs)"><span class="st-caption" style="color:var(--st-danger)">Not saved.</span><button class="st-btn st-btn--ghost st-btn--sm">Retry</button></span></div>
+        </div></div>
+
+      <div><p class="spec">button loading — reserves its own width, so nothing jumps</p>
+        <div class="demo st-cluster">
+          <button class="st-btn st-btn--accent" data-loading="true" aria-busy="true">Save process</button>
+          <button class="st-btn st-btn--accent">Save process</button>
+        </div></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════ STATES -->
+  <section class="item" id="states">
+    <h2 style="font-size:var(--st-text-lg)">States</h2>
+    <p class="st-caption" style="margin-block:var(--st-space-xs) var(--st-space-s)">
+      All of them follow one rule: <strong>say what happened, then offer the way out</strong>. Note
+      that “nothing here yet” and “your filter matched nothing” are different screens — the first is
+      an invitation and carries the primary action, the second is a correction and carries a way back.
+    </p>
+    <div class="st-grid st-grid--2" style="gap:var(--st-space-l)">
+      <div><p class="spec">first-run — an invitation</p>
+        <div class="demo"><div class="st-empty"><p class="st-empty__title">No processes yet</p><p>When you map your first process, it will show up here.</p><button class="st-btn st-btn--accent">Map a process</button></div></div></div>
+
+      <div><p class="spec">no-results — a correction, echoing the query</p>
+        <div class="demo"><div class="st-empty"><p class="st-empty__title">Nothing matches “invocing”</p><p>Try a shorter search, or remove a filter.</p><button class="st-btn st-btn--outline">Clear filters</button></div></div></div>
+
+      <div><p class="spec">error-state — inline failure</p>
+        <div class="demo"><div class="st-empty"><p class="st-empty__title">That didn't work</p><p>Something went wrong on our side. Trying again usually fixes it.</p><button class="st-btn st-btn--outline">Try again</button></div></div></div>
+
+      <div><p class="spec">success-state</p>
+        <div class="demo"><div class="st-empty"><span class="st-dot st-dot--success"></span><p class="st-empty__title">Your process map is ready</p><p>We found three bottlenecks worth costing.</p><button class="st-btn st-btn--accent">Open the map</button></div></div></div>
+
+      <div><p class="spec">offline-banner — watches the connection</p>
+        <div class="demo"><div class="st-banner st-banner--danger">You're offline. Changes will sync when the connection returns.</div></div></div>
+
+      <div><p class="spec">error-boundary — never a blank white screen</p>
+        <div class="demo"><div class="st-status-page" style="min-height:auto;padding:var(--st-space-base)"><div class="st-status-page__inner">
+          <h1 class="st-status-page__title" style="font-size:var(--st-text-md)">This part of the page stopped working</h1>
+          <p class="st-status-page__body">The rest of the app is still fine.</p>
+          <div class="st-status-page__actions"><button class="st-btn st-btn--accent st-btn--sm">Try again</button></div></div></div></div></div>
+    </div>
+    <p class="st-caption" style="margin-top:var(--st-space-base)">
+      Full-page 404 / 500 / 403 / maintenance live on the <a class="st-link" href="./screens.html#status-pages">screens page</a>.
+    </p>
+  </section>
+
+  <section class="item">
+    <div class="st-alert st-alert--warning">
+      <div><strong>Reduced motion is not an afterthought here.</strong>
+        <p style="margin-top:var(--st-space-xs)">Every indicator above degrades to a still, legible form under
+        <code>prefers-reduced-motion</code> — the spinner keeps its accent arc, skeletons hold at 75% opacity,
+        the bar fills. Someone who cannot tolerate motion must still be able to tell that something is loading.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer class="wide" style="padding-block:var(--st-space-m)">
+  <hr class="st-divider">
+  <p class="st-caption" style="margin-top:var(--st-space-base)">Structure — the Kwapso design language.</p>
+</footer>
+
+<script type="module">
+const stage = document.getElementById("stage")
+const ROWS = [["Quote to order","Sales","21.25"],["Invoice approval","Finance","12.50"],["Onboarding","People","8.00"],["Supplier intake","Ops","4.75"]]
+
+const table = (busy = false) => `<div class="${busy ? "st-busy" : ""}" ${busy ? 'aria-busy="true"' : ""}>
+  <div class="st-table-wrap st-scroll-x"><table class="st-table">
+  <thead><tr><th scope="col">Process</th><th scope="col">Owner</th><th scope="col" data-numeric>Hrs / wk</th></tr></thead>
+  <tbody>${ROWS.map(([a,b,c]) => `<tr><td>${a}</td><td>${b}</td><td data-numeric>${c}</td></tr>`).join("")}</tbody></table></div></div>`
+
+const skeleton = `<div class="st-table-wrap"><table class="st-table">
+  <thead><tr>${["","",""].map(() => `<th><div class="st-skeleton st-skeleton--text" style="width:60%"></div></th>`).join("")}</tr></thead>
+  <tbody>${ROWS.map((_, r) => `<tr>${[0,1,2].map(c => `<td><div class="st-skeleton st-skeleton--text" style="width:${c===0?"80%":"50%"}"></div></td>`).join("")}</tr>`).join("")}</tbody></table></div>`
+
+stage.innerHTML = table()
+
+document.querySelectorAll("[data-load]").forEach((b) => b.onclick = () => {
+  const mode = b.dataset.load
+  if (mode === "skeleton") stage.innerHTML = skeleton
+  else if (mode === "spinner") stage.innerHTML = `<div class="st-page-loader" style="min-height:230px"><span class="st-spinner st-spinner--lg"></span></div>`
+  else stage.innerHTML = table(true)
+  setTimeout(() => { stage.innerHTML = table() }, 1800)
+})
+
+const order = ["light","dark","system"]; let ti = 0
+document.getElementById("theme").onclick = (e) => {
+  ti = (ti + 1) % 3; const t = order[ti]
+  if (t === "system") document.documentElement.removeAttribute("data-theme")
+  else document.documentElement.setAttribute("data-theme", t)
+  e.currentTarget.textContent = t
+}
+</script>
+</body>
+</html>

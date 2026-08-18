@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Components — Structure</title>
+<meta name="description" content="Every component in the Kwapso design language, rendered live.">
+<link rel="stylesheet" href="./assets/fonts.css">
+<link rel="stylesheet" href="./assets/structure.css">
+<!-- structure-ignore accent-budget: a specimen sheet renders every accent variant on purpose. -->
+<!-- structure-ignore type-scale: a gallery necessarily shows the whole scale. -->
+<style>
+  .wide { width: min(1400px, 100% - 80px); margin-inline: auto; }
+  @media (max-width: 700px) { .wide { width: calc(100% - 40px); } }
+  .spec { font-family: var(--st-font-mono); font-size: var(--st-text-xs); color: var(--st-muted); }
+  .kicker { font-family: var(--st-font-display); font-weight: 300; font-size: clamp(2rem, 5vw, 3.4rem); line-height: .95; }
+  .demo { padding: var(--st-space-m); border: 1px solid var(--st-border); border-radius: var(--st-radius-surface); background: var(--st-background); }
+  .lay { display: grid; grid-template-columns: 210px 1fr; gap: var(--st-space-l); align-items: start; }
+  /* A grid child defaults to min-content width, so one wide demo (the kanban)
+     would force the whole column open and scroll the page sideways. This is
+     the exact failure screens.css warns about for the app shell. */
+  .lay > * { min-width: 0; }
+  @media (max-width: 960px) { .lay { grid-template-columns: 1fr; } .rail { position: static !important; } }
+  .rail { position: sticky; top: 72px; max-height: 82svh; overflow-y: auto; }
+  .item { scroll-margin-top: 80px; }
+  .item + .item { margin-top: var(--st-space-l); }
+  .phone { width: 280px; border: 1px solid var(--st-border-control); border-radius: 26px; overflow: hidden; }
+  .phone__notch { height: 24px; display: grid; place-items: center; background: var(--st-surface); }
+  .phone__pill { width: 64px; height: 5px; border-radius: 3px; background: var(--st-border-control); }
+</style>
+</head>
+<body>
+<a href="#main" class="st-skip-link">Skip to content</a>
+
+<header class="st-navbar" style="position:sticky;top:0;z-index:100">
+  <strong style="letter-spacing:var(--st-tracking-wide)"><a href="./" style="text-decoration:none">Structure</a></strong>
+  <nav class="st-navbar__links" aria-label="Main">
+    <a class="st-navbar__link" href="./">Overview</a>
+    <a class="st-navbar__link" href="./components.html" aria-current="page">Components</a>
+    <a class="st-navbar__link" href="./screens.html">Screens</a>
+    <a class="st-navbar__link" href="./loaders.html">Loaders &amp; states</a>
+  </nav>
+  <div class="st-cluster">
+    <div class="st-segmented" role="group" aria-label="Density">
+      <button class="st-segmented__item" aria-pressed="true" data-density="comfortable">Comfortable</button>
+      <button class="st-segmented__item" aria-pressed="false" data-density="compact">Compact</button>
+    </div>
+    <button class="st-btn st-btn--ghost st-btn--sm" id="theme" aria-label="Switch theme">Theme</button>
+  </div>
+</header>
+
+<main id="main" class="wide" style="padding-block:var(--st-space-xl)">
+  <p class="st-eyebrow">Components</p>
+  <h1 class="kicker" style="margin-top:var(--st-space-s);max-width:22ch">Every part, rendered live.</h1>
+  <p class="st-lead" style="margin-top:var(--st-space-base)">
+    Nothing here is a screenshot. <strong id="count">—</strong> registry entries, each proven by
+    <code>npm run check:coverage</code> to resolve to a real class and a real React export.
+  </p>
+
+  <div class="lay" style="margin-top:var(--st-space-xl)">
+    <nav class="st-sidebar rail" aria-label="Components"><div id="toc"></div></nav>
+    <div id="gallery"></div>
+  </div>
+</main>
+
+<footer class="wide" style="padding-block:var(--st-space-m)">
+  <hr class="st-divider">
+  <p class="st-caption" style="margin-top:var(--st-space-base)">Structure — the Kwapso design language.</p>
+</footer>
+
+<script type="module">
+const reg = await (await fetch("./assets/registry.json")).json()
+document.getElementById("count").textContent = reg.items.length
+
+/* Every demo is real markup using the shipped classes. Where a component
+   needs behaviour to be legible, the script at the bottom wires it up. */
+const demos = {
+  button: `<div class="st-cluster">
+    <button class="st-btn st-btn--accent">Take the scorecard</button>
+    <button class="st-btn st-btn--outline">Talk to us</button>
+    <button class="st-btn st-btn--ghost">Read more</button>
+    <button class="st-btn st-btn--solid">Contact</button>
+    <button class="st-btn st-btn--danger">Delete</button>
+    <button class="st-btn st-btn--accent" disabled>Disabled</button>
+    <button class="st-btn st-btn--accent st-btn--sm">Small</button>
+    <button class="st-btn st-btn--accent st-btn--lg">Large</button>
+  </div>`,
+  "split-button": `<span class="st-split-btn"><button class="st-btn st-btn--accent">Publish</button><button class="st-btn st-btn--accent" aria-label="More">▾</button></span>`,
+  fab: `<span class="st-cluster"><span style="position:relative;width:60px;height:52px"><button class="st-fab" style="position:absolute;right:0;bottom:0" aria-label="Back to top">↑</button></span><span class="st-caption">Fixed bottom-right in real use</span></span>`,
+  link: `<p>Body copy with an <a class="st-link" href="#main">inline link</a> — ink underline, never mango.</p>`,
+  "copy-button": `<span class="st-cluster"><code class="st-code">npm i @kwapso/structure</code><button class="st-btn st-btn--ghost st-btn--sm">Copy</button></span>`,
+
+  input: `<input class="st-input" placeholder="Kwapso GmbH">`,
+  textarea: `<textarea class="st-input" rows="3" placeholder="Notes…"></textarea>`,
+  select: `<select class="st-input"><option>Process audit</option><option>Workflow automation</option></select>`,
+  field: `<div class="st-field"><label class="st-field__label" for="f1" data-required>Company name</label><input class="st-input" id="f1" placeholder="Kwapso GmbH"><p class="st-field__hint">As it appears on your invoices.</p></div>
+    <div class="st-field" data-invalid="true" style="margin-top:var(--st-space-base)"><label class="st-field__label" for="f2">Work email</label><input class="st-input" id="f2" value="not-an-email" aria-invalid="true"><p class="st-field__error" role="alert">Enter a valid email address.</p></div>`,
+  checkbox: `<div class="st-stack st-stack--s">
+    <label class="st-checkbox"><input type="checkbox" checked><span class="st-checkbox__box"></span><span>Send me the summary</span></label>
+    <label class="st-checkbox"><input type="checkbox"><span class="st-checkbox__box"></span><span>Unchecked</span></label>
+    <label class="st-checkbox"><input type="checkbox" id="indet"><span class="st-checkbox__box"></span><span>Indeterminate (select all)</span></label></div>`,
+  "radio-group": `<div class="st-stack st-stack--s" role="radiogroup" aria-label="Plan">
+    <label class="st-radio"><input type="radio" name="pl" checked><span class="st-radio__box"></span><span>Monthly</span></label>
+    <label class="st-radio"><input type="radio" name="pl"><span class="st-radio__box"></span><span>Yearly<span class="st-caption" style="display:block">Two months free</span></span></label></div>`,
+  switch: `<label class="st-switch"><input type="checkbox" role="switch" checked><span class="st-switch__control"></span><span>Email notifications</span></label>`,
+  slider: `<input class="st-slider" type="range" value="60" aria-label="Volume">`,
+  scale: `<div class="st-scale" role="radiogroup" aria-label="How structured?">
+    <button class="st-scale__item" role="radio" aria-checked="false">Never</button>
+    <button class="st-scale__item" role="radio" aria-checked="false">Rarely</button>
+    <button class="st-scale__item" role="radio" aria-checked="true" data-selected="true">Sometimes</button>
+    <button class="st-scale__item" role="radio" aria-checked="false">Often</button>
+    <button class="st-scale__item" role="radio" aria-checked="false">Always</button></div>`,
+  rating: `<span class="st-rating">${[1,2,3,4,5].map(n=>`<button class="st-rating__star"${n<=4?' data-on="true"':''} aria-label="${n} of 5">★</button>`).join("")}</span>`,
+  choice: `<div class="st-stack st-stack--s">
+    <label class="st-choice" data-selected="true"><input type="radio" name="ch" checked><span><span class="st-choice__title">Usually</span><span class="st-choice__desc">Most roles have a written process</span></span></label>
+    <label class="st-choice"><input type="radio" name="ch"><span><span class="st-choice__title">Rarely</span></span></label></div>`,
+  "search-input": `<div class="st-search"><svg class="st-search__icon" width="16" height="16" viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5" stroke-width="1.5"/><path d="M10.5 10.5 14 14" stroke-width="1.5" stroke-linecap="round"/></svg><input class="st-input" type="search" placeholder="Search processes"></div>`,
+  "tag-input": `<div class="st-tag-input"><span class="st-chip">Finance<button class="st-chip__remove" aria-label="Remove">×</button></span><span class="st-chip">Ops<button class="st-chip__remove" aria-label="Remove">×</button></span><input placeholder="Add…" aria-label="Add tag"></div>`,
+  "otp-input": `<div class="st-otp">${Array.from({length:6},(_,i)=>`<input inputmode="numeric" maxlength="1" aria-label="Digit ${i+1}" value="${i<3?i+1:''}">`).join("")}</div>`,
+  "file-upload": `<div class="st-dropzone" role="button" tabindex="0"><strong>Upload your process export</strong><span class="st-caption">Drag and drop, or click to browse</span></div>`,
+  calendar: `<div class="st-calendar"><div class="st-calendar__head"><button class="st-btn st-btn--ghost st-btn--sm st-btn--icon" aria-label="Previous">‹</button><strong style="font-size:var(--st-text-sm)">August 2026</strong><button class="st-btn st-btn--ghost st-btn--sm st-btn--icon" aria-label="Next">›</button></div><div class="st-calendar__grid" id="cal"></div></div>`,
+  combobox: `<div class="st-combobox"><input class="st-input" role="combobox" aria-expanded="true" placeholder="Search a process…" value="Quote"><ul class="st-combobox__list" role="listbox" style="position:static;box-shadow:none;margin-top:4px"><li class="st-combobox__option" role="option" aria-selected="true">Quote to order</li><li class="st-combobox__option" role="option">Quote approval</li></ul></div>`,
+  signature: `<canvas class="st-signature" height="120"></canvas>`,
+  form: `<form class="st-form"><div class="st-field"><label class="st-field__label" for="fm1">Email</label><input class="st-input" id="fm1" type="email" placeholder="you@company.com"></div><button class="st-btn st-btn--accent" type="button">Submit</button></form>`,
+  fieldset: `<fieldset class="st-fieldset"><legend>Contact</legend><p class="st-caption">Grouped controls with a legend.</p></fieldset>`,
+
+  card: `<div class="st-grid"><div class="st-card"><h3 class="st-card__title">Sand on paper</h3><p style="margin-top:var(--st-space-xs)">The colour step is the elevation. No shadow.</p></div><div class="st-card st-card--outline"><h3 class="st-card__title">Outline</h3><p style="margin-top:var(--st-space-xs)">Hairline instead of a fill.</p></div><div class="st-card st-card--accent"><h3 class="st-card__title">Accent</h3><p style="margin-top:var(--st-space-xs)">Spends the accent — one per view.</p></div></div>`,
+  row: `<div class="st-stack st-stack--s"><div class="st-row"><span class="st-badge">01</span><span>Full operational process map</span></div><div class="st-row"><span class="st-badge">02</span><span>Bottleneck cost calculation</span></div></div>`,
+  panel: `<div class="st-panel">A panel — paper with a hairline, for content that must separate from a sand background.</div>`,
+  well: `<div class="st-well">A well — inset sand, for quoted or secondary content.</div>`,
+  invert: `<div class="st-invert" style="padding:var(--st-space-base);border-radius:var(--st-radius-surface)"><strong>Inverted band</strong><p class="st-muted" style="margin-top:var(--st-space-xs)">Re-scopes the tokens, so children need no special casing.</p></div>`,
+  frame: `<div class="st-frame"><div class="st-frame__bar"><span class="st-frame__dot"></span><span class="st-frame__dot"></span><span class="st-frame__dot"></span><span class="st-caption" style="margin-left:var(--st-space-s)">app.kwapso.com</span></div><div class="st-frame__body">Product shown inside a page.</div></div>`,
+
+  badge: `<div class="st-cluster"><span class="st-badge st-badge--accent">Featured</span><span class="st-badge">Draft</span><span class="st-badge st-badge--outline">Archived</span><span class="st-badge st-badge--success">Live</span><span class="st-badge st-badge--danger">Blocked</span></div>`,
+  "status-dot": `<div class="st-cluster" style="gap:var(--st-space-base)">
+    <span class="st-cluster" style="gap:var(--st-space-xs)"><span class="st-dot st-dot--success"></span>Live</span>
+    <span class="st-cluster" style="gap:var(--st-space-xs)"><span class="st-dot st-dot--warning"></span>In review</span>
+    <span class="st-cluster" style="gap:var(--st-space-xs)"><span class="st-dot st-dot--danger"></span>Blocked</span>
+    <span class="st-cluster" style="gap:var(--st-space-xs)"><span class="st-dot st-dot--muted"></span>Draft</span></div>`,
+  chip: `<span class="st-chip">Workflow <button class="st-chip__remove" aria-label="Remove">×</button></span>`,
+  avatar: `<div class="st-cluster"><span class="st-avatar">AK</span><span class="st-avatar st-avatar--lg">MB</span><span class="st-avatar-group"><span class="st-avatar">AK</span><span class="st-avatar">MB</span><span class="st-avatar">JS</span></span></div>`,
+
+  navbar: `<div class="st-frame"><header class="st-navbar" style="position:static"><strong>kwapso</strong><nav class="st-navbar__links"><a class="st-navbar__link" aria-current="page" href="#main">Process</a><a class="st-navbar__link" href="#main">Services</a><a class="st-navbar__link" href="#main">Case studies</a></nav><button class="st-btn st-btn--accent st-btn--sm">Contact</button></header></div>`,
+  sidebar: `<nav class="st-sidebar" style="width:240px"><a class="st-sidebar__link" aria-current="page" href="#main">Overview</a><a class="st-sidebar__link" href="#main">Processes</a><a class="st-sidebar__link" href="#main">Team</a><a class="st-sidebar__link" href="#main">Settings</a></nav>`,
+  tabs: `<div class="st-tabs" role="tablist" aria-label="Demo"><button class="st-tabs__tab" role="tab" aria-selected="true">Overview</button><button class="st-tabs__tab" role="tab" aria-selected="false">Processes</button><button class="st-tabs__tab" role="tab" aria-selected="false">Team</button></div>`,
+  segmented: `<div class="st-segmented" role="group" aria-label="View"><button class="st-segmented__item" aria-pressed="true">Board</button><button class="st-segmented__item" aria-pressed="false">Table</button><button class="st-segmented__item" aria-pressed="false">Calendar</button></div>`,
+  breadcrumb: `<nav aria-label="Breadcrumb"><ol class="st-breadcrumb" style="list-style:none;padding:0;margin:0"><li><a href="#main">Processes</a></li><li class="st-breadcrumb__sep">/</li><li><a href="#main">Finance</a></li><li class="st-breadcrumb__sep">/</li><li aria-current="page">Invoice approval</li></ol></nav>`,
+  pagination: `<nav class="st-pagination" aria-label="Pagination"><button class="st-btn st-btn--ghost st-btn--sm">Previous</button><span class="st-caption st-numeric">Page 2 of 9</span><button class="st-btn st-btn--ghost st-btn--sm">Next</button></nav>`,
+  stepper: `<ol class="st-stepper" style="list-style:none;padding:0;margin:0"><li class="st-stepper__step" data-state="done"><span class="st-stepper__dot">✓</span><span>Audit</span></li><li class="st-stepper__line"></li><li class="st-stepper__step" data-state="current"><span class="st-stepper__dot">2</span><span>Design</span></li><li class="st-stepper__line"></li><li class="st-stepper__step" data-state="todo"><span class="st-stepper__dot">3</span><span>Build</span></li></ol>`,
+  "anchor-nav": `<nav class="st-anchor-nav"><a href="#main" aria-current="true">Introduction</a><a href="#main">Method</a><a href="#main">Findings</a></nav>`,
+  menubar: `<div class="st-menubar" role="menubar"><button class="st-menubar__item" role="menuitem">File</button><button class="st-menubar__item" role="menuitem">Edit</button><button class="st-menubar__item" role="menuitem">View</button></div>`,
+  command: `<div class="st-command" style="box-shadow:none"><input class="st-input st-command__input" placeholder="Type a command…" value="proc"><div class="st-command__list"><div class="st-command__group-label">Processes</div><button class="st-command__item" aria-selected="true"><span>New process</span><span class="st-spacer"></span><kbd class="st-kbd">N</kbd></button><button class="st-command__item"><span>Import processes</span></button></div></div>`,
+  "bottom-nav": `<div class="phone"><div class="phone__notch"><span class="phone__pill"></span></div><div style="padding:var(--st-space-base);min-height:90px" class="st-caption">Screen content</div><nav class="st-bottom-nav"><a class="st-bottom-nav__item" aria-current="page" href="#main">Home</a><a class="st-bottom-nav__item" href="#main">Processes</a><a class="st-bottom-nav__item" href="#main">Team</a><a class="st-bottom-nav__item" href="#main">More</a></nav></div>`,
+
+  dialog: `<button class="st-btn st-btn--outline" data-open-modal>Open dialog</button>`,
+  "alert-dialog": `<button class="st-btn st-btn--danger" data-open-confirm>Delete process</button>`,
+  drawer: `<button class="st-btn st-btn--outline" data-open-drawer>Open drawer</button>`,
+  popover: `<div class="st-popover" style="position:static;display:inline-block">A popover — hairline, radius, and the one sanctioned shadow.</div>`,
+  "dropdown-menu": `<div class="st-popover" style="position:static;display:inline-block;min-width:200px"><div class="st-menu"><button class="st-menu__item">Rename</button><button class="st-menu__item">Duplicate</button><button class="st-menu__item" data-danger>Delete</button></div></div>`,
+  tooltip: `<span class="st-cluster"><span class="st-tooltip" style="position:static;display:inline-block">Automatable share of this process</span></span>`,
+  toast: `<div class="st-toast">Process saved.</div>`,
+  banner: `<div class="st-stack st-stack--s"><div class="st-banner">A neutral banner — part of the page.</div><div class="st-banner st-banner--accent">An accent banner.</div><div class="st-banner st-banner--danger">You're offline. Changes will sync when the connection returns.</div></div>`,
+  alert: `<div class="st-stack st-stack--s"><div class="st-alert st-alert--info"><div>Your process map is being generated.</div></div><div class="st-alert st-alert--success"><div>Ready to review.</div></div><div class="st-alert st-alert--warning"><div>Three processes have no owner.</div></div><div class="st-alert st-alert--danger"><div>The import failed on row 42.</div></div></div>`,
+
+  accordion: `<div class="st-accordion"><details open><summary>Who or what is kwapso?</summary><div>The operational partner for established, owner-led businesses in the DACH region.</div></details><details><summary>How long does the scorecard take?</summary><div>About five minutes — thirty questions from your everyday work.</div></details></div>`,
+  toggle: `<div class="st-cluster"><button class="st-toggle" aria-pressed="true">Bold</button><button class="st-toggle" aria-pressed="false">Italic</button></div>`,
+  "toggle-group": `<div class="st-toggle-group" role="group" aria-label="Align"><button class="st-toggle" aria-pressed="true">Left</button><button class="st-toggle" aria-pressed="false">Centre</button><button class="st-toggle" aria-pressed="false">Right</button></div>`,
+  carousel: `<div class="st-carousel"><div class="st-carousel__track st-no-scrollbar">${[1,2,3].map(n=>`<div class="st-carousel__slide"><div class="st-card" style="width:220px"><strong>Slide ${n}</strong></div></div>`).join("")}</div><div class="st-carousel__dots"><button class="st-carousel__dot" aria-current="true"></button><button class="st-carousel__dot"></button><button class="st-carousel__dot"></button></div></div>`,
+
+  table: `<div class="st-table-wrap st-scroll-x"><table class="st-table"><thead><tr><th scope="col">Process</th><th scope="col">Owner</th><th scope="col">Status</th><th scope="col" data-numeric>Hrs / wk</th></tr></thead><tbody>
+    <tr><td>Quote to order</td><td>Sales</td><td><span class="st-cluster" style="gap:var(--st-space-xs)"><span class="st-dot st-dot--danger"></span>Blocked</span></td><td data-numeric>21.25</td></tr>
+    <tr><td>Invoice approval</td><td>Finance</td><td><span class="st-cluster" style="gap:var(--st-space-xs)"><span class="st-dot st-dot--warning"></span>In review</span></td><td data-numeric>12.50</td></tr>
+    <tr><td>Onboarding</td><td>People</td><td><span class="st-cluster" style="gap:var(--st-space-xs)"><span class="st-dot st-dot--success"></span>Live</span></td><td data-numeric>8.00</td></tr></tbody></table></div>`,
+  list: `<div class="st-list"><div style="padding:var(--st-space-s) 0">Quote to order</div><div style="padding:var(--st-space-s) 0">Invoice approval</div><div style="padding:var(--st-space-s) 0">Onboarding</div></div>`,
+  kanban: `<div class="st-kanban"><section class="st-kanban__col"><header class="st-kanban__head"><span>To do</span><span class="st-badge">2</span></header><article class="st-kanban__card">Map supplier intake</article><article class="st-kanban__card">Cost the quote delay</article></section><section class="st-kanban__col"><header class="st-kanban__head"><span>In progress</span><span class="st-badge">1</span></header><article class="st-kanban__card">Automate invoice routing</article></section><section class="st-kanban__col"><header class="st-kanban__head"><span>Done</span><span class="st-badge">1</span></header><article class="st-kanban__card">Onboarding checklist</article></section></div>`,
+  tree: `<div class="st-tree" role="tree"><ul style="list-style:none;padding:0;border:0"><li><div class="st-tree__item">▾ Finance</div><ul><li><div class="st-tree__item" aria-selected="true">Invoice approval</div></li><li><div class="st-tree__item">Expense claims</div></li></ul></li><li><div class="st-tree__item">▾ Sales</div><ul><li><div class="st-tree__item">Quote to order</div></li></ul></li></ul></div>`,
+  stat: `<div class="st-grid"><div class="st-card"><div class="st-stat"><span class="st-stat__value">68</span><span class="st-stat__label">Operational health</span><span class="st-stat__delta" data-dir="up">↑ 6 this month</span></div></div><div class="st-card"><div class="st-stat"><span class="st-stat__value">41.75</span><span class="st-stat__label">Hours / week manual</span><span class="st-stat__delta" data-dir="down">↓ 3.2</span></div></div></div>`,
+  meter: `<div class="st-meter"><div class="st-meter__head"><span>Operational health</span><span class="st-numeric">68/100</span></div><div class="st-progress" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100" aria-label="Operational health"><div class="st-progress__bar" style="width:68%"></div></div></div>`,
+  progress: `<div class="st-progress" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" aria-label="Progress"><div class="st-progress__bar" style="width:40%"></div></div>`,
+  gauge: `<span class="st-gauge"><svg width="140" height="80" viewBox="0 0 140 80"><path d="M6 70 A 64 64 0 0 1 134 70" fill="none" stroke="var(--st-border)" stroke-width="8"/><path d="M6 70 A 64 64 0 0 1 134 70" fill="none" stroke="var(--st-accent)" stroke-width="8" stroke-linecap="round" stroke-dasharray="201" stroke-dashoffset="64"/></svg><span class="st-gauge__value">68</span></span>`,
+  timeline: `<ol class="st-timeline" style="list-style:none;padding:0;margin:0"><li class="st-timeline__item"><span class="st-timeline__marker"></span><div><div>Process map delivered</div><div class="st-caption">14 August</div></div></li><li class="st-timeline__item"><span class="st-timeline__marker"></span><div><div>Audit completed</div><div class="st-caption">2 August</div></div></li></ol>`,
+  checklist: `<div class="st-checklist"><label class="st-checklist__item" data-done="true"><span class="st-checkbox"><input type="checkbox" checked><span class="st-checkbox__box"></span></span><span>Map the quote-to-order flow</span></label><label class="st-checklist__item"><span class="st-checkbox"><input type="checkbox"><span class="st-checkbox__box"></span></span><span>Cost the bottleneck</span></label></div>`,
+  comments: `<div class="st-comments"><article class="st-comment"><span class="st-avatar">AK</span><div><div class="st-comment__meta">Alaap · 2 hours ago</div><div class="st-comment__body">The re-keying step is the whole delay.</div></div></article><article class="st-comment"><span class="st-avatar">MB</span><div><div class="st-comment__meta">Marta · 1 hour ago</div><div class="st-comment__body">Agreed — automating it saves about 17 hours a week.</div></div></article></div>`,
+  "description-list": `<dl class="st-kv"><dt>Owner</dt><dd>Finance</dd><dt>Frequency</dt><dd>Daily</dd><dt>Automatable</dt><dd>64%</dd></dl>`,
+  "filter-bar": `<div class="st-filter-bar"><div class="st-segmented"><button class="st-segmented__item" aria-pressed="true">All</button><button class="st-segmented__item" aria-pressed="false">Blocked</button></div><span class="st-badge">2 active</span><button class="st-btn st-btn--ghost st-btn--sm">Clear</button></div>`,
+  chart: `<div class="st-grid st-grid--2"><figure class="st-chart" style="margin:0"><figcaption class="st-caption" style="margin-bottom:var(--st-space-xs)">Hours per week, by process</figcaption><svg viewBox="0 0 100 120" preserveAspectRatio="none" role="img" aria-label="Bar chart">
+    <line class="st-chart__grid" x1="0" x2="100" y1="4" y2="4"/><line class="st-chart__grid" x1="0" x2="100" y1="60" y2="60"/><line class="st-chart__grid" x1="0" x2="100" y1="116" y2="116"/>
+    ${[21,12,8,5].map((v,i)=>`<rect class="st-chart-mark st-chart-${i+1}" vector-effect="non-scaling-stroke" x="${6+i*23}" y="${116-v*5}" width="14" height="${v*5}" rx="1"/>`).join("")}</svg></figure>
+    <div class="st-heatmap" role="img" aria-label="Activity heatmap">${Array.from({length:60},(_,i)=>`<span class="st-heatmap__cell" style="background:var(--st-chart-1);opacity:${(0.15+Math.abs(Math.sin(i))*0.85).toFixed(2)}"></span>`).join("")}</div></div>`,
+  "permission-matrix": `<div class="st-table-wrap st-scroll-x"><table class="st-table"><thead><tr><th scope="col">Permission</th><th scope="col">Admin</th><th scope="col">Member</th><th scope="col">Viewer</th></tr></thead><tbody>
+    ${["Read processes","Edit processes","Delete processes"].map((p,r)=>`<tr><th scope="row" style="font-weight:var(--st-weight-light)">${p}</th>${[0,1,2].map(c=>`<td><label class="st-checkbox"><input type="checkbox" ${c<=(2-r)?"checked":""} aria-label="${p}"><span class="st-checkbox__box"></span></label></td>`).join("")}</tr>`).join("")}</tbody></table></div>`,
+
+  chat: `<div class="st-frame"><div class="st-frame__body" style="padding:0"><div class="st-chat" style="height:340px" data-density="compact"><div class="st-chat__log" role="log">
+    <div class="st-msg st-msg--user"><div><div class="st-msg__body">Where is our biggest bottleneck?</div></div></div>
+    <div class="st-msg st-msg--assistant"><div><div class="st-msg__body">Quote-to-order — 21.25 hours a week against 12.5 for invoice approval.<a class="st-citation" href="#main">1</a> About 82% is automatable.</div><div class="st-cluster" style="gap:var(--st-space-s)"><span class="st-msg__meta">Just now</span><span class="st-msg__actions"><button class="st-btn st-btn--ghost st-btn--sm">Copy</button></span></div></div></div>
+    <div class="st-msg st-msg--assistant"><div style="width:100%"><div class="st-toolcall"><button class="st-toolcall__head" aria-expanded="false"><span class="st-dot st-dot--success"></span><span>query_process_times</span><span class="st-spacer"></span><span>+</span></button></div></div></div>
+    <div class="st-msg st-msg--assistant"><div class="st-typing"><span></span><span></span><span></span></div></div></div>
+    <div class="st-stack st-stack--s" style="padding:var(--st-space-base);padding-top:0"><div class="st-prompts"><button class="st-prompts__item">What would automation save?</button></div>
+    <div class="st-composer"><textarea class="st-composer__input" rows="1" placeholder="Message…" aria-label="Message"></textarea><button class="st-btn st-btn--accent st-btn--icon st-btn--sm" aria-label="Send"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 13V3M4 7l4-4 4 4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div></div></div></div>`,
+  "run-steps": `<ol class="st-run-steps" style="list-style:none;padding:0;margin:0"><li class="st-run-steps__item"><span class="st-dot st-dot--success"></span><span>Read 1,204 rows</span></li><li class="st-run-steps__item"><span class="st-dot st-dot--warning"></span><span>Validating columns</span></li><li class="st-run-steps__item"><span class="st-dot st-dot--muted"></span><span>Import</span></li></ol>`,
+
+  display: `<p class="st-display st-display--sm">Make work visible.</p>`,
+  eyebrow: `<p class="st-eyebrow">Process audit &amp; design</p>`,
+  lead: `<p class="st-lead">Structure you can see, data you can trust, and a team that works from one system instead of ten.</p>`,
+  prose: `<div class="st-prose"><h2>A section heading</h2><p>Long-form editorial. The measure is enforced here, because a 120-character line is unreadable however good the type is.</p><p>A second paragraph, to show the rhythm between blocks.</p></div>`,
+  blockquote: `<blockquote class="st-quote">More than 280 users work with our systems every day across over 15 industries.</blockquote>`,
+  code: `<p>Install with <code class="st-code">npm i @kwapso/structure</code>.</p>`,
+  kbd: `<p>Press <kbd class="st-kbd">⌘</kbd> <kbd class="st-kbd">K</kbd> to open the command palette.</p>`,
+
+  hero: `<section class="st-hero" style="padding-block:var(--st-space-m)"><p class="st-eyebrow">Work, structured</p><h1 class="st-display st-display--sm">From chaos to full overview.</h1><p class="st-lead">We map how work actually moves through your business.</p><div class="st-cluster"><button class="st-btn st-btn--accent">Book a process check</button></div></section>`,
+  "pricing-table": `<div class="st-grid">${[["Audit","€4,900","one-off",["Process map","Bottleneck costing"],false],["Program","€2,400","per month",["Everything in Audit","Build & rollout","Ongoing partnership"],true]].map(([n,p,per,f,ft])=>`<div class="st-price"${ft?' data-featured="true"':''}><div><p class="st-eyebrow">${n}</p><p class="st-price__amount">${p}</p><p class="st-caption">${per}</p></div><ul style="list-style:none;padding:0;margin:0" class="st-stack st-stack--xs">${f.map(x=>`<li>${x}</li>`).join("")}</ul><button class="st-btn ${ft?"st-btn--accent":"st-btn--outline"}">Choose</button></div>`).join("")}</div>`,
+  faq: `<div class="st-accordion"><details><summary>Is this a hidden sales pitch?</summary><div>No. The scorecard result stands on its own.</div></details><details><summary>Where do I start?</summary><div>With the process that costs the most hours.</div></details></div>`,
+  "cta-band": `<section class="st-cta-band"><h2 class="st-display st-display--xs">Make scale possible.</h2><p class="st-lead" style="text-align:center">A partner who builds it with you.</p><div class="st-cluster"><button class="st-btn st-btn--accent">Talk to us</button></div></section>`,
+  "page-header": `<div class="st-page-header"><div><h1 class="st-page-header__title">Invoice approval</h1><p class="st-page-header__meta">Finance · updated 8 minutes ago</p></div><div class="st-cluster"><button class="st-btn st-btn--ghost st-btn--sm">Export</button><button class="st-btn st-btn--accent st-btn--sm">Edit</button></div></div>`,
+  toolbar: `<div class="st-toolbar"><div class="st-search" style="max-width:240px"><input class="st-input" type="search" placeholder="Search"></div><span class="st-spacer"></span><button class="st-btn st-btn--ghost st-btn--sm">Filter</button><button class="st-btn st-btn--accent st-btn--sm">New</button></div>`,
+  footer: `<footer class="st-footer" style="padding-block:var(--st-space-base)"><div class="st-footer__cols"><div><p class="st-eyebrow">Product</p><p class="st-caption">Process audit<br>Automation<br>Dashboards</p></div><div><p class="st-eyebrow">Company</p><p class="st-caption">About<br>Newsroom</p></div></div></footer>`,
+  "blog-card": `<a class="st-card st-card--interactive" href="#main" style="text-decoration:none;display:block;max-width:320px"><h3 class="st-card__title">The cost of manual work</h3><p class="st-clamp-2" style="margin-top:var(--st-space-xs)">What forty hours a week of re-keying actually costs a mid-sized business.</p><p class="st-caption" style="margin-top:var(--st-space-s)">Guides · 6 min</p></a>`,
+  newsletter: `<form class="st-form" style="max-width:420px"><div class="st-field"><label class="st-field__label" for="nl">Get the monthly note</label><div class="st-cluster" style="flex-wrap:nowrap"><input class="st-input" id="nl" type="email" placeholder="you@company.com"><button class="st-btn st-btn--accent" type="button">Subscribe</button></div></div></form>`,
+  testimonial: `<figure class="st-quote" style="margin:0"><blockquote style="margin:0;border:0;padding:0">We finally see the whole operation in one place.</blockquote><figcaption class="st-caption" style="margin-top:var(--st-space-s)">Operations Director · Padelbase</figcaption></figure>`,
+  "logo-wall": `<div class="st-logo-wall">${["Padelbase","Amstella","Koidl","Comunitapp","Confia"].map(n=>`<span class="st-caption" style="font-size:var(--st-text-md)">${n}</span>`).join("")}</div>`,
+
+  container: `<div class="st-well"><div class="st-container" style="background:var(--st-background);padding-block:var(--st-space-s);border-radius:var(--st-radius-surface)"><p class="st-caption">950px reading column, centred — measured off the live site.</p></div></div>`,
+  stack: `<div class="st-stack st-stack--s"><div class="st-row">One</div><div class="st-row">Two</div><div class="st-row">Three</div></div>`,
+  cluster: `<div class="st-cluster"><span class="st-badge">Wraps</span><span class="st-badge">instead</span><span class="st-badge">of</span><span class="st-badge">overflowing</span></div>`,
+  grid: `<div class="st-grid"><div class="st-card">Auto-fit</div><div class="st-card">No media</div><div class="st-card">queries</div></div>`,
+  split: `<div class="st-split"><div class="st-card">Left</div><div class="st-card">Right</div></div>`,
+  divider: `<div><p class="st-caption">Above</p><hr class="st-divider" style="margin-block:var(--st-space-base)"><p class="st-caption">Below</p></div>`,
+  "aspect-ratio": `<div class="st-aspect" style="aspect-ratio:16/9;max-width:320px;background:var(--st-surface)"><div class="st-center st-caption">16 / 9</div></div>`,
+  resizable: `<div class="st-resizable" style="height:90px"><div class="st-well">Start</div><div class="st-resizable__handle"></div><div class="st-well">End</div></div>`,
+  "scroll-area": `<div class="st-scroll-x" style="max-width:100%"><div style="display:flex;gap:var(--st-space-s);width:max-content">${Array.from({length:12},(_,i)=>`<div class="st-card" style="width:150px">Card ${i+1}</div>`).join("")}</div></div>`,
+  "skip-link": `<p class="st-caption">Present on every page — tab from the address bar to reveal it.</p>`,
+}
+
+/* Registry entries that share an implementation with another entry get one
+   canonical demo rather than a duplicate; the alias is listed on that card. */
+const aliasOf = {
+  "icon-button":"button", separator:"divider", collapsible:"accordion", sheet:"drawer",
+  "context-menu":"dropdown-menu", "hover-card":"popover", "data-table":"table",
+  "card-grid":"grid", "activity-feed":"timeline", "stat-grid":"stat", "ticket-thread":"comments",
+  "article-body":"prose", tag:"badge", "date-picker":"calendar", "date-range":"calendar",
+  "calendar-view":"calendar", "range-slider":"slider", nps:"scale", "avatar-group":"avatar",
+  "button-group":"button", "section-header":"hero", "feature-row":"split", "pricing-screen":"pricing-table",
+  "import-wizard":"wizard-screen", sparkline:"chart", heatmap:"chart", "time-picker":"calendar",
+  "color-input":"input", "detail-view":"split", label:"field", "message-list":"chat", message:"chat",
+  composer:"chat", "tool-call":"chat", reasoning:"chat", citation:"chat", "suggested-prompts":"chat",
+  "copilot-overlay":"chat", clamp:"prose", text:"prose", heading:"prose", "sr-only":"skip-link",
+  box:"stack", center:"grid", spacer:"cluster", visibility:"grid", portal:"dialog", icon:"badge",
+}
+
+/* Screens, loaders and states live on their own pages. */
+const elsewhere = { screen: "./screens.html", loader: "./loaders.html", state: "./loaders.html" }
+
+const shown = reg.items.filter((i) => !elsewhere[i.layer])
+const groups = {}
+for (const it of shown) (groups[it.layer] ??= []).push(it)
+
+const label = { primitive: "Primitives", composite: "Composites", collection: "Collections", pattern: "Patterns" }
+let toc = "", html = ""
+
+for (const [layer, items] of Object.entries(groups)) {
+  toc += `<p class="st-eyebrow" style="padding:var(--st-space-s) var(--st-space-s) 4px">${label[layer] ?? layer}</p>`
+  html += `<h2 class="st-display st-display--xs item" id="l-${layer}" style="margin-top:var(--st-space-xl)">${label[layer] ?? layer}</h2>`
+
+  for (const it of items) {
+    const key = demos[it.name] ? it.name : aliasOf[it.name]
+    toc += `<a class="st-sidebar__link" href="#c-${it.name}">${it.name}</a>`
+    html += `<section class="item" id="c-${it.name}">
+      <div class="st-cluster st-cluster--between" style="margin-bottom:var(--st-space-s)">
+        <h3 style="font-size:var(--st-text-md)">${it.name}</h3>
+        <span class="spec">${it.css ? "." + it.css : "—"} · &lt;${it.react ?? "—"}&gt;</span>
+      </div>
+      ${key && demos[key]
+        ? `<div class="demo">${demos[key]}</div>${key !== it.name ? `<p class="spec" style="margin-top:4px">Shares its implementation with <a href="#c-${key}">${key}</a>.</p>` : ""}`
+        : `<div class="demo st-caption">Rendered on the <a href="${elsewhere[it.layer] ?? "./screens.html"}">screens page</a>.</div>`}
+    </section>`
+  }
+}
+document.getElementById("toc").innerHTML = toc
+document.getElementById("gallery").innerHTML = html
+
+/* ---- August 2026 calendar for the date demos ---- */
+const cal = document.getElementById("cal")
+if (cal) {
+  const dow = ["Mo","Tu","We","Th","Fr","Sa","Su"]
+  const lead = (new Date(2026, 7, 1).getDay() + 6) % 7
+  cal.innerHTML = dow.map(d => `<div class="st-calendar__dow">${d}</div>`).join("")
+    + Array.from({length:lead},()=>"<div></div>").join("")
+    + Array.from({length:31},(_,i)=>`<button class="st-calendar__day"${i+1===18?' data-today="true"':''}${i+1===21?' aria-selected="true"':''}>${i+1}</button>`).join("")
+}
+
+/* ---- shared page behaviour ---- */
+const order = ["light","dark","system"]; let ti = 0
+document.getElementById("theme").onclick = (e) => {
+  ti = (ti + 1) % 3; const t = order[ti]
+  if (t === "system") document.documentElement.removeAttribute("data-theme")
+  else document.documentElement.setAttribute("data-theme", t)
+  e.currentTarget.textContent = t
+}
+document.querySelectorAll("button[data-density]").forEach(b => b.onclick = () => {
+  document.documentElement.setAttribute("data-density", b.dataset.density)
+  document.querySelectorAll("button[data-density]").forEach(o => o.setAttribute("aria-pressed", String(o === b)))
+})
+
+/* Interactive demos, so the gallery behaves like the real components. */
+document.addEventListener("click", (e) => {
+  const t = e.target.closest("button")
+  if (!t) return
+  if (t.classList.contains("st-scale__item") || t.classList.contains("st-segmented__item")
+      || t.getAttribute("role") === "tab" || t.classList.contains("st-toggle")
+      || t.classList.contains("st-carousel__dot")) {
+    const group = t.parentElement
+    const attr = t.hasAttribute("aria-selected") ? "aria-selected"
+      : t.hasAttribute("aria-current") || t.classList.contains("st-carousel__dot") ? "aria-current" : "aria-pressed"
+    group.querySelectorAll("button").forEach(o => {
+      o.setAttribute(attr, String(o === t)); o.removeAttribute("data-selected")
+    })
+    if (t.classList.contains("st-scale__item")) t.setAttribute("data-selected", "true")
+  }
+  if (t.classList.contains("st-rating__star")) {
+    const stars = [...t.parentElement.children]
+    stars.forEach((s, i) => s.toggleAttribute("data-on", i <= stars.indexOf(t)))
+  }
+  if (t.classList.contains("st-chip__remove")) t.parentElement.remove()
+  if (t.classList.contains("st-toolcall__head")) {
+    const open = t.getAttribute("aria-expanded") === "true"
+    t.setAttribute("aria-expanded", String(!open))
+    t.querySelector("span:last-child").textContent = open ? "+" : "−"
+  }
+})
+document.querySelectorAll(".st-choice input").forEach(i => i.onchange = () => {
+  document.querySelectorAll(`.st-choice:has(input[name="${i.name}"])`).forEach(c => c.removeAttribute("data-selected"))
+  i.closest(".st-choice").setAttribute("data-selected", "true")
+})
+const indet = document.getElementById("indet"); if (indet) indet.indeterminate = true
+
+/* Overlays are opened for real, so focus behaviour is visible. */
+const overlay = (html) => {
+  const w = document.createElement("div")
+  w.innerHTML = `<div class="st-overlay"></div>${html}`
+  document.body.append(w)
+  const close = () => w.remove()
+  w.querySelector(".st-overlay").onclick = close
+  w.querySelectorAll("[data-close]").forEach(b => b.onclick = close)
+  document.addEventListener("keydown", function esc(e) {
+    if (e.key === "Escape") { close(); document.removeEventListener("keydown", esc) }
+  })
+}
+document.addEventListener("click", (e) => {
+  if (e.target.closest("[data-open-modal]")) overlay(`<div class="st-modal" role="dialog" aria-modal="true" aria-label="Rename process"><h2 class="st-modal__title">Rename process</h2><div class="st-field"><label class="st-field__label" for="mn">Name</label><input class="st-input" id="mn" value="Quote to order"></div><div class="st-modal__actions"><button class="st-btn st-btn--ghost" data-close>Cancel</button><button class="st-btn st-btn--accent" data-close>Save</button></div></div>`)
+  if (e.target.closest("[data-open-confirm]")) overlay(`<div class="st-modal" role="alertdialog" aria-modal="true" aria-label="Delete process"><h2 class="st-modal__title">Delete this process?</h2><p>Its history and attachments go with it. This cannot be undone.</p><div class="st-modal__actions"><button class="st-btn st-btn--ghost" data-close>Cancel</button><button class="st-btn st-btn--danger" data-close>Delete</button></div></div>`)
+  if (e.target.closest("[data-open-drawer]")) overlay(`<aside class="st-drawer" role="dialog" aria-modal="true" aria-label="Process details"><div class="st-cluster st-cluster--between"><h2 class="st-card__title">Quote to order</h2><button class="st-btn st-btn--ghost st-btn--sm st-btn--icon" data-close aria-label="Close">×</button></div><dl class="st-kv" style="margin-top:var(--st-space-base)"><dt>Owner</dt><dd>Sales</dd><dt>Hours / week</dt><dd>21.25</dd><dt>Automatable</dt><dd>82%</dd></dl></aside>`)
+})
+</script>
+</body>
+</html>

@@ -1,4 +1,5 @@
-/* Structure — overlays. The only surfaces permitted a shadow. */
+/* Structure — overlays. The only surfaces permitted a shadow. * structure-definitions — defines the vocabulary; view budgets do not apply.
+ */
 import * as React from "react"
 import { cx } from "./layout"
 import { Button } from "./controls"
